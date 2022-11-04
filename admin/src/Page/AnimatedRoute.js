@@ -4,7 +4,7 @@ import { AnimatePresence } from "framer-motion";
 import News from "./News"
 import Data from "./Data"
 import DataWebService from "./DataWebService"
-import OperatingManual from "./OperatingManual";
+import PDFViewer from "./OperatingManual";
 import Person from "./Person";
 
 const AnimatedRoute = () => {
@@ -13,7 +13,7 @@ const AnimatedRoute = () => {
         <AnimatePresence>
             <Routes location={location} key={location.pathname}>
                 <Route path="/News" element={<News />} />
-                <Route path="/OperatingManual" element={<OperatingManual />} />
+                <Route path="/OperatingManual" element={<PDFViewer />} />
                 <Route path="/Person" element={<Person />} />
                 <Route path="/Data" element={<Data />} />
                 <Route path="/DataWebService" element={<DataWebService />} />
