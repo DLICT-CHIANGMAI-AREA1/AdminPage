@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const { REACT_APP_PATH } = process.env;
 
 const PDFViewer = () => {
@@ -19,25 +21,55 @@ const PDFViewer = () => {
     const [input, setInput] = useState([]);
     const [File, setFile] = useState();
 
-
-    /*function _treat(e) {
+    function _treat(e) {
+        setFile(e.target.files[0]);
         const { files } = e.target;
-        setFile(e.target.value)
-        console.log(e.target.value)
-        console.log(File)
         let images = [];
         const selecteds = [...[...files]];
         selecteds.forEach((i) => images.push(URL.createObjectURL(i)));
         setInput(images);
-    }*/
-
+    }
     
-    const editNews = async () => {
-        const formData = new FormData();
-        formData.append("filename", 'operation');
-        formData.append("file", File);
-       
-        let data = await axios.put(`http://localhost:5000/admin/api/UpdatePDF_OPM/${Id}`, formData);
+    const notify = () =>
+        toast.warn("กรุณา upload file pdf. ", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+
+    const notifySucceed = () =>
+        toast.success("upload file สำเร็จ", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+
+    function Reload() {
+        window.location.reload();
+    }
+
+    const editOPM = async () => {
+        if (input.length === 0) {
+            notify();
+        } else {
+            const formData = new FormData();
+            formData.append("filename", "operation");
+            formData.append("file", File);
+            await axios.put(`http://localhost:5000/admin/api/UpdatePDF_OPM/${Id}`, formData).then(() => {
+                notifySucceed();
+                const myTimeout = setTimeout(Reload, 2000);
+            });
+        }
     };
 
     return (
@@ -72,10 +104,19 @@ const PDFViewer = () => {
                                     ))}
                                     <form>
                                         <label>
-                                            <input type="file" multiple onChange={(event) => setFile(event.target.files[0])} />
-                                            <button type="button" onClick={editNews}>
-                                                Upload
-                                            </button>
+                                            <Row>
+                                                <Col xs={12} md={6} xl={5}>
+                                                    <input type="file" multiple onChange={_treat} />
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col xs={12} md={6} xl={5}>
+                                                    <button className="upload" type="button" onClick={editOPM}>
+                                                        Upload
+                                                    </button>
+                                                    <ToastContainer />
+                                                </Col>
+                                            </Row>
                                         </label>
                                     </form>
                                 </div>
