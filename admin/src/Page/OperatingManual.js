@@ -67,7 +67,7 @@ const PDFViewer = () => {
             formData.append("file", File);
             await axios.put(`http://localhost:5000/admin/api/UpdatePDF_OPM/${Id}`, formData).then(() => {
                 notifySucceed();
-                const myTimeout = setTimeout(Reload, 2000);
+                setTimeout(Reload, 2000);
             });
         }
     };
