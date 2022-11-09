@@ -1,42 +1,41 @@
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import ListGroup from "react-bootstrap/ListGroup";
-import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
-import { Row, Col } from "react-bootstrap";
-function FlushExample() {
+function FlushExample({ data }) {
+    console.log(data.data)
     return (
-        <Accordion flush>
-            <Accordion.Item eventKey="0">
-                <Accordion.Header>ปีการศึกษา-ภาคเรียน 2565-1</Accordion.Header>
-                <Accordion.Body>
-                    <div class="row gy-5">
-                        <div class="col-8">
-                            <h2 className="m-3">Student Details</h2>
-                        </div>
-                        <div class="col-4">
-                            <button type="button" class="btn btn-danger rounded-pill m-3">
-                                Delete Record
-                            </button>
-                            <button type="button" class="btn btn-success rounded-pill">
-                                + Add New
-                            </button>
-                        </div>
+        <Accordion.Item eventKey="0">
+            <Accordion.Header>{data.name_year}</Accordion.Header>
+            <Accordion.Body>
+                <div class="row gy-5">
+                    <div class="col-8">
+                        <h2 className="m-3">Student Details</h2>
                     </div>
+                    <div class="col-4">
+                        <button type="button" class="btn btn-danger rounded-pill m-3">
+                            Delete Record
+                        </button>
+                        <button type="button" class="btn btn-success rounded-pill">
+                            + Add New
+                        </button>
+                    </div>
+                </div>
 
-                    <ListGroup>
-                        <Table striped bordered hover size="sm">
-                            <thead>
+                <ListGroup>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="col-md-7">Name</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data.data.map((x) => (
+                        
                                 <tr>
-                                    <th>ลำดับ</th>
-                                    <th class="col-md-7">Name</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td class="col-md-7">Mark</td>
+                                    <td class="col-md-7">{x.name}</td>
                                     <td>
                                         <button type="button" class="btn btn-success">
                                             Edit
@@ -48,26 +47,12 @@ function FlushExample() {
                                         </button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td class="col-md-7">Mark</td>
-                                    <td>
-                                        <button type="button" class="btn btn-success">
-                                            Edit
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-danger">
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                    </ListGroup>
-                </Accordion.Body>
-            </Accordion.Item>
-        </Accordion>
+                            ))}
+                        </tbody>
+                    </table>
+                </ListGroup>
+            </Accordion.Body>
+        </Accordion.Item>
     );
 }
 

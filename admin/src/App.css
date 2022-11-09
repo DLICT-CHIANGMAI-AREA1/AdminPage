@@ -74,6 +74,9 @@ body {
 .react-pdf__Page__canvas {
     margin: 0 auto;
 }
+.nav-menu.active{
+    z-index:1
+}
 
 /* For all pages */
 .all-page-container {
@@ -100,4 +103,7 @@ body {
     border-radius: 10px;
     padding: 50px 50px;
     margin-top : 20px
+}
+.accordion-item{
+    margin: 10px;
 }
