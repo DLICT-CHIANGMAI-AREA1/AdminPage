@@ -107,3 +107,6 @@ body {
 .accordion-item{
     margin: 10px;
 }
+.CreateDataButton{
+    text-align: end
+}
