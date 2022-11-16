@@ -13,7 +13,7 @@ const ButtonCreateRecords = () => {
     const handleShowAddRecord = () => setShowAddRecord(true);
 
     const notify = () =>
-        toast.warn("กรุณา กรอกข้อมูลให้ครบถ้วน ", {
+        toast.warn("กรุณากรอกข้อมูลให้ครบถ้วน ", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -24,7 +24,7 @@ const ButtonCreateRecords = () => {
             theme: "light",
         });
     const notifySucceed = () =>
-        toast.success("upload file สำเร็จ", {
+        toast.success("สร้างปีการศึกษา-ภาคเรียนชุดใหม่สำเร็จ", {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -41,7 +41,7 @@ const ButtonCreateRecords = () => {
         } else {
             const data = {
                 name_year: semester,
-                data:[{}]
+                data:[]
             };
             await axios.post(`http://localhost:5000/admin/api/AddSemester`, data).then((a) => {
                 notifySucceed();

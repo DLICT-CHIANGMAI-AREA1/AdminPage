@@ -1,11 +1,12 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-const ButtonAddRecord = () => {
+const ButtonAdd = (x) => {
+    const [id, setId] = useState(x.data);
     const [showAddRecord, setShowAddRecord] = useState(false);
     const [name, setName] = useState("");
     const [URL, setURL] = useState("");
@@ -13,7 +14,7 @@ const ButtonAddRecord = () => {
     const handleShowAddRecord = () => setShowAddRecord(true);
 
     const notify = () =>
-        toast.warn("กรุณา กรอกข้อมูลให้ครบถ้วน ", {
+        toast.warn("กรุณากรอกข้อมูลให้ครบถ้วน ", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -24,7 +25,7 @@ const ButtonAddRecord = () => {
             theme: "light",
         });
     const notifySucceed = () =>
-        toast.success("upload file สำเร็จ", {
+        toast.success("เพิ่มข้อมูลสำเร็จ", {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -36,16 +37,16 @@ const ButtonAddRecord = () => {
         });
 
     const onSubmit = async () => {
-        if (name === "" || URL==="") {
+        if (name === "" || URL === "") {
             notify();
         } else {
             const data = {
-                name:name,
-                url:URL
-            }
-            await axios.post(`http://localhost:5000/admin/api/AddData/`,data).then((a) => {
-            notifySucceed();
-            setTimeout(Reload, 2000);
+                name: name,
+                url: URL,
+            };
+            await axios.post(`http://localhost:5000/admin/api/AddData/${id}`, data).then((a) => {
+                notifySucceed();
+                setTimeout(Reload, 2000);
             });
         }
     };
@@ -55,11 +56,8 @@ const ButtonAddRecord = () => {
     }
 
     return (
-        <div class="col-4">
-            <button type="button" class="btn btn-danger rounded-pill m-3">
-                Delete Record
-            </button>
-            <button type="button" class="btn btn-success rounded-pill" onClick={handleShowAddRecord}>
+        <div>
+            <button type="button" class="btn btn-success rounded-pill m-3" onClick={handleShowAddRecord}>
                 + Add New
             </button>
             <Modal show={showAddRecord} onHide={handleCloseAddRecord}>
@@ -102,4 +100,4 @@ const ButtonAddRecord = () => {
     );
 };
 
-export default ButtonAddRecord;
+export default ButtonAdd;

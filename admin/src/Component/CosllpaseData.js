@@ -1,20 +1,25 @@
 import React from "react";
 import Accordion from "react-bootstrap/Accordion";
 import ListGroup from "react-bootstrap/ListGroup";
-import ButtonAddRecord from "./ButtonCRUD/ButtonAddRecord";
+import ButtonAdd from "./ButtonCRUD/ButtonAddData";
 import ButtonEdit from "./ButtonCRUD/ButtonEdit";
 import ButtonDelete from "./ButtonCRUD/ButtonDelete";
+import ButtonDeleteRecord from "./ButtonCRUD/ButtonDeleteRecord";
 function FlushExample({ data }) {
     return (
-        
         <Accordion.Item eventKey="0">
             <Accordion.Header>{data.name_year}</Accordion.Header>
             <Accordion.Body>
                 <div class="row gy-5">
                     <div class="col-8">
-                        <h2 className="m-3">Student Details</h2>
+                        <h2 className="m-4">ข้อมูลนักเรียน</h2>
                     </div>
-                    <ButtonAddRecord />
+                    <div class="col-2">
+                        <ButtonDeleteRecord data={data._id} />
+                    </div>
+                    <div class="col-2">
+                        <ButtonAdd data={data._id} />
+                    </div>
                 </div>
 
                 <ListGroup>
@@ -27,17 +32,15 @@ function FlushExample({ data }) {
                             </tr>
                         </thead>
                         <tbody>
-                        
-                            {data.data.map((x,index) => (
+                            {data.data.map((x, index) => (
+                              
                                 <tr>
-                                    
-                                    <td class="col-md-7">{x._id}</td>
+                                    <td class="col-md-7"><a href={x.url} target="_blank" rel="noreferrer">{x.name}</a></td>
                                     <td>
-                                       <ButtonEdit data={x}/>
+                                        <ButtonEdit data={x} id={data._id}/>
                                     </td>
                                     <td>
-                                    <ButtonDelete  data={x._id} id={data._id}/>
-                                        
+                                        <ButtonDelete data={x._id} id={data._id} />
                                     </td>
                                 </tr>
                             ))}

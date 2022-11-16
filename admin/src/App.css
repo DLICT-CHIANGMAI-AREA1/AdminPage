@@ -110,3 +110,6 @@ body {
 .CreateDataButton{
     text-align: end
 }
+a{
+    text-decoration: none
+}

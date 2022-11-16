@@ -10,7 +10,8 @@ const ButtonEdit = (x) => {
     const [show, setShow] = useState(false);
     const [name, setName] = useState(x.data.name);
     const [URL, setURL] = useState(x.data.url);
-    const [id, setId] = useState(x.data._id);
+    const [id, setId] = useState(x.id);
+    const [ids,setIds] = useState(x.data._id);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -26,7 +27,7 @@ const ButtonEdit = (x) => {
             theme: "light",
         });
     const notifySucceed = () =>
-        toast.success("upload file สำเร็จ", {
+        toast.success("อัพเดทข้อมูลสำเร็จ", {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -46,7 +47,8 @@ const ButtonEdit = (x) => {
                 url: URL,
                 id:id
             };
-            await axios.put(`http://localhost:5000/admin/api/UpdateData`, data).then((a) => {
+            await axios.put(`http://localhost:5000/admin/api/UpdateData/${id}/${ids}`, data).then((a) => {
+                console.log(a)
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });
