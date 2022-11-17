@@ -1,16 +1,12 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Swa from "sweetalert2";
-
-const ButtonDelete = (x) => {
+import { ToastContainer, toast } from "react-toastify";
+const ButtonDeleteRecord = (x) => {
     const [id, setId] = useState(x.data);
-    const [idYear, setIdYear] = useState(x.id);
-
-    const Delete = async () => {
+    const DeleteRecord = async () => {
         Swa.fire({
-            title: "ต้องการลบข้อมูลนี้หรือไม่",
+            title: "ต้องการลบข้อมูลชุดนี้หรือไม่",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -19,10 +15,12 @@ const ButtonDelete = (x) => {
             cancelButtonText: "No",
         }).then((result) => {
             if (result.isConfirmed) {
-                let data = axios.delete(`http://localhost:5000/admin/api/DeleteData/${idYear}/${id}`).then((result) => {
-                    notifySucceed();
-                    setTimeout(Reload, 2000);
-                });
+                let data = axios
+                    .delete(`http://localhost:5000/admin/api/DeleteDataRecordByYearDataWebService/${id}`)
+                    .then((result) => {
+                        notifySucceed();
+                        setTimeout(Reload, 2000);
+                    });
             }
         });
     };
@@ -43,12 +41,12 @@ const ButtonDelete = (x) => {
         window.location.reload();
     }
     return (
-        <td>
-            <button type="button" class="btn btn-danger" onClick={Delete}>
-                Delete
+        <div>
+            <button type="button" class="btn btn-danger rounded-pill m-3" onClick={DeleteRecord}>
+                Delete Record
             </button>
-        </td>
+        </div>
     );
 };
 
-export default ButtonDelete;
+export default ButtonDeleteRecord;

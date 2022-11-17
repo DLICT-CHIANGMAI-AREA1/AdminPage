@@ -18,8 +18,8 @@ const ButtonDelete = (x) => {
             confirmButtonText: "Yes",
             cancelButtonText: "No",
         }).then((result) => {
-            if (result.isConfirmed) {
-                let data = axios.delete(`http://localhost:5000/admin/api/DeleteData/${idYear}/${id}`).then((result) => {
+            if(result.isConfirmed){
+                let data = axios.delete(`http://localhost:5000/admin/api/DeleteDataWebService/${idYear}/${id}`).then((result) => {
                     notifySucceed();
                     setTimeout(Reload, 2000);
                 });

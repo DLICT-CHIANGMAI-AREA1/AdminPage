@@ -14,10 +14,14 @@ const ButtonDeleteRecord = (x) => {
             confirmButtonText: "Yes",
             cancelButtonText: "No",
         }).then((result) => {
-            let data = axios.delete(`http://localhost:5000/admin/api/DeleteDataRecordByYear/${id}`).then((result) => {
-                notifySucceed();
-                setTimeout(Reload, 2000);
-            });
+            if (result.isConfirmed) {
+                let data = axios
+                    .delete(`http://localhost:5000/admin/api/DeleteDataRecordByYear/${id}`)
+                    .then((result) => {
+                        notifySucceed();
+                        setTimeout(Reload, 2000);
+                    });
+            }
         });
     };
 
