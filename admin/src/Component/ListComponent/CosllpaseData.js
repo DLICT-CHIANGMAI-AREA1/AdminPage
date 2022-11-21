@@ -1,21 +1,25 @@
 import React from "react";
 import Accordion from "react-bootstrap/Accordion";
+import ButtonAdd from "../ButtonCRUD/ButtonAddData";
+import ButtonDeleteRecord from "../ButtonCRUD/ButtonDelete/ButtonDeleteRecordDate";
+import ButtonDelete from "../ButtonCRUD/ButtonDelete/ButtonDeleteDate";
+import ButtonEditLink from "../ButtonCRUD/ButtonEdit/ButtonEditLink2";
 import ListGroup from "react-bootstrap/ListGroup";
-import ButtonAdd from "./ButtonCRUD/ButtonAddData";
-import ButtonEdit from "./ButtonCRUD/ButtonEdit";
-import ButtonDelete from "./ButtonCRUD/ButtonDelete";
-import ButtonDeleteRecord from "./ButtonCRUD/ButtonDeleteRecord";
-function FlushExample({ data }) {
+
+function FlushExample({ data, id_year }) {
     return (
         <Accordion.Item eventKey="0">
-            <Accordion.Header>{data.name_year}</Accordion.Header>
+            <Accordion.Header>
+                {data._id}
+                {data.name_data}
+            </Accordion.Header>
             <Accordion.Body>
                 <div class="row gy-5">
                     <div class="col-8">
-                        <h2 className="m-4">ข้อมูลนักเรียน</h2>
+                        <h2 className="m-4"></h2>
                     </div>
                     <div class="col-2">
-                        <ButtonDeleteRecord data={data._id} />
+                        <ButtonDeleteRecord data={data._id} id_year={id_year} />
                     </div>
                     <div class="col-2">
                         <ButtonAdd data={data._id} />
@@ -32,15 +36,17 @@ function FlushExample({ data }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.data.map((x, index) => (
-                              
+                            {data.date.map((x, index) => (
                                 <tr>
-                                    <td class="col-md-7"><a href={x.url} target="_blank" rel="noreferrer">{x.name}</a></td>
-                                    <td>
-                                        <ButtonEdit data={x} id={data._id}/>
+                                    <td class="col-md-7">
+                                        {x.name_date}
+                                        {x._id}
                                     </td>
                                     <td>
-                                        <ButtonDelete data={x._id} id={data._id} />
+                                        <ButtonEditLink data={x} id={data._id} id_year={id_year} />
+                                    </td>
+                                    <td>
+                                        <ButtonDelete id_date={x._id} id={data._id} id_year={id_year} />
                                     </td>
                                 </tr>
                             ))}

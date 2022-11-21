@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Swa from "sweetalert2";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 const ButtonDeleteRecord = (x) => {
     const [id, setId] = useState(x.data);
     const DeleteRecord = async () => {
@@ -16,7 +16,7 @@ const ButtonDeleteRecord = (x) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = axios
-                    .delete(`http://localhost:5000/admin/api/DeleteDataRecordByYearDataWebService/${id}`)
+                    .delete(`http://localhost:5000/admin/api/DeleteDataRecordDate/${x.id_year}/${id}`)
                     .then((result) => {
                         notifySucceed();
                         setTimeout(Reload, 2000);

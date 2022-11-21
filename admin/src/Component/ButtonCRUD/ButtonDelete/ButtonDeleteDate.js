@@ -1,13 +1,13 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Swa from "sweetalert2";
 
 const ButtonDelete = (x) => {
-    const [id, setId] = useState(x.data);
-    const [idYear, setIdYear] = useState(x.id);
-
+    const { param1 } = useParams();
+    const [id, setId] = useState(x.id_date);
     const Delete = async () => {
         Swa.fire({
             title: "ต้องการลบข้อมูลนี้หรือไม่",
@@ -18,8 +18,8 @@ const ButtonDelete = (x) => {
             confirmButtonText: "Yes",
             cancelButtonText: "No",
         }).then((result) => {
-            if(result.isConfirmed){
-                let data = axios.delete(`http://localhost:5000/admin/api/DeleteDataWebService/${idYear}/${id}`).then((result) => {
+            if (result.isConfirmed) {
+                let data = axios.delete(`http://localhost:5000/admin/api/DeleteDataDate/${param1}/${id}`).then((result) => {
                     notifySucceed();
                     setTimeout(Reload, 2000);
                 });

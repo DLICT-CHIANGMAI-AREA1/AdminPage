@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Swa from "sweetalert2";
-import { ToastContainer, toast } from "react-toastify";
-const ButtonDeleteRecord = (x) => {
-    const [id, setId] = useState(x.data);
+import {toast } from "react-toastify";
+
+const ButtonDeleteYear = (x) => {
+    const [id, setId] = useState(x.id);
     const DeleteRecord = async () => {
         Swa.fire({
             title: "ต้องการลบข้อมูลชุดนี้หรือไม่",
@@ -16,7 +17,7 @@ const ButtonDeleteRecord = (x) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = axios
-                    .delete(`http://localhost:5000/admin/api/DeleteDataRecordByYear/${id}`)
+                    .delete(`http://localhost:5000/admin/api/DeleteDataYear/${id}`)
                     .then((result) => {
                         notifySucceed();
                         setTimeout(Reload, 2000);
@@ -49,4 +50,4 @@ const ButtonDeleteRecord = (x) => {
     );
 };
 
-export default ButtonDeleteRecord;
+export default ButtonDeleteYear;
