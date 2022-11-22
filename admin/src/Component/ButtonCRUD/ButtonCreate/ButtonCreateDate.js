@@ -5,18 +5,16 @@ import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-
-const ButtonEdit = (x) => {
-    const [show, setShow] = useState(false);
-    const [name, setName] = useState(x.data.name);
-    const [URL, setURL] = useState(x.data.url);
-    const [id, setId] = useState(x.id);
-    const [ids,setIds] = useState(x.data._id);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+const ButtonAdd = (x) => {
+    const [param] = useState(x.id_year)
+    const [param2] = useState(x.id_data)
+    const [showAddRecord, setShowAddRecord] = useState(false);
+    const [name, setName] = useState("");
+    const handleCloseAddRecord = () => setShowAddRecord(false);
+    const handleShowAddRecord = () => setShowAddRecord(true);
 
     const notify = () =>
-        toast.warn("กรุณา กรอกข้อมูลให้ครบถ้วน ", {
+        toast.warn("กรุณากรอกข้อมูลให้ครบถ้วน ", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -27,7 +25,7 @@ const ButtonEdit = (x) => {
             theme: "light",
         });
     const notifySucceed = () =>
-        toast.success("อัพเดทข้อมูลสำเร็จ", {
+        toast.success("เพิ่มข้อมูลสำเร็จ", {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -39,16 +37,14 @@ const ButtonEdit = (x) => {
         });
 
     const onSubmit = async () => {
-        if (name === "" || URL === "") {
+        if (name === "") {
             notify();
         } else {
             const data = {
-                name: name,
-                url: URL,
-                id:id
+                name_date:name,
+                
             };
-            await axios.put(`http://localhost:5000/admin/api/UpdateData/${x.id_year}/${x.data._id}/${x.id_date}`, data).then((a) => {
-                console.log(a)
+            await axios.post(`http://localhost:5000/admin/api/CreateDate/${param}/${param2}`, data).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });
@@ -58,42 +54,31 @@ const ButtonEdit = (x) => {
     function Reload() {
         window.location.reload();
     }
-    return (
-        <td>
-            <button type="button" class="btn btn-success" onClick={handleShow}>
-                Edit
-            </button>
 
-            <Modal show={show} onHide={handleClose}>
+    return (
+        <div>
+            <button type="button" class="btn btn-success rounded-pill m-3" onClick={handleShowAddRecord}>
+                + Add Date
+            </button>
+            <Modal show={showAddRecord} onHide={handleCloseAddRecord}>
                 <Modal.Header closeButton>
-                    <Modal.Title>เเก้ไขข้อมูล</Modal.Title>
+                    <Modal.Title>เพิ่มข้อมูล</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>ชื่อ</Form.Label>
+                            <Form.Label>ช่วงเวลา</Form.Label>
                             <Form.Control
                                 type="text"
                                 autoFocus
-                                value={name}
                                 onChange={(event) => setName(event.target.value)}
-                                required
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>URL</Form.Label>
-                            <Form.Control
-                                type="text"
-                                autoFocus
-                                value={URL}
-                                onChange={(event) => setURL(event.target.value)}
                                 required
                             />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={handleCloseAddRecord}>
                         Close
                     </Button>
                     <Button variant="primary" onClick={onSubmit}>
@@ -102,8 +87,8 @@ const ButtonEdit = (x) => {
                 </Modal.Footer>
             </Modal>
             <ToastContainer />
-        </td>
+        </div>
     );
 };
 
-export default ButtonEdit;
+export default ButtonAdd;

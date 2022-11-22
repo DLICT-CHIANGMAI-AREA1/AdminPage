@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Swa from "sweetalert2";
-import {toast } from "react-toastify";
+import {toast} from "react-toastify";
 
 const ButtonDeleteYear = (x) => {
     const [id, setId] = useState(x.id);

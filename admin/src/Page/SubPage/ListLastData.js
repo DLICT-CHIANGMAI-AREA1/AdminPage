@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ListGroup from "react-bootstrap/ListGroup";
 import ButtonDelete from "../../Component/ButtonCRUD/ButtonDelete/ButtonDelete";
 import ButtonEdit from "../../Component/ButtonCRUD/ButtonEdit/ButtonEditData";
+import ButtonCreate_Data from "../../Component/ButtonCRUD/ButtonCreate/ButtonCreateData";
 const Data = () => {
     const { param1, param2, param3 } = useParams();
     const [Data, setData] = useState([]);
@@ -26,7 +27,9 @@ const Data = () => {
                         <div className="col-12">
                             <div className="landing-data-page">
                                 <div class="p-2">
-                                    <div></div>
+                                    <div>
+                                        <ButtonCreate_Data id_year={param1} id_data={param2} id_date={param3} />
+                                    </div>
                                 </div>
                                 <ListGroup>
                                     <table class="table table-bordered table-striped">
@@ -40,9 +43,9 @@ const Data = () => {
                                         <tbody>
                                             {Data.map((x, index) => (
                                                 <tr>
-                                                    <td class="col-md-7">{x.name}</td>
+                                                    <td class="col-md-7"><a href={x.url} target="_blank">{x.name}</a></td>
                                                     <td>
-                                                        <ButtonEdit data={x} />
+                                                        <ButtonEdit data={x} id_year={param1} id_data={param2} id_date={param3}/>
                                                     </td>
                                                     <td>
                                                         <ButtonDelete data={x} />

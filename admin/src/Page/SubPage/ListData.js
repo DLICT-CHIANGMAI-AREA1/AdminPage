@@ -5,14 +5,21 @@ import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import FlushExample from "../../Component/ListComponent/CosllpaseData";
 import Accordion from "react-bootstrap/Accordion";
+import ButtonCreateRecordNameData from "../../Component/ButtonCRUD/ButtonCreate/ButtonCreateRecordDataName";
 
 const Data = () => {
+
     const { param1 } = useParams();
     const [Data, setData] = useState();
+    const [NameYear, setNameYear] = useState();
+  
+ 
     useEffect(() => {
         function get() {
             axios.get(`http://localhost:5000/admin/api/FindDataEachYearById/${param1}`).then((res) => {
                 setData(res.data.data);
+                setNameYear(res.data.name_year)
+              
             });
         }
         get();
@@ -24,7 +31,15 @@ const Data = () => {
                     <div className="row">
                         <div className="col-12">
                             <div className="landing-data-page">
-                                <div class="p-2"></div>
+                                <div class="row p-2">
+                                    <div class="col">
+                                        <h1>{NameYear}</h1>
+                                    </div>
+                                    <div class="col">
+                                        <ButtonCreateRecordNameData id_year={param1} />
+                                    </div>
+                                </div>
+
                                 <Accordion flush>
                                     {Data ? (
                                         Data.map((data) => {

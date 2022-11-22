@@ -8,7 +8,7 @@ import axios from "axios";
 
 const ButtonCreateRecords = () => {
     const [showAddRecord, setShowAddRecord] = useState(false);
-    const [semester, setSemester] = useState("");
+    const [year, setYear] = useState("");
     const handleCloseAddRecord = () => setShowAddRecord(false);
     const handleShowAddRecord = () => setShowAddRecord(true);
 
@@ -36,14 +36,14 @@ const ButtonCreateRecords = () => {
         });
 
     const onSubmit = async () => {
-        if (semester === "") {
+        if (year === "") {
             notify();
         } else {
             const data = {
-                name_year: semester,
+                name_year: year,
                 data:[]
             };
-            await axios.post(`http://localhost:5000/admin/api/AddSemester`, data).then((a) => {
+            await axios.post(`http://localhost:5000/admin/api/CreateDataYear`, data).then((a) => {
                 notifySucceed();
             setTimeout(Reload, 2000);
             });
@@ -58,7 +58,7 @@ const ButtonCreateRecords = () => {
     return (
         <div className="CreateDataButton">
             <button type="button" class="btn btn-success" onClick={handleShowAddRecord}>
-                + Create Record Data
+                + Create Record Data Year
             </button>
             <Modal show={showAddRecord} onHide={handleCloseAddRecord}>
                 <Modal.Header closeButton>
@@ -67,11 +67,11 @@ const ButtonCreateRecords = () => {
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>ปีการศึกษา-ภาคเรียน</Form.Label>
+                            <Form.Label>ปีการศึกษา</Form.Label>
                             <Form.Control
                                 type="text"
                                 autoFocus
-                                onChange={(event) => setSemester(event.target.value)}
+                                onChange={(event) => setYear(event.target.value)}
                                 required
                             />
                         </Form.Group>

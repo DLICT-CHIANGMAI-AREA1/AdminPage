@@ -6,10 +6,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 const ButtonAdd = (x) => {
-    const [id, setId] = useState(x.data);
+    const [param] = useState(x.id_year);
+    const [param2] = useState(x.id_data);
+    const [param3] = useState(x.id_date);
     const [showAddRecord, setShowAddRecord] = useState(false);
     const [name, setName] = useState("");
-    const [URL, setURL] = useState("");
+    const [url, setUrl] = useState("");
     const handleCloseAddRecord = () => setShowAddRecord(false);
     const handleShowAddRecord = () => setShowAddRecord(true);
 
@@ -37,14 +39,14 @@ const ButtonAdd = (x) => {
         });
 
     const onSubmit = async () => {
-        if (name === "" || URL === "") {
+        if (name === "" || url === ""  ) {
             notify();
         } else {
             const data = {
                 name: name,
-                url: URL,
+                url:url
             };
-            await axios.post(`http://localhost:5000/admin/api/AddData/${id}`, data).then((a) => {
+            await axios.post(`http://localhost:5000/admin/api/CreateData/${param}/${param2}/${param3}`, data).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });
@@ -56,9 +58,9 @@ const ButtonAdd = (x) => {
     }
 
     return (
-        <div>
+        <div className="CreateDataButton">
             <button type="button" class="btn btn-success rounded-pill m-3" onClick={handleShowAddRecord}>
-                + Add New
+                + Add New Data
             </button>
             <Modal show={showAddRecord} onHide={handleCloseAddRecord}>
                 <Modal.Header closeButton>
@@ -67,7 +69,7 @@ const ButtonAdd = (x) => {
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>ชื่อ</Form.Label>
+                            <Form.Label>ชื่อข้อมูล</Form.Label>
                             <Form.Control
                                 type="text"
                                 autoFocus
@@ -75,16 +77,19 @@ const ButtonAdd = (x) => {
                                 required
                             />
                         </Form.Group>
+                    </Form>
+                    <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>URL</Form.Label>
                             <Form.Control
                                 type="text"
                                 autoFocus
-                                onChange={(event) => setURL(event.target.value)}
+                                onChange={(event) => setUrl(event.target.value)}
                                 required
                             />
                         </Form.Group>
                     </Form>
+                    
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseAddRecord}>

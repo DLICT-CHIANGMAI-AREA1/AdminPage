@@ -1,6 +1,6 @@
 import React from "react";
 import Accordion from "react-bootstrap/Accordion";
-import ButtonAdd from "../ButtonCRUD/ButtonAddData";
+import ButtonAdd from "../ButtonCRUD/ButtonCreate/ButtonCreateDate";
 import ButtonDeleteRecord from "../ButtonCRUD/ButtonDelete/ButtonDeleteRecordDate";
 import ButtonDelete from "../ButtonCRUD/ButtonDelete/ButtonDeleteDate";
 import ButtonEditLink from "../ButtonCRUD/ButtonEdit/ButtonEditLink2";
@@ -9,10 +9,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 function FlushExample({ data, id_year }) {
     return (
         <Accordion.Item eventKey="0">
-            <Accordion.Header>
-                {data._id}
-                {data.name_data}
-            </Accordion.Header>
+            <Accordion.Header>{data.name_data}</Accordion.Header>
             <Accordion.Body>
                 <div class="row gy-5">
                     <div class="col-8">
@@ -22,7 +19,7 @@ function FlushExample({ data, id_year }) {
                         <ButtonDeleteRecord data={data._id} id_year={id_year} />
                     </div>
                     <div class="col-2">
-                        <ButtonAdd data={data._id} />
+                        <ButtonAdd id_data={data._id} id_year={id_year} />
                     </div>
                 </div>
 
@@ -38,10 +35,7 @@ function FlushExample({ data, id_year }) {
                         <tbody>
                             {data.date.map((x, index) => (
                                 <tr>
-                                    <td class="col-md-7">
-                                        {x.name_date}
-                                        {x._id}
-                                    </td>
+                                    <td class="col-md-7">{x.name_date}</td>
                                     <td>
                                         <ButtonEditLink data={x} id={data._id} id_year={id_year} />
                                     </td>
