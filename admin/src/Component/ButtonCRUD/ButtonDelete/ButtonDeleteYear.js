@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Swa from "sweetalert2";
-import {toast} from "react-toastify";
-
+import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+const { REACT_APP_PATH } = process.env;
 const ButtonDeleteYear = (x) => {
-    const [id, setId] = useState(x.id);
+    const [id] = useState(x.id);
     const DeleteRecord = async () => {
         Swa.fire({
             title: "ต้องการลบข้อมูลชุดนี้หรือไม่",
@@ -16,12 +17,10 @@ const ButtonDeleteYear = (x) => {
             cancelButtonText: "No",
         }).then((result) => {
             if (result.isConfirmed) {
-                let data = axios
-                    .delete(`http://localhost:5000/admin/api/DeleteDataYear/${id}`)
-                    .then((result) => {
-                        notifySucceed();
-                        setTimeout(Reload, 2000);
-                    });
+                let data = axios.delete(`${REACT_APP_PATH}/admin/api/DeleteDataYear/${id}`).then((result) => {
+                    notifySucceed();
+                    setTimeout(Reload, 2000);
+                });
             }
         });
     };
@@ -43,9 +42,16 @@ const ButtonDeleteYear = (x) => {
     }
     return (
         <div>
-            <button type="button" class="btn btn-danger rounded-pill m-3" onClick={DeleteRecord}>
-                Delete Record
-            </button>
+            <Link className="btn" role="button">
+                <img
+                    src="images/delete-button.png"
+                    alt="Girl in a jacket"
+                    width="40"
+                    height="45"
+                    class="pointer"
+                    onClick={DeleteRecord}
+                ></img>
+            </Link>
         </div>
     );
 };

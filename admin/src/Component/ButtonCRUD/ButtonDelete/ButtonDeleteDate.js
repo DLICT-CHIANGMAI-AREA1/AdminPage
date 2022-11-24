@@ -4,7 +4,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Swa from "sweetalert2";
-
+import { Link } from "react-router-dom";
+const { REACT_APP_PATH } = process.env;
 const ButtonDelete = (x) => {
     const { param1 } = useParams();
     const [id, setId] = useState(x.id_date);
@@ -19,10 +20,12 @@ const ButtonDelete = (x) => {
             cancelButtonText: "No",
         }).then((result) => {
             if (result.isConfirmed) {
-                let data = axios.delete(`http://localhost:5000/admin/api/DeleteDataDate/${param1}/${id}`).then((result) => {
-                    notifySucceed();
-                    setTimeout(Reload, 2000);
-                });
+                let data = axios
+                    .delete(`${REACT_APP_PATH}/admin/api/DeleteDataDate/${param1}/${id}`)
+                    .then((result) => {
+                        notifySucceed();
+                        setTimeout(Reload, 2000);
+                    });
             }
         });
     };
@@ -44,9 +47,16 @@ const ButtonDelete = (x) => {
     }
     return (
         <td>
-            <button type="button" class="btn btn-danger" onClick={Delete}>
-                Delete
-            </button>
+             <Link className="btn" role="button">
+            <img
+                src="images/delete-button.png"
+                alt="Girl in a jacket"
+                width="40"
+                height="45"
+                class="pointer"
+                onClick={Delete}
+            ></img>
+            </Link>
         </td>
     );
 };

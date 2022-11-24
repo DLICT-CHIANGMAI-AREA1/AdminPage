@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+const { REACT_APP_PATH } = process.env;
 const ButtonAdd = (x) => {
     const [param] = useState(x.id_year);
     const [param2] = useState(x.id_data);
@@ -12,11 +13,24 @@ const ButtonAdd = (x) => {
     const [showAddRecord, setShowAddRecord] = useState(false);
     const [name, setName] = useState("");
     const [url, setUrl] = useState("");
+    const [image, setImage] = useState("");
+    const [csv, setCsv] = useState("");
     const handleCloseAddRecord = () => setShowAddRecord(false);
     const handleShowAddRecord = () => setShowAddRecord(true);
-
+    /*****************************************/
     const notify = () =>
         toast.warn("กรุณากรอกข้อมูลให้ครบถ้วน ", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    const notifyURL = () =>
+        toast.warn("URL ไม่ถูกต้อง ", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -37,19 +51,35 @@ const ButtonAdd = (x) => {
             progress: undefined,
             theme: "light",
         });
+    const validation = (url) => {
+        const regEx = new RegExp("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?");
+        return regEx.test(url);
+    };
+    const validation2 = (url) => {
+        const regEx = new RegExp("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?");
+        return regEx.test(url);
+    };
+
+    /*****************************************/
 
     const onSubmit = async () => {
-        if (name === "" || url === ""  ) {
+        if (name === "" || url === "") {
             notify();
+        } else if (validation(url) === false || validation2(csv) === false) {
+            notifyURL();
         } else {
-            const data = {
-                name: name,
-                url:url
-            };
-            await axios.post(`http://localhost:5000/admin/api/CreateData/${param}/${param2}/${param3}`, data).then((a) => {
-                notifySucceed();
-                setTimeout(Reload, 2000);
-            });
+            const formData = new FormData();
+            formData.append("name", name);
+            formData.append("url", url);
+            formData.append("csv_url", csv);
+            formData.append("image", image);
+
+            await axios
+                .post(`${REACT_APP_PATH}/admin/api/CreateData/${param}/${param2}/${param3}/`, formData)
+                .then((a) => {
+                    notifySucceed();
+                    setTimeout(Reload, 2000);
+                });
         }
     };
 
@@ -89,7 +119,27 @@ const ButtonAdd = (x) => {
                             />
                         </Form.Group>
                     </Form>
-                    
+                    <Form>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Label>CSV.URL</Form.Label>
+                            <Form.Control
+                                type="text"
+                                autoFocus
+                                onChange={(event) => setCsv(event.target.value)}
+                                required
+                            />
+                        </Form.Group>
+                    </Form>
+                    <Form>
+                        <Form.Group controlId="formFile" className="mb-3">
+                            <Form.Label>เลือกรูปภาพ</Form.Label>
+                            <Form.Control
+                                type="file"
+                                accept="image/png, image/jpeg"
+                                onChange={(event) => setImage(event.target.files[0])}
+                            />
+                        </Form.Group>
+                    </Form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseAddRecord}>

@@ -5,11 +5,12 @@ import ListGroup from "react-bootstrap/ListGroup";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import ButtonCreateRecordsYear from "../Component/ButtonCRUD/ButtonCreate/ButtonCreateRecord";
+const { REACT_APP_PATH } = process.env;
 const Data = () => {
     const [Data, setData] = useState("");
     useEffect(() => {
         function get() {
-            axios.get(`http://localhost:5000/admin/api/FindDataEachYear`).then((res) => {
+            axios.get(`${REACT_APP_PATH}/admin/api/FindDataEachYear`).then((res) => { // ดึงข้อมูล Data ทั้งหมด
                 setData(res.data);
             });
         }
@@ -29,15 +30,15 @@ const Data = () => {
                                     <table class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th class="col-md-7">ปีข้อมูล</th>
+                                                <th class="col-md-10">ปีข้อมูล</th>
                                                 <th>Edit</th>
                                                 <th>Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {Data ? (
-                                                Data.map((data) => {
-                                                    return <ListYear key={data._id} data={data} />;
+                                                Data.map((data) => {  
+                                                    return <ListYear key={data._id} data={data} />; // map ออกมาเป็นปีก่อน 
                                                 })
                                             ) : (
                                                 <div>Loading</div>

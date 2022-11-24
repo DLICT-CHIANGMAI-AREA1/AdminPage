@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Swa from "sweetalert2";
 import { toast } from "react-toastify";
+const { REACT_APP_PATH } = process.env;
 const ButtonDeleteRecord = (x) => {
     const [id, setId] = useState(x.data);
     const DeleteRecord = async () => {
@@ -16,7 +17,7 @@ const ButtonDeleteRecord = (x) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = axios
-                    .delete(`http://localhost:5000/admin/api/DeleteDataRecordDate/${x.id_year}/${id}`)
+                    .delete(`${REACT_APP_PATH}/admin/api/DeleteDataRecordDate/${x.id_year}/${id}`)
                     .then((result) => {
                         notifySucceed();
                         setTimeout(Reload, 2000);

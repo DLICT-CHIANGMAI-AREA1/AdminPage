@@ -74,8 +74,8 @@ body {
 .react-pdf__Page__canvas {
     margin: 0 auto;
 }
-.nav-menu.active{
-    z-index:1
+.nav-menu.active {
+    z-index: 1;
 }
 
 /* For all pages */
@@ -90,26 +90,42 @@ body {
     background-repeat: no-repeat;
     border-radius: 10px;
     padding: 50px 50px;
-    margin-bottom : 20px
+    margin-bottom: 20px;
 }
-.upload{
+.upload {
     padding: 5px;
     margin: 10px 0px 10px 0px;
 }
-.landing-data-page{
+.landing-data-page {
     background-image: url(../src/assets/img/background2.svg);
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: 10px;
     padding: 50px 50px;
-    margin-top : 20px
+    margin-top: 20px;
 }
-.accordion-item{
+.accordion-item {
     margin: 10px;
 }
-.CreateDataButton{
-    text-align: end
+.CreateDataButton {
+    text-align: end;
 }
-a{
-    text-decoration: none
+th {
+    text-align: center;
+}
+a {
+    text-decoration: none;
+}
+.pointer {
+    cursor: pointer;
+}
+p {
+    margin-top: 15px;
+    font-size: 20px;
+}
+.imageInModel {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
 }

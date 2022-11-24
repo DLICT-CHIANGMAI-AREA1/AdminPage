@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+const { REACT_APP_PATH } = process.env;
 const ButtonAdd = (x) => {
     const [param] = useState(x.id_year)
     const [param2] = useState(x.id_data)
@@ -44,7 +45,7 @@ const ButtonAdd = (x) => {
                 name_date:name,
                 
             };
-            await axios.post(`http://localhost:5000/admin/api/CreateDate/${param}/${param2}`, data).then((a) => {
+            await axios.post(`${REACT_APP_PATH}/admin/api/CreateDate/${param}/${param2}`, data).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });

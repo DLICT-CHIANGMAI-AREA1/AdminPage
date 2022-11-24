@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-
+const { REACT_APP_PATH } = process.env;
 const ButtonCreateRecords = (data) => {
     const [showAddRecord, setShowAddRecord] = useState(false);
     const [DataName, setDataName] = useState("");
@@ -44,7 +44,7 @@ const ButtonCreateRecords = (data) => {
                 name_data: DataName,
                 date:[]
             };
-            await axios.post(`http://localhost:5000/admin/api/CreateDataName/${param}`, data).then((a) => {
+            await axios.post(`${REACT_APP_PATH}/admin/api/CreateDataName/${param}`, data).then((a) => {
                 notifySucceed();
             setTimeout(Reload, 2000);
             });

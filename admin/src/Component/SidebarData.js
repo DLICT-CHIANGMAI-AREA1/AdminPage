@@ -34,10 +34,5 @@ export const SidebarData = [
         icon: <FaIcons.FaEnvelopeOpenText />,
         cName: "nav-text",
     },
-    {
-        title: "DataWebService",
-        path: "/DataWebService",
-        icon: <IoIcons.IoMdHelpCircle />,
-        cName: "nav-text",
-    },
+  
 ];

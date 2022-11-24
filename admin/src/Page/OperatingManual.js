@@ -65,7 +65,8 @@ const PDFViewer = () => {
             const formData = new FormData();
             formData.append("filename", "operation");
             formData.append("file", File);
-            await axios.put(`http://localhost:5000/admin/api/UpdatePDF_OPM/${Id}`, formData).then(() => {
+            await axios.put(`${REACT_APP_PATH}/admin/api/UpdatePDF_OPM/${Id}`, formData).then((res) => {
+                
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });
@@ -79,7 +80,7 @@ const PDFViewer = () => {
                     <div className="row">
                         <div className="op">
                             <iframe
-                                src={`http://localhost:5000/${Data}`}
+                                src={`${REACT_APP_PATH}/${Data}`}
                                 frameborder="0"
                                 height="90%"
                                 width="90%"

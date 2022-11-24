@@ -5,9 +5,11 @@ import ButtonDeleteYear from "../ButtonCRUD/ButtonDelete/ButtonDeleteYear";
 function ListYear({ data }) {
     return (
         <tr>
-            <td>{data.name_year}</td>
             <td>
-                <ButtonEditLink data={data}/>
+                <p>{data.name_year}</p>
+            </td>
+            <td> 
+                <ButtonEditLink data={data} />  
             </td>
             <td>
                 <ButtonDeleteYear data={data} id={data._id} />
@@ -16,6 +18,7 @@ function ListYear({ data }) {
     );
 }
 
+
 export default ListYear;
 
-// /*ตรงนี้ axios ข้อมูลจาก DataBase*/
+

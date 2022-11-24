@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-const News = () => {
+const NewPage = () => {
     return (
-        <div className="news">
-            <h1>Nesw</h1>
+        <div className="person">
+            <h1>Person</h1>
         </div>
     );
-};
+}
 
-export default News;
+export default NewPage;

@@ -6,9 +6,11 @@ import "react-toastify/dist/ReactToastify.css";
 import FlushExample from "../../Component/ListComponent/CosllpaseData";
 import Accordion from "react-bootstrap/Accordion";
 import ButtonCreateRecordNameData from "../../Component/ButtonCRUD/ButtonCreate/ButtonCreateRecordDataName";
-
+const { REACT_APP_PATH } = process.env;
 const Data = () => {
 
+    //TODO หลังจากได้รับข้อมูลจากการกด ButtonEditlink ใน file ButtonEditLink.js ดึง param _Id ที่ส่งไปลงมา เเล้วนำมา Axios ว่าในปีนี้มีข้อมูลอะไรบ้าง เช่น DMC , Money
+    
     const { param1 } = useParams();
     const [Data, setData] = useState();
     const [NameYear, setNameYear] = useState();
@@ -16,7 +18,7 @@ const Data = () => {
  
     useEffect(() => {
         function get() {
-            axios.get(`http://localhost:5000/admin/api/FindDataEachYearById/${param1}`).then((res) => {
+            axios.get(`${REACT_APP_PATH}/admin/api/FindDataEachYearById/${param1}`).then((res) => {
                 setData(res.data.data);
                 setNameYear(res.data.name_year)
               
@@ -36,14 +38,14 @@ const Data = () => {
                                         <h1>{NameYear}</h1>
                                     </div>
                                     <div class="col">
-                                        <ButtonCreateRecordNameData id_year={param1} />
+                                        <ButtonCreateRecordNameData id_year={param1} /> 
                                     </div>
                                 </div>
 
                                 <Accordion flush>
                                     {Data ? (
                                         Data.map((data) => {
-                                            return <FlushExample key={data._id} data={data} id_year={param1} />;
+                                            return <FlushExample key={data._id} data={data} id_year={param1} />; 
                                         })
                                     ) : (
                                         <div>Loading</div>

@@ -5,13 +5,13 @@ import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-
+const { REACT_APP_PATH } = process.env;
 const ButtonEdit = (x) => {
     const [show, setShow] = useState(false);
     const [name, setName] = useState(x.data.name);
     const [URL, setURL] = useState(x.data.url);
-    const [id, setId] = useState(x.id);
-    const [ids,setIds] = useState(x.data._id);
+    const [image, setImage] = useState(x.data.image);
+    const [csv, setCsv] = useState(x.data.csv_url);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -37,21 +37,45 @@ const ButtonEdit = (x) => {
             progress: undefined,
             theme: "light",
         });
+    const notifyURL = () =>
+        toast.warn("URL ไม่ถูกต้อง ", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    const validation = (url) => {
+        const regEx = new RegExp("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?");
+        return regEx.test(url);
+    };
+    const validation2 = (url) => {
+        const regEx = new RegExp("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?");
+        return regEx.test(url);
+    };
+
 
     const onSubmit = async () => {
         if (name === "" || URL === "") {
             notify();
+        } else if (validation(URL) === false || validation2(csv) === false) {
+            notifyURL();
         } else {
-            const data = {
-                name: name,
-                url: URL,
-                id:id
-            };
-            await axios.put(`http://localhost:5000/admin/api/UpdateData/${x.id_year}/${x.data._id}/${x.id_date}`, data).then((a) => {
-                console.log(a)
-                notifySucceed();
-                setTimeout(Reload, 2000);
-            });
+            const formData = new FormData();
+            formData.append("name", name);
+            formData.append("url", URL);
+            formData.append("csv_url", csv);
+            formData.append("image", image)
+            await axios
+                .put(`${REACT_APP_PATH}/admin/api/UpdateData/${x.id_year}/${x.data._id}/${x.id_date}`, formData)
+                .then((a) => {
+                    console.log(a);
+                    notifySucceed();
+                    setTimeout(Reload, 2000);
+                });
         }
     };
 
@@ -60,10 +84,14 @@ const ButtonEdit = (x) => {
     }
     return (
         <td>
-            <button type="button" class="btn btn-success" onClick={handleShow}>
-                Edit
-            </button>
-
+            <img
+                src="images/contract.png"
+                alt="Girl in a jacket"
+                width="50"
+                height="50"
+                class="pointer"
+                onClick={handleShow}
+            ></img>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>เเก้ไขข้อมูล</Modal.Title>
@@ -89,6 +117,24 @@ const ButtonEdit = (x) => {
                                 onChange={(event) => setURL(event.target.value)}
                                 required
                             />
+                        </Form.Group>
+                    </Form>
+                    <Form>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Label>CSV.URL</Form.Label>
+                            <Form.Control
+                                type="text"
+                                autoFocus
+                                value={csv}
+                                onChange={(event) => setCsv(event.target.value)}
+                                required
+                            />
+                        </Form.Group>
+                    </Form>
+                    <Form>
+                        <Form.Group controlId="formFile" className="mb-3">
+                            <Form.Label>เลือกรูปภาพ</Form.Label>
+                            <Form.Control type="file"  accept="image/png, image/jpeg" onChange={(event) => setImage(event.target.files[0])} />
                         </Form.Group>
                     </Form>
                 </Modal.Body>

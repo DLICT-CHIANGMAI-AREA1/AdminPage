@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Swa from "sweetalert2";
-
+const { REACT_APP_PATH } = process.env;
 const ButtonDelete = (x) => {
     const { param1, param2, param3 } = useParams();
     const [id, setId] = useState(x.data._id);
@@ -21,7 +21,7 @@ const ButtonDelete = (x) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = axios
-                    .delete(`http://localhost:5000/admin/api/DeleteData/${param1}/${param2}/${param3}/${id}`)
+                    .delete(`${REACT_APP_PATH}/admin/api/DeleteData/${param1}/${param2}/${param3}/${id}`)
                     .then((result) => {
                         console.log(result.data);
                         notifySucceed();
@@ -48,9 +48,7 @@ const ButtonDelete = (x) => {
     }
     return (
         <td>
-            <button type="button" class="btn btn-danger" onClick={Delete}>
-                Delete
-            </button>
+             <img src="images/delete-button.png" alt="Girl in a jacket" width="40" height="45" class="pointer" onClick={Delete}></img>
         </td>
     );
 };
