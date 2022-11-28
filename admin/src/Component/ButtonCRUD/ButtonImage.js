@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-
+const { REACT_APP_PATH } = process.env;
 const ButtonEdit = (x) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -8,12 +8,12 @@ const ButtonEdit = (x) => {
 
     return (
         <td class="col-md-2">
-            <img src={`http://localhost:5000/${x.data.image}`} class="pointer" width="100" alt="button" onClick={handleShow}></img>
+            <img src={`${REACT_APP_PATH}/${x.data.image}`} class="pointer" width="100" alt="button" onClick={handleShow}></img>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
                     <img
-                        src={`http://localhost:5000/${x.data.image}`}
+                        src={`${REACT_APP_PATH}/${x.data.image}`}
                         class="imageInModel"
                         width="100"
                         alt="button"

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
+import Form from "react-bootstrap/Form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const { REACT_APP_PATH } = process.env;
@@ -29,7 +30,7 @@ const PDFViewer = () => {
         selecteds.forEach((i) => images.push(URL.createObjectURL(i)));
         setInput(images);
     }
-    
+
     const notify = () =>
         toast.warn("กรุณา upload file pdf. ", {
             position: "top-right",
@@ -66,7 +67,6 @@ const PDFViewer = () => {
             formData.append("filename", "operation");
             formData.append("file", File);
             await axios.put(`${REACT_APP_PATH}/admin/api/UpdatePDF_OPM/${Id}`, formData).then((res) => {
-                
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });
@@ -106,8 +106,10 @@ const PDFViewer = () => {
                                     <form>
                                         <label>
                                             <Row>
-                                                <Col xs={12} md={6} xl={5}>
-                                                    <input type="file" multiple onChange={_treat} />
+                                                <Col xs={12} md={5} xl={12}>
+                                                    <Form.Group controlId="formFile" className="mb-3" onChange={_treat}>
+                                                        <Form.Control type="file" accept="application/pdf" />
+                                                    </Form.Group>
                                                 </Col>
                                             </Row>
                                             <Row>

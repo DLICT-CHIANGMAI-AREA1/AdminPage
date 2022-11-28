@@ -8,10 +8,13 @@ import ButtonDelete from "../../Component/ButtonCRUD/ButtonDelete/ButtonDelete";
 import ButtonEdit from "../../Component/ButtonCRUD/ButtonEdit/ButtonEditData";
 import ButtonCreateData from "../../Component/ButtonCRUD/ButtonCreate/ButtonCreateData";
 import ButtonSeeFullImage from "../../Component/ButtonCRUD/ButtonImage";
+import Post from "../../Component/Posts";
+import Pagination from "../../Component/Pagination";
 const { REACT_APP_PATH } = process.env;
 const Data = () => {
     const { param1, param2, param3 } = useParams();
     const [Data, setData] = useState([]);
+
     useEffect(() => {
         function get() {
             axios.get(`${REACT_APP_PATH}/admin/api/FindDataEachYearByDate/${param2}/${param3}`).then((res) => {
@@ -21,6 +24,16 @@ const Data = () => {
         get();
     }, [param1, param2, param3]);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage, setPostsPerPage] = useState(10);
+
+    // Current Page
+    const indexOfLastPosts = currentPage * postsPerPage;
+    const indexOfFirstPosts = indexOfLastPosts - postsPerPage;
+    const currentPosts = Data.slice(indexOfFirstPosts, indexOfLastPosts);
+
+    // Change Page
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
     return (
         <Container>
             <div className="container">
@@ -43,34 +56,20 @@ const Data = () => {
                                                 <th>Delete</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            {Data.map((x, index) => (
-                                                <tr>
-                                                    <td class="col-md-10">
-                                                        <p>
-                                                            <a href={x.url} target="_blank" rel="noreferrer">
-                                                                {x.name}
-                                                            </a>
-                                                        </p>
-                                                    </td>
-                                                    <td>
-                                                        <ButtonSeeFullImage data={x} />
-                                                    </td>
-                                                    <td>
-                                                        <ButtonEdit
-                                                            data={x}
-                                                            id_year={param1}
-                                                            id_data={param2}
-                                                            id_date={param3}
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <ButtonDelete data={x} />
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
+
+                                        <Post
+                                            data={currentPosts}
+                                            param1={param1}
+                                            param2={param2}
+                                            param3={param3}
+                                        ></Post>
                                     </table>
+                                    <Pagination
+                                        postsPerPage={postsPerPage}
+                                        totalPosts={Data.length}
+                                        setCurrentPage={setCurrentPage}
+                                        currentPage={currentPage}
+                                    />
                                 </ListGroup>
                             </div>
                         </div>
