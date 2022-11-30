@@ -149,8 +149,8 @@ const ButtonAdd = (x) => {
                         Save Changes
                     </Button>
                 </Modal.Footer>
+                <ToastContainer />
             </Modal>
-            <ToastContainer />
         </div>
     );
 };

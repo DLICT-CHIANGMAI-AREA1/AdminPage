@@ -2,21 +2,23 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import { ToastContainer, toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-const { REACT_APP_PATH } = process.env;
-const ButtonCreateRecords = (data) => {
+
+const ButtonCreateMedia = () => {
     const [showAddRecord, setShowAddRecord] = useState(false);
-    const [DataName, setDataName] = useState("");
-    const [param] = useState(data.id_year);
     const handleCloseAddRecord = () => setShowAddRecord(false);
     const handleShowAddRecord = () => setShowAddRecord(true);
+    const [Message, setMessage] = useState('');
 
     const notify = () =>
         toast.warn("กรุณากรอกข้อมูลให้ครบถ้วน ", {
             position: "top-right",
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -25,7 +27,7 @@ const ButtonCreateRecords = (data) => {
             theme: "light",
         });
     const notifySucceed = () =>
-        toast.success("สร้างปีการศึกษา-ภาคเรียนชุดใหม่สำเร็จ", {
+        toast.success("เพิ่มข้อมูลสำเร็จ", {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -36,42 +38,39 @@ const ButtonCreateRecords = (data) => {
             theme: "light",
         });
 
+    function Reload() {
+        window.location.reload();
+    }
+
     const onSubmit = async () => {
-        if (DataName === "") {
+        if (Message === "") {
             notify();
         } else {
-            const data = {
-                name_data: DataName,
-                date: [],
-            };
-            await axios.post(`${REACT_APP_PATH}/admin/api/CreateDataName/${param}`, data).then((a) => {
+            let data = { text: Message };
+            await axios.post(`http://localhost:5000/admin/api/AddMission`, data).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });
         }
     };
 
-    function Reload() {
-        window.location.reload();
-    }
-
     return (
         <div className="CreateDataButton">
             <button type="button" class="btn btn-success" onClick={handleShowAddRecord}>
-                + Create Record Data Name
+                + เพิ่มขอบข่าย/ภารกิจ
             </button>
             <Modal show={showAddRecord} onHide={handleCloseAddRecord}>
                 <Modal.Header closeButton>
-                    <Modal.Title>เพิ่มข้อมูลชุดใหม่</Modal.Title>
+                    <Modal.Title>เพิ่มขอบข่าย/ภารกิจ</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>ชื่อข้อมูล</Form.Label>
+                            <Form.Label>เพิ่มขอบข่าย/ภารกิจ</Form.Label>
                             <Form.Control
                                 type="text"
                                 autoFocus
-                                onChange={(event) => setDataName(event.target.value)}
+                                onChange={(event) => setMessage(event.target.value)}
                                 required
                             />
                         </Form.Group>
@@ -85,10 +84,9 @@ const ButtonCreateRecords = (data) => {
                         Create Save
                     </Button>
                 </Modal.Footer>
-                <ToastContainer />
             </Modal>
         </div>
     );
 };
 
-export default ButtonCreateRecords;
+export default ButtonCreateMedia;

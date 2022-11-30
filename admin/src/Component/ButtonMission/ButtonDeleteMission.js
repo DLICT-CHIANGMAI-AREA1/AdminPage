@@ -2,21 +2,23 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import { ToastContainer, toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-const { REACT_APP_PATH } = process.env;
-const ButtonCreateRecords = (data) => {
+
+const ButtonEditMedia = () => {
     const [showAddRecord, setShowAddRecord] = useState(false);
-    const [DataName, setDataName] = useState("");
-    const [param] = useState(data.id_year);
     const handleCloseAddRecord = () => setShowAddRecord(false);
     const handleShowAddRecord = () => setShowAddRecord(true);
+    const [Video, setVideo] = useState();
 
     const notify = () =>
         toast.warn("กรุณากรอกข้อมูลให้ครบถ้วน ", {
             position: "top-right",
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -25,7 +27,28 @@ const ButtonCreateRecords = (data) => {
             theme: "light",
         });
     const notifySucceed = () =>
-        toast.success("สร้างปีการศึกษา-ภาคเรียนชุดใหม่สำเร็จ", {
+        toast.success("เพิ่มข้อมูลสำเร็จ", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+
+    function Reload() {
+        window.location.reload();
+    }
+
+    const validation = (url) => {
+        const regEx = new RegExp("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?");
+        return regEx.test(url);
+    };
+
+    const notifyURL = () =>
+        toast.warn("URL ไม่ถูกต้อง ", {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -37,41 +60,39 @@ const ButtonCreateRecords = (data) => {
         });
 
     const onSubmit = async () => {
-        if (DataName === "") {
+        if (Video === "") {
             notify();
+        } else if (validation(Video) === false) {
+            notifyURL();
         } else {
-            const data = {
-                name_data: DataName,
-                date: [],
-            };
-            await axios.post(`${REACT_APP_PATH}/admin/api/CreateDataName/${param}`, data).then((a) => {
-                notifySucceed();
-                setTimeout(Reload, 2000);
-            });
+            let data ={url:Video}
+            await axios
+                .post(`http://localhost:5000/admin/api/AddVideo`, data)
+                .then((a) => {
+                    notifySucceed();
+                    setTimeout(Reload, 2000);
+                });
         }
     };
-
-    function Reload() {
-        window.location.reload();
-    }
 
     return (
         <div className="CreateDataButton">
             <button type="button" class="btn btn-success" onClick={handleShowAddRecord}>
-                + Create Record Data Name
+                + Add Vdieo
             </button>
             <Modal show={showAddRecord} onHide={handleCloseAddRecord}>
                 <Modal.Header closeButton>
-                    <Modal.Title>เพิ่มข้อมูลชุดใหม่</Modal.Title>
+                    <Modal.Title>ADD VIDEO</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>ชื่อข้อมูล</Form.Label>
+                            <Form.Label>url video</Form.Label>
                             <Form.Control
-                                type="text"
+                                type="url"
                                 autoFocus
-                                onChange={(event) => setDataName(event.target.value)}
+                                placeholder="https://example.com"
+                                onChange={(event) => setVideo(event.target.value)}
                                 required
                             />
                         </Form.Group>
@@ -91,4 +112,4 @@ const ButtonCreateRecords = (data) => {
     );
 };
 
-export default ButtonCreateRecords;
+export default ButtonEditMedia;

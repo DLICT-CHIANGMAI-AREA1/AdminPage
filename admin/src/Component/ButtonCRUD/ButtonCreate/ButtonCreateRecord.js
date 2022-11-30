@@ -41,13 +41,12 @@ const ButtonCreateRecords = () => {
         } else {
             const data = {
                 name_year: year,
-                data:[]
+                data: [],
             };
             await axios.post(`http://localhost:5000/admin/api/CreateDataYear`, data).then((a) => {
                 notifySucceed();
-            setTimeout(Reload, 2000);
+                setTimeout(Reload, 2000);
             });
-            
         }
     };
 
@@ -86,7 +85,6 @@ const ButtonCreateRecords = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <ToastContainer />
         </div>
     );
 };

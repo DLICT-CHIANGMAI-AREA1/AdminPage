@@ -6,6 +6,7 @@ import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import ButtonCreateRecordsYear from "../Component/ButtonCRUD/ButtonCreate/ButtonCreateRecord";
 import { Spinner } from "react-bootstrap";
+import { ToastContainer } from "react-toastify";
 const { REACT_APP_PATH } = process.env;
 const Data = () => {
     const [Data, setData] = useState("");
@@ -53,6 +54,7 @@ const Data = () => {
                                             )}
                                         </tbody>
                                     </table>
+                                    <ToastContainer />
                                 </ListGroup>
                             </div>
                         </div>
