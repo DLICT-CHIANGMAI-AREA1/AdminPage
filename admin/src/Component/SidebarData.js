@@ -47,5 +47,11 @@ export const SidebarData = [
         icon: <AiIcons.AiFillFileText />,
         cName: "nav-text",
     },
+    {
+        title: "Service",
+        path: "/Service",
+        icon: <AiIcons.AiFillCustomerService />,
+        cName: "nav-text",
+    },
   
 ];

@@ -51,7 +51,8 @@ body {
 .op,
 .person,
 .data,
-.media {
+.media ,
+.service{
     display: flex;
     height: 90vh;
     align-items: center;

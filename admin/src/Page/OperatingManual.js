@@ -66,6 +66,10 @@ const PDFViewer = () => {
             const formData = new FormData();
             formData.append("filename", "operation");
             formData.append("file", File);
+            /*await axios.post(`http://localhost:5000/admin/api/CreatePDF`, formData).then((res) => {
+                notifySucceed();
+                setTimeout(Reload, 2000);
+            });*/
             await axios.put(`${REACT_APP_PATH}/admin/api/UpdatePDF_OPM/${Id}`, formData).then((res) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);

@@ -10,6 +10,7 @@ import PDFViewer from "./OperatingManual";
 import Person from "./Person";
 import Media from "./Media";
 import Mission from "./Mission";
+import Service from "./Service";
 
 const AnimatedRoute = () => {
     const location = useLocation();
@@ -21,6 +22,7 @@ const AnimatedRoute = () => {
                 <Route path="/Person" element={<Person />} />
                 <Route path="/Media" element={<Media />} />
                 <Route path="/Mission" element={<Mission />} />
+                <Route path="/Service" element={<Service />} />
                 <Route path="/Person/:param" element={<PersonDetail />} />
                 <Route path="/BigData" element={<Data />} />
                 <Route path="/BigData/ListData/:param1" element={<ListData />} />
