@@ -9,7 +9,7 @@ import ListService from "../Component/ListComponent/ListService";
 import TitleText from "../Page/SubPage/TitleText";
 const { REACT_APP_PATH } = process.env;
 
-const ServicePage = () => {
+const DLICTPage = () => {
     const [Data, setData] = useState();
     useEffect(() => {
         function get() {
@@ -70,4 +70,4 @@ const ServicePage = () => {
     );
 };
 
-export default ServicePage;
+export default DLICTPage;

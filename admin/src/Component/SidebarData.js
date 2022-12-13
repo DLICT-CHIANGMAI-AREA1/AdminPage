@@ -53,5 +53,11 @@ export const SidebarData = [
         icon: <AiIcons.AiFillCustomerService />,
         cName: "nav-text",
     },
+    {
+        title: "DLICT",
+        path: "/DLICT",
+        icon: <FaIcons.FaDigitalTachograph/>,
+        cName: "nav-text",
+    },
   
 ];

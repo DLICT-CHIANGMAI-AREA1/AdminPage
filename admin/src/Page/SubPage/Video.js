@@ -47,7 +47,7 @@ const Video = (data) => {
         <div class="col-sm-4 p-1">
             <div class="card ">
                 <div class="card-header d-flex justify-content-end ">
-                    <img className="close_img_size" src={iconDelete} onClick={Delete}></img>
+                    <img className="close_img_size" alt="video" src={iconDelete} onClick={Delete}></img>
                 </div>
                 <div class="card-body">
                     <ReactPlayer controls className="react-player" url={data.data.url} width="auto" height="200px" />

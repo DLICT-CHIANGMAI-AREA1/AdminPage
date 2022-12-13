@@ -5,9 +5,9 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { ToastContainer, toast } from "react-toastify";
-
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+const { REACT_APP_PATH } = process.env;
 
 const CreatePerson = () => {
     const [showAddRecord, setShowAddRecord] = useState(false);
@@ -71,7 +71,6 @@ const CreatePerson = () => {
         ) {
             notify();
         } else {
-          
             const formData = new FormData();
             formData.append("First_name", FirstName);
             formData.append("Last_name", LastName);
@@ -82,7 +81,7 @@ const CreatePerson = () => {
             formData.append("Phone", Phone);
             formData.append("Operating_Manual", OperatingManual);
             formData.append("Profile", Profile);
-           await axios.post(`http://localhost:5000/admin/api/CreatePerson`, formData).then((a) => {
+            await axios.post(`${REACT_APP_PATH}/admin/api/CreatePerson`, formData).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });
@@ -204,7 +203,6 @@ const CreatePerson = () => {
             </Modal>
             <ToastContainer />
         </div>
-        
     );
 };
 

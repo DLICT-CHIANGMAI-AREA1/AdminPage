@@ -11,7 +11,7 @@ import Person from "./Person";
 import Media from "./Media";
 import Mission from "./Mission";
 import Service from "./Service";
-
+import DLICT from "./DLICT";
 const AnimatedRoute = () => {
     const location = useLocation();
     return (
@@ -23,6 +23,7 @@ const AnimatedRoute = () => {
                 <Route path="/Media" element={<Media />} />
                 <Route path="/Mission" element={<Mission />} />
                 <Route path="/Service" element={<Service />} />
+                <Route path="/DLICT" element={<DLICT />} />
                 <Route path="/Person/:param" element={<PersonDetail />} />
                 <Route path="/BigData" element={<Data />} />
                 <Route path="/BigData/ListData/:param1" element={<ListData />} />

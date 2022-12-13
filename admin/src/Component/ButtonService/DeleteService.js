@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Swa from "sweetalert2";
+import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 const { REACT_APP_PATH } = process.env;
-const ButtonDelete = (x) => {
+const ButtonDeleteService = (x) => {
     const [id] = useState(x.data.data._id);
-
-    const Delete = async () => {
+    const DeleteRecord = async () => {
         Swa.fire({
-            title: "ต้องการลบข้อมูลนี้หรือไม่",
+            title: "ต้องการลบข้อมูลชุดนี้หรือไม่",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -20,7 +17,7 @@ const ButtonDelete = (x) => {
             cancelButtonText: "No",
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`${REACT_APP_PATH}/admin/api/DeletePerson/${id}`).then((result) => {
+                let data = axios.delete(`http://localhost:7000/admin/api/DeleteService/${id}`).then((result) => {
                     notifySucceed();
                     setTimeout(Reload, 2000);
                 });
@@ -43,9 +40,8 @@ const ButtonDelete = (x) => {
     function Reload() {
         window.location.reload();
     }
-
     return (
-        <td>
+        <div>
             <Link className="btn" role="button">
                 <img
                     src="images/delete-button.png"
@@ -53,11 +49,11 @@ const ButtonDelete = (x) => {
                     width="40"
                     height="45"
                     class="pointer"
-                    onClick={Delete}
+                    onClick={DeleteRecord}
                 ></img>
             </Link>
-        </td>
+        </div>
     );
 };
 
-export default ButtonDelete;
+export default ButtonDeleteService;

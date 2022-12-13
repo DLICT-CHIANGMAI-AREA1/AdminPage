@@ -51,8 +51,8 @@ body {
 .op,
 .person,
 .data,
-.media ,
-.service{
+.media,
+.service {
     display: flex;
     height: 90vh;
     align-items: center;
@@ -137,8 +137,17 @@ p {
     cursor: pointer;
 }
 
-.delete_img_size{
+.delete_img_size {
     height: 50px;
     width: 50px;
     cursor: pointer;
+}
+.edit_img_size {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+.center {
+    margin-top: 40px;
+    font-size: 15px;
 }
