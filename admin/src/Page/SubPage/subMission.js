@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import ListGroup from "react-bootstrap/ListGroup";
 import delete_icon from "../../assets/img/backspace.png";
+const { REACT_APP_PATH } = process.env;
 const SubMission = (data) => {
     const id = data.data._id;
     const notifySucceed = () =>
@@ -33,7 +34,7 @@ const SubMission = (data) => {
             cancelButtonText: "No",
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/admin/api/DeleteMission/${id}`).then((result) => {
+                axios.delete(`${REACT_APP_PATH}/admin/api/DeleteMission/${id}`).then((result) => {
                     notifySucceed();
                     setTimeout(Reload, 2000);
                 });

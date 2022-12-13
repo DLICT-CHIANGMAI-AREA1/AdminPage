@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import { ToastContainer, toast } from "react-toastify";
-
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+const { REACT_APP_PATH } = process.env;
 
 const ButtonCreateMedia = () => {
     const [showAddRecord, setShowAddRecord] = useState(false);
@@ -47,7 +45,7 @@ const ButtonCreateMedia = () => {
             notify();
         } else {
             let data = { text: Message };
-            await axios.post(`http://localhost:5000/admin/api/AddMission`, data).then((a) => {
+            await axios.post(`${REACT_APP_PATH}/admin/api/AddMission`, data).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });

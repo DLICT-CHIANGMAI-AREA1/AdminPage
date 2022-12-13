@@ -6,12 +6,13 @@ import { Spinner } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
 import ListGroup from "react-bootstrap/ListGroup";
 import SubMission from "../Page/SubPage/subMission"
+const { REACT_APP_PATH } = process.env;
 
 const Mission = () => {
     const [Data, setData] = useState();
     useEffect(() => {
         function get() {
-            axios.get(`http://localhost:5000/admin/api/FindMission`).then((res) => {
+            axios.get(`${REACT_APP_PATH}/admin/api/FindMission`).then((res) => {
                 setData(res.data);
             });
         }
