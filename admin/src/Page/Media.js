@@ -5,12 +5,12 @@ import { Container } from "react-bootstrap";
 import { Spinner } from "react-bootstrap";
 import Video from "./SubPage/Video";
 import { ToastContainer } from "react-toastify";
-
+const { REACT_APP_PATH } = process.env;
 const Media = () => {
     const [Data, setData] = useState();
     useEffect(() => {
         function get() {
-            axios.get(`http://localhost:5000/admin/api/FindVideo`).then((res) => {
+            axios.get(`${REACT_APP_PATH}/admin/api/FindVideo`).then((res) => {
                 setData(res.data);
             });
         }

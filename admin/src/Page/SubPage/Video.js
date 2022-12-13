@@ -5,6 +5,7 @@ import Swa from "sweetalert2";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import axios from "axios";
+const { REACT_APP_PATH } = process.env;
 
 const Video = (data) => {
     const id = data.data._id
@@ -34,7 +35,7 @@ const Video = (data) => {
             cancelButtonText: "No",
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/admin/api/DeleteVideo/${id}`).then((result) => {
+                axios.delete(`${REACT_APP_PATH}/admin/api/DeleteVideo/${id}`).then((result) => {
                     notifySucceed();
                     setTimeout(Reload, 2000);
                 });
