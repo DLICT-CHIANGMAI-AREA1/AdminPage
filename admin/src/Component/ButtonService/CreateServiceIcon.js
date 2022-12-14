@@ -7,13 +7,15 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 const { REACT_APP_PATH } = process.env;
 
-const ButtonCreateServiceIcon = () => {
+const ButtonCreateServiceIcon = (types) => {
+   
     const [showAddRecord, setShowAddRecord] = useState(false);
     const handleCloseAddRecord = () => setShowAddRecord(false);
     const handleShowAddRecord = () => setShowAddRecord(true);
     const [Message, setMessage] = useState("");
     const [URL, setURL] = useState("");
     const [Image, setImage] = useState("");
+
 
     const notify = () =>
         toast.warn("กรุณากรอกข้อมูลให้ครบถ้วน ", {
@@ -50,8 +52,9 @@ const ButtonCreateServiceIcon = () => {
             formData.append("name", Message);
             formData.append("url", URL);
             formData.append("image", Image);
+            formData.append("type", types.data);
 
-            await axios.post(`http://localhost:7000/admin/api/CreateService`, formData).then((a) => {
+            await axios.post(`${REACT_APP_PATH}/admin/api/CreateService`, formData).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });

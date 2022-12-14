@@ -17,7 +17,7 @@ const ButtonDeleteService = (x) => {
             cancelButtonText: "No",
         }).then((result) => {
             if (result.isConfirmed) {
-                let data = axios.delete(`http://localhost:7000/admin/api/DeleteService/${id}`).then((result) => {
+               axios.delete(`${REACT_APP_PATH}/admin/api/DeleteService/${id}`).then((result) => {
                     notifySucceed();
                     setTimeout(Reload, 2000);
                 });

@@ -8,13 +8,14 @@ import axios from "axios";
 import ListGroup from "react-bootstrap/ListGroup";
 import edit_icon from "../../assets/img/edit.png";
 const { REACT_APP_PATH } = process.env;
-const TitleText = () => {
+const TitleText = (types) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [show, setShow] = useState(false);
     const [Title, setTitle] = useState("");
     const [subTitle, setSubTitle] = useState("");
     const [id,setId] = useState('');
+   
 
     const notifySucceed = () =>
         toast.success("เเก้ไขรายการาสำเร็จ", {
@@ -49,8 +50,10 @@ const TitleText = () => {
             let data = {
                 Title: Title,
                 subTitle: subTitle,
+                type:types.data
             };
-            await axios.put(`http://localhost:7000/admin/api/ServiceTitle/${id}`,data).then((a) => {
+              
+            await axios.put(`${REACT_APP_PATH}/admin/api/ServiceTitle/${id}`,data).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });
@@ -59,7 +62,7 @@ const TitleText = () => {
     
     useEffect(() => {
         function get() {
-            axios.get(`http://localhost:7000/admin/api/ServiceTitleFind`).then((res) => {
+            axios.get(`${REACT_APP_PATH}/admin/api/ServiceTitleFindByType/${types.data}`).then((res) => {
                 setTitle(res.data[0].title)
                 setSubTitle(res.data[0].subtitle)
                 setId(res.data[0]._id)

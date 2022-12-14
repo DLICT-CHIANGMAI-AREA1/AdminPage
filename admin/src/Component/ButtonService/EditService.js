@@ -37,18 +37,7 @@ const EditService = (x) => {
             progress: undefined,
             theme: "light",
         });
-    const notifyURL = () =>
-        toast.warn("URL ไม่ถูกต้อง ", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
- 
+
     const onSubmit = async () => {
         if (name === "" || URL === "") {
             notify();
@@ -57,7 +46,7 @@ const EditService = (x) => {
             formData.append("name", name);
             formData.append("url", URL);
             formData.append("image", image);
-            await axios.put(`http://localhost:7000/admin/api/EditService/${id}`, formData).then((a) => {
+            await axios.put(`${REACT_APP_PATH}/admin/api/EditService/${id}`, formData).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });

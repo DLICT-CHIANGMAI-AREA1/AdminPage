@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ListGroup from "react-bootstrap/ListGroup";
+import { Spinner } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import ListPerson from "../Component/ListComponent/ListPerson";
 import CreatePerson from "../Component/ButtonCRUDPerson/CreatePerson";
@@ -42,7 +43,13 @@ const Person = () => {
                                                     return <ListPerson key={data._id} data={data} />; // map ออกมาเป็นปีก่อน
                                                 })
                                             ) : (
-                                                <div>Loading</div>
+                                                <Spinner
+                                                    animation="border"
+                                                    role="status"
+                                                    style={{ width: "3rem", height: "3rem", margin: "20px" }}
+                                                >
+                                                    <span className="visually-hidden">Loading...</span>
+                                                </Spinner>
                                             )}
                                         </tbody>
                                     </table>

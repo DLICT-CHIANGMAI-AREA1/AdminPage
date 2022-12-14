@@ -6,7 +6,7 @@ const ListService = (data) => {
     return (
         <tr>
             <td>
-                <a href={`${data.data.url}`}><img src={`http://localhost:7000/${data.data.image}`} width="100" height="100"></img></a>
+                <a href={`${data.data.url}`}><img src={`${REACT_APP_PATH}/${data.data.image}`} alt="asd" width="100" height="100"></img></a>
             </td>
             <td>
                 <p className="center">{data.data.name}</p>

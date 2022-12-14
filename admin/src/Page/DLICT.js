@@ -10,10 +10,11 @@ import TitleText from "../Page/SubPage/TitleText";
 const { REACT_APP_PATH } = process.env;
 
 const DLICTPage = () => {
+    const type = 'dlict'
     const [Data, setData] = useState();
     useEffect(() => {
         function get() {
-            axios.get(`http://localhost:7000/admin/api/FindService`).then((res) => {
+            axios.get(`${REACT_APP_PATH}/admin/api/FindServiceByType/${type}`).then((res) => {
                 setData(res.data);
             });
         }
@@ -28,11 +29,11 @@ const DLICTPage = () => {
                         <div className="col-12">
                             <div className="landing-data-page">
                                 <div class="p-2">
-                                    <ButtonCreateServiceIcon />
+                                    <ButtonCreateServiceIcon data={type}/>
                                 </div>
                                 <div class="row ">
                                     <ListGroup variant="flush">
-                                        <TitleText />
+                                        <TitleText data={type} />
                                         <table class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
