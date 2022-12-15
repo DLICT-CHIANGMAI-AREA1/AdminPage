@@ -22,14 +22,31 @@ const PDFViewer = () => {
     const [input, setInput] = useState([]);
     const [File, setFile] = useState();
 
-    function _treat(e) {
-        setFile(e.target.files[0]);
+    const uploadImage = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertBase64(file);
         const { files } = e.target;
         let images = [];
         const selecteds = [...[...files]];
         selecteds.forEach((i) => images.push(URL.createObjectURL(i)));
         setInput(images);
-    }
+        setFile(base64);
+    };
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
 
     const notify = () =>
         toast.warn("กรุณา upload file pdf. ", {
@@ -63,15 +80,17 @@ const PDFViewer = () => {
         if (input.length === 0) {
             notify();
         } else {
-            const formData = new FormData();
-            formData.append("filename", "operation");
-            formData.append("file", File);
-            /*await axios.post(`${REACT_APP_PATH}/admin/api/CreatePDF`, formData).then((res) => {
+            console.log(File)
+            const formData = {
+                filename: "operation",
+                file: File,
+            };
+            /*await axios.post(`http://localhost:7000/admin/api/CreatePDF`, formData).then((res) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });*/
             await axios.put(`${REACT_APP_PATH}/admin/api/UpdatePDF_OPM/${Id}`, formData).then((res) => {
-                notifySucceed();
+                notifySucceed()
                 setTimeout(Reload, 2000);
             });
         }
@@ -84,7 +103,7 @@ const PDFViewer = () => {
                     <div className="row">
                         <div className="op">
                             <iframe
-                                src={`${REACT_APP_PATH}/${Data}`}
+                                src={`${Data}`}
                                 frameborder="0"
                                 height="90%"
                                 width="90%"
@@ -111,7 +130,13 @@ const PDFViewer = () => {
                                         <label>
                                             <Row>
                                                 <Col xs={12} md={5} xl={12}>
-                                                    <Form.Group controlId="formFile" className="mb-3" onChange={_treat}>
+                                                    <Form.Group
+                                                        controlId="formFile"
+                                                        className="mb-3"
+                                                        onChange={(e) => {
+                                                            uploadImage(e);
+                                                        }}
+                                                    >
                                                         <Form.Control type="file" accept="application/pdf" />
                                                     </Form.Group>
                                                 </Col>

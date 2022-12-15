@@ -8,7 +8,6 @@ import axios from "axios";
 const { REACT_APP_PATH } = process.env;
 
 const ButtonCreateServiceIcon = (types) => {
-   
     const [showAddRecord, setShowAddRecord] = useState(false);
     const handleCloseAddRecord = () => setShowAddRecord(false);
     const handleShowAddRecord = () => setShowAddRecord(true);
@@ -16,6 +15,26 @@ const ButtonCreateServiceIcon = (types) => {
     const [URL, setURL] = useState("");
     const [Image, setImage] = useState("");
 
+    const uploadImage = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertBase64(file);
+        setImage(base64);
+    };
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
 
     const notify = () =>
         toast.warn("กรุณากรอกข้อมูลให้ครบถ้วน ", {
@@ -48,13 +67,14 @@ const ButtonCreateServiceIcon = (types) => {
         if (Message === "" || URL === "") {
             notify();
         } else {
-            const formData = new FormData();
-            formData.append("name", Message);
-            formData.append("url", URL);
-            formData.append("image", Image);
-            formData.append("type", types.data);
+            const data = {
+                name: Message,
+                url: URL,
+                image: Image,
+                type: types.data,
+            };
 
-            await axios.post(`${REACT_APP_PATH}/admin/api/CreateService`, formData).then((a) => {
+            await axios.post(`${REACT_APP_PATH}/admin/api/CreateService`, data).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });
@@ -98,7 +118,9 @@ const ButtonCreateServiceIcon = (types) => {
                                 <Form.Control
                                     type="file"
                                     accept="image/png, image/jpeg"
-                                    onChange={(event) => setImage(event.target.files[0])}
+                                    onChange={(e) => {
+                                        uploadImage(e);
+                                    }}
                                 />
                             </Form.Group>
                         </Form>
