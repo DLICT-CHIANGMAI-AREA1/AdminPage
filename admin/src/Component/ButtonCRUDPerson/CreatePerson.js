@@ -200,8 +200,8 @@ const CreatePerson = () => {
                         Create Save
                     </Button>
                 </Modal.Footer>
+                <ToastContainer />
             </Modal>
-            <ToastContainer />
         </div>
     );
 };

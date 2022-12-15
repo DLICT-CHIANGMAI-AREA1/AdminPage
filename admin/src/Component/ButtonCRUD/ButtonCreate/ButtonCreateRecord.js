@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-
+const { REACT_APP_PATH } = process.env;
 const ButtonCreateRecords = () => {
     const [showAddRecord, setShowAddRecord] = useState(false);
     const [year, setYear] = useState("");
@@ -43,7 +43,7 @@ const ButtonCreateRecords = () => {
                 name_year: year,
                 data: [],
             };
-            await axios.post(`http://localhost:5000/admin/api/CreateDataYear`, data).then((a) => {
+            await axios.post(`${REACT_APP_PATH}/admin/api/CreateDataYear`, data).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });

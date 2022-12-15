@@ -12,6 +12,7 @@ import Media from "./Media";
 import Mission from "./Mission";
 import Service from "./Service";
 import DLICT from "./DLICT";
+import AddNewsPage from "./SubPage/AddNewsPage";
 const AnimatedRoute = () => {
     const location = useLocation();
     return (
@@ -25,6 +26,7 @@ const AnimatedRoute = () => {
                 <Route path="/Service" element={<Service />} />
                 <Route path="/DLICT" element={<DLICT />} />
                 <Route path="/Person/:param" element={<PersonDetail />} />
+                <Route path="/News/AddNews" element={<AddNewsPage />} />
                 <Route path="/BigData" element={<Data />} />
                 <Route path="/BigData/ListData/:param1" element={<ListData />} />
                 <Route path="/BigData/ListData/Data/:param1/:param2/:param3" element={<ListLastData />} />

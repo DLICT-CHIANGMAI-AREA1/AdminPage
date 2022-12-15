@@ -30,8 +30,7 @@ const PersonDetail = () => {
 
     useEffect(() => {
         function get() {
-            axios.get(`http://localhost:5000/admin/api/DataPersonById/${param}`).then((res) => {
-                console.log(res.data);
+            axios.get(`${REACT_APP_PATH}/admin/api/DataPersonById/${param}`).then((res) => {
                 setData(res.data);
                 setLastName(res.data.Last_name);
                 setFirstName(res.data.First_name);
@@ -82,7 +81,7 @@ const PersonDetail = () => {
         formData.append("Operating_Manual", OperatingManual);
         formData.append("Profile", OldProfile);
 
-        await axios.put(`http://localhost:5000/admin/api/UpdatePerson/${param}`, formData).then((res) => {
+        await axios.put(`${REACT_APP_PATH}/admin/api/UpdatePerson/${param}`, formData).then((res) => {
             if(res){
                 notifySucceed()
                 setTimeout(2000);
@@ -102,7 +101,7 @@ const PersonDetail = () => {
                                 <div class="row p-2">
                                     <div class="col-5">
                                         <img
-                                            src={`http://localhost:5000/${Profile}`}
+                                            src={`${REACT_APP_PATH}/${Profile}`}
                                             alt="Girl in a jacket"
                                             width="350"
                                             height="500"

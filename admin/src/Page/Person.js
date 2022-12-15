@@ -5,6 +5,7 @@ import { Spinner } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import ListPerson from "../Component/ListComponent/ListPerson";
 import CreatePerson from "../Component/ButtonCRUDPerson/CreatePerson";
+import { ToastContainer } from "react-toastify";
 const { REACT_APP_PATH } = process.env;
 const Person = () => {
     const [Data, setData] = useState("");
@@ -53,6 +54,7 @@ const Person = () => {
                                             )}
                                         </tbody>
                                     </table>
+                                    <ToastContainer />
                                 </ListGroup>
                             </div>
                         </div>
