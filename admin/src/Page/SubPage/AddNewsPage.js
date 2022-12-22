@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+const { REACT_APP_PATH } = process.env;
 const AddNewsPage = () => {
     const [selectedDate, setSelectedDate] = useState("");
     const [Headline, setHeadline] = useState("");
@@ -93,7 +94,7 @@ const AddNewsPage = () => {
                 DateTime: Date,
                 type: "ICT",
             };
-            await axios.post(`http://localhost:7000/admin/api/AddNews`, data).then((res) => {
+            await axios.post(`${REACT_APP_PATH}/admin/api/AddNews`, data).then((res) => {
                 if (res) {
                     notifySucceed();
                     setTimeout(() => {

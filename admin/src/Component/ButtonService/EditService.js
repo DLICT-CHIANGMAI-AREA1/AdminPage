@@ -5,9 +5,10 @@ import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-const { REACT_APP_PATH ,REACT_APP_IMGEPATH} = process.env;
+const { REACT_APP_PATH, REACT_APP_IMGEPATH } = process.env;
 const EditService = (x) => {
-    const [id] = useState(x.data.data._id)
+    console.log(x)
+    const [id] = useState(x.data.data._id);
     const [show, setShow] = useState(false);
     const [name, setName] = useState(x.data.data.name);
     const [URL, setURL] = useState(x.data.data.url);
@@ -37,16 +38,36 @@ const EditService = (x) => {
             progress: undefined,
             theme: "light",
         });
+    const uploadImage = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertBase64(file);
+        setImage(base64);
+    };
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
 
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
     const onSubmit = async () => {
         if (name === "" || URL === "") {
             notify();
         } else {
-            const formData = new FormData();
-            formData.append("name", name);
-            formData.append("url", URL);
-            formData.append("image", image);
-            await axios.put(`${REACT_APP_PATH}/admin/api/EditService/${id}`, formData).then((a) => {
+            const data = {
+                name: name,
+                url: URL,
+                image: image,
+                type: x.data.types,
+            };
+            await axios.put(`${REACT_APP_PATH}/admin/api/EditService/${id}`, data).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });
@@ -99,7 +120,9 @@ const EditService = (x) => {
                             <Form.Control
                                 type="file"
                                 accept="image/png, image/jpeg"
-                                onChange={(event) => setImage(event.target.files[0])}
+                                onChange={(e) => {
+                                    uploadImage(e);
+                                }}
                             />
                         </Form.Group>
                     </Form>

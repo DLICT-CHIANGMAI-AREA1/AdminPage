@@ -15,7 +15,7 @@ const AddNewsPage = () => {
     const { param } = useParams();
     useEffect(() => {
         function get() {
-            axios.get(`http://localhost:7000/admin/api/FindNewsById/${param}`).then((res) => {
+            axios.get(`${REACT_APP_PATH}/admin/api/FindNewsById/${param}`).then((res) => {
                 console.log(res.data);
                 setHeadline(res.data.Headline);
                 setInput(res.data.image_title_url);
@@ -112,7 +112,7 @@ const AddNewsPage = () => {
                 DateTime: Date,
                 type: "ICT",
             };
-            await axios.put(`http://localhost:7000/admin/api/UpdateNews/${Id}`, data).then((res) => {
+            await axios.put(`${REACT_APP_PATH}/admin/api/UpdateNews/${Id}`, data).then((res) => {
                 if (res) {
                     notifySucceed();
                     setTimeout(() => {

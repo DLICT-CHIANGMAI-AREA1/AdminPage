@@ -108,7 +108,7 @@ const PersonDetail = () => {
             formData.append("Phone", Phone);
             formData.append("Operating_Manual", OperatingManual);
             formData.append("Profile", OldProfile);
-            await axios.put(`http://localhost:7000/admin/api/UpdatePerson/${param}`, formData).then((res) => {
+            await axios.put(`${REACT_APP_PATH}/admin/api/UpdatePerson/${param}`, formData).then((res) => {
                 Swal.fire("เเก้ไขข้อมูลสำเร็จ").then(() => {
                     navigate("/Person");
                 });

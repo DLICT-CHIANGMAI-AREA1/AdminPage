@@ -13,7 +13,7 @@ const PDFViewer = () => {
     const [Id, setId] = useState("");
     useEffect(() => {
         function get() {
-            axios.get(`http://localhost:7000/admin/api/FindPDF`).then((res) => {
+            axios.get(`${REACT_APP_PATH}/admin/api/FindPDF`).then((res) => {
                 setData(res.data[0].url);
                 setId(res.data[0]._id);
             });
@@ -75,7 +75,7 @@ const PDFViewer = () => {
 
             
             const id = toast.loading("Please wait...")
-            await axios.put(`http://localhost:7000/admin/api/UpdatePDF_OPM/${Id}`, formData).then((res) => {
+            await axios.put(`${REACT_APP_PATH}/admin/api/UpdatePDF_OPM/${Id}`, formData).then((res) => {
                 toast.update(id, {render: "All is good", type: "success", isLoading: false});
                 notifySucceed();
                 setTimeout(Reload, 2000);

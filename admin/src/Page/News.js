@@ -11,7 +11,7 @@ const NewPage = () => {
     const [Data, setData] = useState();
     useEffect(() => {
         function get() {
-            axios.get(`http://localhost:7000/admin/api/FindNews`).then((res) => {
+            axios.get(`${REACT_APP_PATH}/admin/api/FindNews`).then((res) => {
                 setData(res.data);
             });
         }

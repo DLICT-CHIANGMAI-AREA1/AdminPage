@@ -100,7 +100,7 @@ const CreatePerson = () => {
             formData.append("Operating_Manual", OperatingManual);
             formData.append("Profile", Profile);
             const id = toast.loading("Please wait...");
-            await axios.post(`http://localhost:7000/admin/api/CreatePerson`, formData).then((a) => {
+            await axios.post(`${REACT_APP_PATH}/admin/api/CreatePerson`, formData).then((a) => {
                 toast.update(id, { render: "All is good", type: "success", isLoading: false });
                 notifySucceed();
                 setTimeout(Reload, 2000);

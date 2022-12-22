@@ -73,7 +73,7 @@ const ButtonAdd = (x) => {
             formData.append("csv_url", csv);
 
             await axios
-                .post(`${REACT_APP_PATH}/admin/api/CreateData/${param}/${param2}/${param3}/`, formData)
+                .post(`${REACT_APP_PATH}/admin/api/CreateData/${param}/${param2}/${param3}`, formData)
                 .then((a) => {
                     notifySucceed();
                     setTimeout(Reload, 2000);

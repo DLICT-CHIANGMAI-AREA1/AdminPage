@@ -4,10 +4,9 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Swa from "sweetalert2";
 import { Link } from "react-router-dom";
-const {REACT_APP_IMGEPATH } = process.env;
+const { REACT_APP_IMGEPATH, REACT_APP_PATH } = process.env;
 
 const ButtonDeleteNews = (x) => {
-
     const [id] = useState(x.data.data._id);
     const DeleteRecord = async () => {
         Swa.fire({
@@ -20,7 +19,7 @@ const ButtonDeleteNews = (x) => {
             cancelButtonText: "No",
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:7000/admin/api/DeleteNews/${id}`).then((result) => {
+                axios.delete(`${REACT_APP_PATH}/admin/api/DeleteNews/${id}`).then((result) => {
                     notifySucceed();
                     setTimeout(Reload, 2000);
                 });
@@ -42,18 +41,17 @@ const ButtonDeleteNews = (x) => {
         window.location.reload();
     }
 
-
     return (
         <td>
-             <Link className="btn" role="button" >
-            <img
-                src={`${REACT_APP_IMGEPATH}/images/delete-button.png`}
-                alt="Girl in a jacket"
-                width="40"
-                height="45"
-                class="pointer"
-                onClick={DeleteRecord}
-            ></img>
+            <Link className="btn" role="button">
+                <img
+                    src={`${REACT_APP_IMGEPATH}/images/delete-button.png`}
+                    alt="Girl in a jacket"
+                    width="40"
+                    height="45"
+                    class="pointer"
+                    onClick={DeleteRecord}
+                ></img>
             </Link>
         </td>
     );
