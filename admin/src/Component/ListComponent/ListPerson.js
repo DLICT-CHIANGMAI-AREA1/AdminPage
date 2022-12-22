@@ -1,7 +1,6 @@
 import React from "react";
 import PeronDetail from "../ButtonCRUDPerson/PersonDetail";
 import ButtonDeletePerson from "../ButtonCRUDPerson/ButtonDelete";
-const { REACT_APP_PATH } = process.env;
 const ListPerson = (data) => {
     console.log(data)
     return (
