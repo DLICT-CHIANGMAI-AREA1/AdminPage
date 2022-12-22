@@ -9,6 +9,7 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const { REACT_APP_PATH } = process.env;
 const PersonDetail = () => {
     const { param } = useParams();
@@ -20,8 +21,6 @@ const PersonDetail = () => {
     const [JobTitle, setJobTitle] = useState();
     const [Department, setDepartment] = useState();
     const [Genders, setGenders] = useState();
-
-    const [input, setInput] = useState([]);
     const [Profile, setProfile] = useState();
     const [OldProfile, setOldProfile] = useState();
     const [OperatingManual, setOperatingManual] = useState();
@@ -41,25 +40,45 @@ const PersonDetail = () => {
                 setGenders(res.data.Gender);
                 setOperatingManual(res.data.Operating_Manual);
                 setProfile(res.data.Profile);
-                console.log(Profile);
             });
         }
         get();
     }, [param]);
 
-
     function AddOPM(e) {
         setOperatingManual(e.target.files[0]);
     }
-    
-    function AddIMG(e){
-        setOldProfile(e.target.files[0]);
-    }
 
-    const notifySucceed = () =>
-        toast.success("upload file สำเร็จ", {
+    const AddIMG = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertBase64(file);
+        const { files } = e.target;
+        let images = [];
+        const selecteds = [...[...files]];
+        selecteds.forEach((i) => images.push(URL.createObjectURL(i)));
+        setProfile(base64);
+        setOldProfile(base64);
+    };
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
+
+
+    const notify = () =>
+        toast.warn("กรุณา upload file pdf. ", {
             position: "top-right",
-            autoClose: 2000,
+            autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -67,28 +86,34 @@ const PersonDetail = () => {
             progress: undefined,
             theme: "light",
         });
-
-
-    const onSubmit = async (e) => {
-        const formData = new FormData();
-        formData.append("First_name", FirstName);
-        formData.append("Last_name", LastName);
-        formData.append("Gender", Genders);
-        formData.append("Email", Email);
-        formData.append("JobTitle", JobTitle);
-        formData.append("Department", Department);
-        formData.append("Phone", Phone);
-        formData.append("Operating_Manual", OperatingManual);
-        formData.append("Profile", OldProfile);
-
-        await axios.put(`${REACT_APP_PATH}/admin/api/UpdatePerson/${param}`, formData).then((res) => {
-            if(res){
-                notifySucceed()
-                setTimeout(2000);
-                navigate("/Person");
-            }
-          
-        });
+    const onSubmit = async () => {
+        if (
+            FirstName === "" ||
+            LastName === "" ||
+            Email === "" ||
+            Phone === "" ||
+            JobTitle === "" ||
+            Department === "" ||
+            Genders === ""
+        ) {
+            notify();
+        } else {
+            const formData = new FormData();
+            formData.append("First_name", FirstName);
+            formData.append("Last_name", LastName);
+            formData.append("Gender", Genders);
+            formData.append("Email", Email);
+            formData.append("JobTitle", JobTitle);
+            formData.append("Department", Department);
+            formData.append("Phone", Phone);
+            formData.append("Operating_Manual", OperatingManual);
+            formData.append("Profile", OldProfile);
+            await axios.put(`http://localhost:7000/admin/api/UpdatePerson/${param}`, formData).then((res) => {
+                Swal.fire("เเก้ไขข้อมูลสำเร็จ").then(() => {
+                    navigate("/Person");
+                });
+            });
+        }
     };
 
     return (
@@ -100,12 +125,7 @@ const PersonDetail = () => {
                             <div className="landing-data-page">
                                 <div class="row p-2">
                                     <div class="col-5">
-                                        <img
-                                            src={`${REACT_APP_PATH}/${Profile}`}
-                                            alt="Girl in a jacket"
-                                            width="350"
-                                            height="500"
-                                        ></img>
+                                        <img src={`${Profile}`} alt="Girl in a jacket" width="350" height="500"></img>
                                     </div>
                                     <div class="col">
                                         <Form>
@@ -215,8 +235,9 @@ const PersonDetail = () => {
                                                 </Col>
                                             </Row>
                                             <Button variant="primary" type="submit" onClick={onSubmit}>
-                                                Submit
+                                                Update
                                             </Button>
+                                            <ToastContainer />
                                         </Form>
                                     </div>
                                 </div>
@@ -225,7 +246,6 @@ const PersonDetail = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </Container>
     );
 };

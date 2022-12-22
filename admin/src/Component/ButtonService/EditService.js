@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH ,REACT_APP_IMGEPATH} = process.env;
 const EditService = (x) => {
     const [id] = useState(x.data.data._id)
     const [show, setShow] = useState(false);
@@ -59,7 +59,7 @@ const EditService = (x) => {
     return (
         <td>
             <img
-                src="images/contract.png"
+                src={`${REACT_APP_IMGEPATH}/images/contract.png`}
                 alt="Girl in a jacket"
                 width="50"
                 height="50"

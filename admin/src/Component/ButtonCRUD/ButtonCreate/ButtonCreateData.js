@@ -13,7 +13,6 @@ const ButtonAdd = (x) => {
     const [showAddRecord, setShowAddRecord] = useState(false);
     const [name, setName] = useState("");
     const [url, setUrl] = useState("");
-    const [image, setImage] = useState("");
     const [csv, setCsv] = useState("");
     const handleCloseAddRecord = () => setShowAddRecord(false);
     const handleShowAddRecord = () => setShowAddRecord(true);
@@ -72,7 +71,6 @@ const ButtonAdd = (x) => {
             formData.append("name", name);
             formData.append("url", url);
             formData.append("csv_url", csv);
-            formData.append("image", image);
 
             await axios
                 .post(`${REACT_APP_PATH}/admin/api/CreateData/${param}/${param2}/${param3}/`, formData)
@@ -130,16 +128,7 @@ const ButtonAdd = (x) => {
                             />
                         </Form.Group>
                     </Form>
-                    <Form>
-                        <Form.Group controlId="formFile" className="mb-3">
-                            <Form.Label>เลือกรูปภาพ</Form.Label>
-                            <Form.Control
-                                type="file"
-                                accept="image/png, image/jpeg"
-                                onChange={(event) => setImage(event.target.files[0])}
-                            />
-                        </Form.Group>
-                    </Form>
+                   
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseAddRecord}>

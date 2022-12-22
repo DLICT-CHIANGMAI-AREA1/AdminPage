@@ -5,9 +5,19 @@ import { Container } from "react-bootstrap";
 import { Spinner } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
 import ListGroup from "react-bootstrap/ListGroup";
-import ListService from "../Component/ListComponent/ListService";
+import ListsNews from "../Component/ListComponent/ListNew";
 const { REACT_APP_PATH } = process.env;
 const NewPage = () => {
+    const [Data, setData] = useState();
+    useEffect(() => {
+        function get() {
+            axios.get(`http://localhost:7000/admin/api/FindNews`).then((res) => {
+                setData(res.data);
+            });
+        }
+        get();
+    }, []);
+
     return (
         <Container>
             <div className="container">
@@ -28,7 +38,21 @@ const NewPage = () => {
                                                     <th>Delete</th>
                                                 </tr>
                                             </thead>
-                                            <tbody></tbody>
+                                            <tbody>
+                                                {Data ? (
+                                                    Data.map((data) => {
+                                                        return <ListsNews key={data._id} data={data} />; // map ออกมาเป็นปีก่อน
+                                                    })
+                                                ) : (
+                                                    <Spinner
+                                                        animation="border"
+                                                        role="status"
+                                                        style={{ width: "3rem", height: "3rem", margin: "20px" }}
+                                                    >
+                                                        <span className="visually-hidden">Loading...</span>
+                                                    </Spinner>
+                                                )}
+                                            </tbody>
                                         </table>
                                     </ListGroup>
                                 </div>

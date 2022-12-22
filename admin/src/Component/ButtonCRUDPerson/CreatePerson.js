@@ -46,18 +46,36 @@ const CreatePerson = () => {
             progress: undefined,
             theme: "light",
         });
-
     function AddOPM(e) {
         setOperatingManual(e.target.files[0]);
     }
-
-    function AddIMG(e) {
-        setProfile(e.target.files[0]);
+    const AddIMG = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertBase64(file);
+        const { files } = e.target;
+        let images = [];
+        const selecteds = [...[...files]];
+        selecteds.forEach((i) => images.push(URL.createObjectURL(i)));
+        setProfile(base64);
     }
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
 
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
     function Reload() {
         window.location.reload();
     }
+    
 
     const onSubmit = async () => {
         if (
@@ -81,7 +99,9 @@ const CreatePerson = () => {
             formData.append("Phone", Phone);
             formData.append("Operating_Manual", OperatingManual);
             formData.append("Profile", Profile);
-            await axios.post(`${REACT_APP_PATH}/admin/api/CreatePerson`, formData).then((a) => {
+            const id = toast.loading("Please wait...");
+            await axios.post(`http://localhost:7000/admin/api/CreatePerson`, formData).then((a) => {
+                toast.update(id, { render: "All is good", type: "success", isLoading: false });
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });

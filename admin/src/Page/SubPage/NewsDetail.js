@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,16 +10,34 @@ import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+const { REACT_APP_PATH, REACT_APP_IMGEPATH } = process.env;
 const AddNewsPage = () => {
+    const { param } = useParams();
+    useEffect(() => {
+        function get() {
+            axios.get(`http://localhost:7000/admin/api/FindNewsById/${param}`).then((res) => {
+                console.log(res.data);
+                setHeadline(res.data.Headline);
+                setInput(res.data.image_title_url);
+                setContent(res.data.content);
+                setFile(res.data.image_title_url);
+                setMInput(res.data.images[0]);
+                setMFile(res.data.images[0]);
+                setId(res.data._id);
+            });
+        }
+        get();
+    }, [param]);
+    const [Id, setId] = useState("");
     const [selectedDate, setSelectedDate] = useState("");
     const [Headline, setHeadline] = useState("");
     const [Content, setContent] = useState("");
     let Date = moment(selectedDate).add(543, "year").format("MMMM Do YYYY");
     const [input, setInput] = useState([]);
-    const [File, setFile] = useState();
-    const navigate = useNavigate();
+    const [File, setFile] = useState([]);
     const [Minput, setMInput] = useState([]);
     const [MFile, setMFile] = useState([]);
+    const navigate = useNavigate();
 
     const _treat = async (e) => {
         const file = e.target.files[0];
@@ -71,7 +90,7 @@ const AddNewsPage = () => {
             theme: "light",
         });
     const notifySucceed = () =>
-        toast.success("upload file สำเร็จ", {
+        toast.success("อัพเดทข้อมูลสำเร็จ", {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -82,7 +101,7 @@ const AddNewsPage = () => {
             theme: "light",
         });
     const onSubmit = async () => {
-        if (Headline === "" || Content === "") {
+        if (Headline === "" || Content === "" || MFile === "" || File === "" || selectedDate === "") {
             notify();
         } else {
             let data = {
@@ -93,7 +112,7 @@ const AddNewsPage = () => {
                 DateTime: Date,
                 type: "ICT",
             };
-            await axios.post(`http://localhost:7000/admin/api/AddNews`, data).then((res) => {
+            await axios.put(`http://localhost:7000/admin/api/UpdateNews/${Id}`, data).then((res) => {
                 if (res) {
                     notifySucceed();
                     setTimeout(() => {
@@ -115,7 +134,7 @@ const AddNewsPage = () => {
                                     <div class="p-2">
                                         <Button variant="primary" onClick={onSubmit}>
                                             {" "}
-                                            + Upload News
+                                            + Update News
                                         </Button>
                                     </div>
                                 </div>
@@ -125,6 +144,7 @@ const AddNewsPage = () => {
                                         <Form.Control
                                             size="lg"
                                             type="text"
+                                            value={Headline}
                                             onChange={(event) => setHeadline(event.target.value)}
                                         />
                                     </Form.Group>
@@ -149,6 +169,7 @@ const AddNewsPage = () => {
                                         <Form.Control
                                             as="textarea"
                                             rows={10}
+                                            value={Content}
                                             onChange={(event) => setContent(event.target.value)}
                                             required
                                         />

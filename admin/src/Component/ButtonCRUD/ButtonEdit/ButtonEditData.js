@@ -5,12 +5,11 @@ import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH, REACT_APP_IMGEPATH } = process.env;
 const ButtonEdit = (x) => {
     const [show, setShow] = useState(false);
     const [name, setName] = useState(x.data.name);
     const [URL, setURL] = useState(x.data.url);
-    const [image, setImage] = useState(x.data.image);
     const [csv, setCsv] = useState(x.data.csv_url);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -57,7 +56,6 @@ const ButtonEdit = (x) => {
         return regEx.test(url);
     };
 
-
     const onSubmit = async () => {
         if (name === "" || URL === "") {
             notify();
@@ -68,7 +66,6 @@ const ButtonEdit = (x) => {
             formData.append("name", name);
             formData.append("url", URL);
             formData.append("csv_url", csv);
-            formData.append("image", image)
             await axios
                 .put(`${REACT_APP_PATH}/admin/api/UpdateData/${x.id_year}/${x.data._id}/${x.id_date}`, formData)
                 .then((a) => {
@@ -85,7 +82,7 @@ const ButtonEdit = (x) => {
     return (
         <td>
             <img
-                src="images/contract.png"
+                src={`${REACT_APP_IMGEPATH}/images/contract.png`}
                 alt="Girl in a jacket"
                 width="50"
                 height="50"
@@ -129,12 +126,6 @@ const ButtonEdit = (x) => {
                                 onChange={(event) => setCsv(event.target.value)}
                                 required
                             />
-                        </Form.Group>
-                    </Form>
-                    <Form>
-                        <Form.Group controlId="formFile" className="mb-3">
-                            <Form.Label>เลือกรูปภาพ</Form.Label>
-                            <Form.Control type="file"  accept="image/png, image/jpeg" onChange={(event) => setImage(event.target.files[0])} />
                         </Form.Group>
                     </Form>
                 </Modal.Body>

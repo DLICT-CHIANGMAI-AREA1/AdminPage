@@ -4,6 +4,8 @@ import axios from "axios";
 import Form from "react-bootstrap/Form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Button from "react-bootstrap/Button";
+import { Spinner } from "react-bootstrap";
 const { REACT_APP_PATH } = process.env;
 
 const PDFViewer = () => {
@@ -11,8 +13,8 @@ const PDFViewer = () => {
     const [Id, setId] = useState("");
     useEffect(() => {
         function get() {
-            axios.get(`${REACT_APP_PATH}/admin/api/FindPDF`).then((res) => {
-                setData(res.data[0].file);
+            axios.get(`http://localhost:7000/admin/api/FindPDF`).then((res) => {
+                setData(res.data[0].url);
                 setId(res.data[0]._id);
             });
         }
@@ -24,28 +26,12 @@ const PDFViewer = () => {
 
     const uploadImage = async (e) => {
         const file = e.target.files[0];
-        const base64 = await convertBase64(file);
         const { files } = e.target;
         let images = [];
         const selecteds = [...[...files]];
         selecteds.forEach((i) => images.push(URL.createObjectURL(i)));
         setInput(images);
-        setFile(base64);
-    };
-
-    const convertBase64 = (file) => {
-        return new Promise((resolve, reject) => {
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(file);
-
-            fileReader.onload = () => {
-                resolve(fileReader.result);
-            };
-
-            fileReader.onerror = (error) => {
-                reject(error);
-            };
-        });
+        setFile(file);
     };
 
     const notify = () =>
@@ -59,7 +45,6 @@ const PDFViewer = () => {
             progress: undefined,
             theme: "light",
         });
-
     const notifySucceed = () =>
         toast.success("upload file สำเร็จ", {
             position: "top-right",
@@ -80,17 +65,19 @@ const PDFViewer = () => {
         if (input.length === 0) {
             notify();
         } else {
-            console.log(File)
-            const formData = {
-                filename: "operation",
-                file: File,
-            };
+            const formData = new FormData();
+            formData.append("filename", "operation");
+            formData.append("file", File);
             /*await axios.post(`http://localhost:7000/admin/api/CreatePDF`, formData).then((res) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });*/
-            await axios.put(`${REACT_APP_PATH}/admin/api/UpdatePDF_OPM/${Id}`, formData).then((res) => {
-                notifySucceed()
+
+            
+            const id = toast.loading("Please wait...")
+            await axios.put(`http://localhost:7000/admin/api/UpdatePDF_OPM/${Id}`, formData).then((res) => {
+                toast.update(id, {render: "All is good", type: "success", isLoading: false});
+                notifySucceed();
                 setTimeout(Reload, 2000);
             });
         }
@@ -102,30 +89,50 @@ const PDFViewer = () => {
                 <div className="container">
                     <div className="row">
                         <div className="op">
-                            <iframe
-                                src={`${Data}`}
-                                frameborder="0"
-                                height="90%"
-                                width="90%"
-                                title="myFrame"
-                            ></iframe>
+                            {Data ? (
+                                <iframe
+                                    src={`${Data}`}
+                                    frameborder="0"
+                                    height="90%"
+                                    width="90%"
+                                    title="myFrame"
+                                ></iframe>
+                            ) : (
+                                <Spinner
+                                    animation="border"
+                                    role="status"
+                                    style={{ width: "3rem", height: "3rem", margin: "20px" }}
+                                >
+                                    <span className="visually-hidden">Loading...</span>
+                                </Spinner>
+                            )}
                         </div>
 
                         <div className="row">
                             <div className="col-12">
                                 <div className="landing">
-                                    {input.map((i) => (
-                                        <div className="op">
-                                            <iframe
-                                                key={i}
-                                                src={i}
-                                                frameborder="0"
-                                                height="90%"
-                                                width="100%"
-                                                title="myFrame"
-                                            ></iframe>
-                                        </div>
-                                    ))}
+                                    {Data ? (
+                                        input.map((i) => (
+                                            <div className="op">
+                                                <iframe
+                                                    key={i}
+                                                    src={i}
+                                                    frameborder="0"
+                                                    height="90%"
+                                                    width="100%"
+                                                    title="myFrame"
+                                                ></iframe>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <Spinner
+                                            animation="border"
+                                            role="status"
+                                            style={{ width: "3rem", height: "3rem", margin: "20px" }}
+                                        >
+                                            <span className="visually-hidden">Loading...</span>
+                                        </Spinner>
+                                    )}
                                     <form>
                                         <label>
                                             <Row>
@@ -143,9 +150,16 @@ const PDFViewer = () => {
                                             </Row>
                                             <Row>
                                                 <Col xs={12} md={6} xl={5}>
-                                                    <button className="upload" type="button" onClick={editOPM}>
+                                                    <Button
+                                                        variant="primary"
+                                                        className="upload"
+                                                        type="button"
+                                                        onClick={editOPM}
+                                                    >
+                                                        {" "}
                                                         Upload
-                                                    </button>
+                                                    </Button>
+
                                                     <ToastContainer />
                                                 </Col>
                                             </Row>

@@ -11,13 +11,12 @@ const Person = () => {
     const [Data, setData] = useState("");
     useEffect(() => {
         function get() {
-            axios.get(`${REACT_APP_PATH}/admin/api/DataPerson`).then((res) => {
+            axios.get(`http://localhost:7000/admin/api/DataPerson`).then((res) => {
                 setData(res.data);
             });
         }
         get();
     }, []);
-
     return (
         <Container>
             <div className="container">

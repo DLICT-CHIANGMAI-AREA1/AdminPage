@@ -51,7 +51,6 @@ const Data = () => {
                                         <thead>
                                             <tr>
                                                 <th class="col-md-7">Name</th>
-                                                <th>Image</th>
                                                 <th>Edit</th>
                                                 <th>Delete</th>
                                             </tr>

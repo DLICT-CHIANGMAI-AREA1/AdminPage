@@ -151,6 +151,23 @@ p {
     margin-top: 40px;
     font-size: 15px;
 }
-.img-center{
+.container-img {
+    display: flex;
+    flex-wrap: wrap;
+}
+.item {
+    padding: 5px;
+}
+
+.img-center {
     text-align: center;
+}
+.zoom:hover {
+    transform: scale(1.5);
+}
+.zoom {
+    transition: transform 0.2s;
+}
+h3{
+    padding-top:15px
 }

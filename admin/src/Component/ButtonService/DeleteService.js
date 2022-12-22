@@ -3,7 +3,7 @@ import axios from "axios";
 import Swa from "sweetalert2";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH, REACT_APP_IMGEPATH } = process.env;
 const ButtonDeleteService = (x) => {
     const [id] = useState(x.data.data._id);
     const DeleteRecord = async () => {
@@ -17,7 +17,7 @@ const ButtonDeleteService = (x) => {
             cancelButtonText: "No",
         }).then((result) => {
             if (result.isConfirmed) {
-               axios.delete(`${REACT_APP_PATH}/admin/api/DeleteService/${id}`).then((result) => {
+                axios.delete(`${REACT_APP_PATH}/admin/api/DeleteService/${id}`).then((result) => {
                     notifySucceed();
                     setTimeout(Reload, 2000);
                 });
@@ -44,7 +44,7 @@ const ButtonDeleteService = (x) => {
         <div>
             <Link className="btn" role="button">
                 <img
-                    src="images/delete-button.png"
+                    src={`${REACT_APP_IMGEPATH}/images/delete-button.png`}
                     alt="Girl in a jacket"
                     width="40"
                     height="45"
