@@ -74,7 +74,6 @@ const PersonDetail = () => {
         });
     };
 
-
     const notify = () =>
         toast.warn("กรุณา upload file pdf. ", {
             position: "top-right",
@@ -109,9 +108,12 @@ const PersonDetail = () => {
             formData.append("Operating_Manual", OperatingManual);
             formData.append("Profile", OldProfile);
             await axios.put(`${REACT_APP_PATH}/admin/api/UpdatePerson/${param}`, formData).then((res) => {
-                Swal.fire("เเก้ไขข้อมูลสำเร็จ").then(() => {
-                    navigate("/Person");
-                });
+                if(res){
+                    Swal.fire("เเก้ไขข้อมูลสำเร็จ").then(() => {
+                        navigate("/Person");
+                    });
+                }
+               
             });
         }
     };

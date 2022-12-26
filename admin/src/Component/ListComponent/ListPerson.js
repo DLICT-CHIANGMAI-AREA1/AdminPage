@@ -2,7 +2,6 @@ import React from "react";
 import PeronDetail from "../ButtonCRUDPerson/PersonDetail";
 import ButtonDeletePerson from "../ButtonCRUDPerson/ButtonDelete";
 const ListPerson = (data) => {
-    console.log(data)
     return (
         <tr>
             <td>
