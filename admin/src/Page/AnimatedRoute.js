@@ -14,25 +14,30 @@ import Service from "./Service";
 import DLICT from "./DLICT";
 import AddNewsPage from "./SubPage/AddNewsPage";
 import NewsDetail from "./SubPage/NewsDetail";
-
+import Navbar from "../Component/Navbar";
+import LoginForm from "./login";
 const AnimatedRoute = () => {
     const location = useLocation();
     return (
+        
         <AnimatePresence>
+           
             <Routes location={location} key={location.pathname}>
-                <Route path="/News" element={<News />} />
-                <Route path="/OperatingManual" element={<PDFViewer />} />
-                <Route path="/Person" element={<Person />} />
-                <Route path="/Media" element={<Media />} />
-                <Route path="/Mission" element={<Mission />} />
-                <Route path="/Service" element={<Service />} />
-                <Route path="/DLICT" element={<DLICT />} />
-                <Route path="/Person/:param" element={<PersonDetail />} />
-                <Route path="/News/:param" element={<NewsDetail />} />
-                <Route path="/News/AddNews" element={<AddNewsPage />} />
-                <Route path="/BigData" element={<Data />} />
-                <Route path="/BigData/ListData/:param1" element={<ListData />} />
-                <Route path="/BigData/ListData/Data/:param1/:param2/:param3" element={<ListLastData />} />
+                <Route path="/" element={<><LoginForm/></>}  /> 
+                <Route path="/Login" element={<><LoginForm/></>}  /> 
+                <Route path="/News" element={<><Navbar/><News /></>}  />
+                <Route path="/OperatingManual" element={<><Navbar/><PDFViewer /></>} />
+                <Route path="/Person" element={<><Navbar/><Person /></>} />
+                <Route path="/Media" element={<><Navbar/><Media /></>} />
+                <Route path="/Mission" element={<><Navbar/><Mission /></>} />
+                <Route path="/Service" element={<><Navbar/><Service /></>} />
+                <Route path="/DLICT" element={<><Navbar/><DLICT /></>} />
+                <Route path="/Person/:param" element={<><Navbar/><PersonDetail /></>} />
+                <Route path="/News/:param" element={<><Navbar/><NewsDetail /></>} />
+                <Route path="/News/AddNews" element={<><Navbar/><AddNewsPage /></>} />
+                <Route path="/BigData" element={<><Navbar/><Data /></>} />
+                <Route path="/BigData/ListData/:param1" element={<><Navbar/><ListData /></>} />
+                <Route path="/BigData/ListData/Data/:param1/:param2/:param3" element={<><Navbar/><ListLastData /></>} />
             </Routes>
         </AnimatePresence>
     );

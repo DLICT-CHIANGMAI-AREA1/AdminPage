@@ -9,15 +9,30 @@ import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+import jwtDecode from "jwt-decode";
 const { REACT_APP_PATH } = process.env;
 const AddNewsPage = () => {
+    const navigate = useNavigate();
+     // check token 
+     const jwt = localStorage.getItem("mini-session");
+  
+     if (!jwt) {
+         navigate("/Login");
+     }
+     const { exp } = jwtDecode(jwt)
+     const expirationTime = (exp * 1000) - 60000
+     if (Date.now() >= expirationTime) {
+         localStorage.clear();
+         navigate("/Login");
+       }
+ ////////////////////////////////////////////////////
     const [selectedDate, setSelectedDate] = useState("");
     const [Headline, setHeadline] = useState("");
     const [Content, setContent] = useState("");
-    let Date = moment(selectedDate).add(543, "year").format("MMMM Do YYYY");
+    let Dates = moment(selectedDate).add(543, "year").format("MMMM Do YYYY");
     const [input, setInput] = useState([]);
     const [File, setFile] = useState();
-    const navigate = useNavigate();
+
     const [Minput, setMInput] = useState([]);
     const [MFile, setMFile] = useState([]);
 
@@ -91,7 +106,7 @@ const AddNewsPage = () => {
                 content: Content,
                 image_title_url: File,
                 images: [MFile],
-                DateTime: Date,
+                DateTime: Dates,
                 type: "ICT",
             };
             await axios.post(`${REACT_APP_PATH}/admin/api/AddNews`, data).then((res) => {

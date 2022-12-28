@@ -10,8 +10,23 @@ import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import jwtDecode from "jwt-decode";
 const { REACT_APP_PATH } = process.env;
 const PersonDetail = () => {
+    // check token 
+    const navigate = useNavigate();
+    const jwt = localStorage.getItem("mini-session");
+  
+    if (!jwt) {
+        navigate("/Login");
+    }
+    const { exp } = jwtDecode(jwt)
+    const expirationTime = (exp * 1000) - 60000
+    if (Date.now() >= expirationTime) {
+        localStorage.clear();
+        navigate("/Login");
+      }
+////////////////////////////////////////////////////
     const { param } = useParams();
     const [Data, setData] = useState();
     const [FirstName, setFirstName] = useState();
@@ -25,7 +40,7 @@ const PersonDetail = () => {
     const [OldProfile, setOldProfile] = useState();
     const [OperatingManual, setOperatingManual] = useState();
 
-    const navigate = useNavigate();
+
 
     useEffect(() => {
         function get() {

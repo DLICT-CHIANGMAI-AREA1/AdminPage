@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -10,8 +11,22 @@ import ButtonCreateData from "../../Component/ButtonCRUD/ButtonCreate/ButtonCrea
 import ButtonSeeFullImage from "../../Component/ButtonCRUD/ButtonImage";
 import Post from "../../Component/Posts";
 import Pagination from "../../Component/Pagination";
+import jwtDecode from "jwt-decode";
 const { REACT_APP_PATH } = process.env;
 const Data = () => {
+  // check token 
+  const jwt = localStorage.getItem("mini-session");
+  const navigate = useNavigate();
+  if (!jwt) {
+      navigate("/Login");
+  }
+  const { exp } = jwtDecode(jwt)
+  const expirationTime = (exp * 1000) - 60000
+  if (Date.now() >= expirationTime) {
+      localStorage.clear();
+      navigate("/Login");
+    }
+////////////////////////////////////////////////////
     const { param1, param2, param3 } = useParams();
     const [Data, setData] = useState([]);
 
