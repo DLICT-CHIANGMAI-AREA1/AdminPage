@@ -23,6 +23,8 @@ const NewPage = () => {
         localStorage.clear();
         navigate("/Login");
       }
+      console.log("Token "+expirationTime)
+      console.log("DateT "+Date.now())
 ////////////////////////////////////////////////////
     
    

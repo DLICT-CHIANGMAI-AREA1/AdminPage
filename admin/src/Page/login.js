@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Container } from "react-bootstrap";
-
+const { REACT_APP_PATH } = process.env;
 
 function LoginForm() {
     const [Username, setUsername] = useState();
@@ -34,7 +34,7 @@ function LoginForm() {
         };
 
         await axios
-            .post("http://localhost:7000/admin/api/login", data)
+            .post(`${REACT_APP_PATH}/admin/api/login`, data)
             .then((res) => {
                 if (res.data.text === "Invalid password") {
                   notify()
