@@ -64,7 +64,7 @@ const ButtonCreateServiceIcon = (types) => {
     }
 
     const onSubmit = async () => {
-        if (Message === "" || URL === "") {
+        if (Message === "") {
             notify();
         } else {
             const data = {
