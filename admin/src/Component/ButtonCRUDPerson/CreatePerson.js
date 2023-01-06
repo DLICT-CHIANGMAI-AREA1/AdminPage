@@ -57,7 +57,7 @@ const CreatePerson = () => {
         const selecteds = [...[...files]];
         selecteds.forEach((i) => images.push(URL.createObjectURL(i)));
         setProfile(base64);
-    }
+    };
     const convertBase64 = (file) => {
         return new Promise((resolve, reject) => {
             const fileReader = new FileReader();
@@ -75,7 +75,6 @@ const CreatePerson = () => {
     function Reload() {
         window.location.reload();
     }
-    
 
     const onSubmit = async () => {
         if (
@@ -195,18 +194,13 @@ const CreatePerson = () => {
                             <Col>
                                 <Form.Group controlId="formFile" className="mb-3">
                                     <Form.Label>คู่มือปฎิบัติงาน</Form.Label>
-                                    <Form.Control type="file" accept="application/pdf" onChange={AddOPM} required />
+                                    <Form.Control type="file" accept="application/pdf" onChange={AddOPM} />
                                 </Form.Group>
                             </Col>
                             <Col>
                                 <Form.Group controlId="formFile" className="mb-3">
                                     <Form.Label>Profile</Form.Label>
-                                    <Form.Control
-                                        type="file"
-                                        accept="image/png, image/jpeg"
-                                        onChange={AddIMG}
-                                        required
-                                    />
+                                    <Form.Control type="file" accept="image/png, image/jpeg" onChange={AddIMG} />
                                 </Form.Group>
                             </Col>
                         </Row>

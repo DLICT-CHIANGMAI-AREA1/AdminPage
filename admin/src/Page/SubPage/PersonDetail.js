@@ -13,20 +13,20 @@ import Swal from "sweetalert2";
 import jwtDecode from "jwt-decode";
 const { REACT_APP_PATH } = process.env;
 const PersonDetail = () => {
-    // check token 
+    // check token
     const navigate = useNavigate();
     const jwt = localStorage.getItem("mini-session");
-  
+
     if (!jwt) {
         navigate("/Login");
     }
-    const { exp } = jwtDecode(jwt)
-    const expirationTime = (exp * 1000) - 60000
+    const { exp } = jwtDecode(jwt);
+    const expirationTime = exp * 1000 - 60000;
     if (Date.now() >= expirationTime) {
         localStorage.clear();
         navigate("/Login");
-      }
-////////////////////////////////////////////////////
+    }
+    ////////////////////////////////////////////////////
     const { param } = useParams();
     const [Data, setData] = useState();
     const [FirstName, setFirstName] = useState();
@@ -39,8 +39,6 @@ const PersonDetail = () => {
     const [Profile, setProfile] = useState();
     const [OldProfile, setOldProfile] = useState();
     const [OperatingManual, setOperatingManual] = useState();
-
-
 
     useEffect(() => {
         function get() {
@@ -123,12 +121,11 @@ const PersonDetail = () => {
             formData.append("Operating_Manual", OperatingManual);
             formData.append("Profile", OldProfile);
             await axios.put(`${REACT_APP_PATH}/admin/api/UpdatePerson/${param}`, formData).then((res) => {
-                if(res){
+                if (res) {
                     Swal.fire("เเก้ไขข้อมูลสำเร็จ").then(() => {
                         navigate("/Person");
                     });
                 }
-               
             });
         }
     };
@@ -235,7 +232,6 @@ const PersonDetail = () => {
                                                             type="file"
                                                             accept="application/pdf"
                                                             onChange={AddOPM}
-                                                            required
                                                         />
                                                     </Form.Group>
                                                 </Col>
@@ -246,7 +242,6 @@ const PersonDetail = () => {
                                                             type="file"
                                                             accept="image/png, image/jpeg"
                                                             onChange={AddIMG}
-                                                            required
                                                         />
                                                     </Form.Group>
                                                 </Col>
