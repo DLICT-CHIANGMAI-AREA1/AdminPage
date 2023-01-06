@@ -39,6 +39,7 @@ const PersonDetail = () => {
     const [Profile, setProfile] = useState();
     const [OldProfile, setOldProfile] = useState();
     const [OperatingManual, setOperatingManual] = useState();
+    const [Level, setLevel] = useState();
 
     useEffect(() => {
         function get() {
@@ -102,8 +103,6 @@ const PersonDetail = () => {
         if (
             FirstName === "" ||
             LastName === "" ||
-            Email === "" ||
-            Phone === "" ||
             JobTitle === "" ||
             Department === "" ||
             Genders === ""

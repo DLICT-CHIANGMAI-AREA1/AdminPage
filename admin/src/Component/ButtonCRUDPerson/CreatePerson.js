@@ -80,8 +80,6 @@ const CreatePerson = () => {
         if (
             FirstName === "" ||
             LastName === "" ||
-            Email === "" ||
-            Phone === "" ||
             JobTitle === "" ||
             Department === "" ||
             Genders === ""
