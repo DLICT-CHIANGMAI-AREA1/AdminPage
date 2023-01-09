@@ -39,8 +39,7 @@ const PersonDetail = () => {
     const [Profile, setProfile] = useState();
     const [OldProfile, setOldProfile] = useState();
     const [OperatingManual, setOperatingManual] = useState();
-    const [Level, setLevel] = useState();
-
+    const [Position, setPosition] = useState("");
     useEffect(() => {
         function get() {
             axios.get(`${REACT_APP_PATH}/admin/api/DataPersonById/${param}`).then((res) => {
@@ -54,6 +53,7 @@ const PersonDetail = () => {
                 setGenders(res.data.Gender);
                 setOperatingManual(res.data.Operating_Manual);
                 setProfile(res.data.Profile);
+                setPosition(res.data.Positions);
             });
         }
         get();
@@ -100,13 +100,7 @@ const PersonDetail = () => {
             theme: "light",
         });
     const onSubmit = async () => {
-        if (
-            FirstName === "" ||
-            LastName === "" ||
-            JobTitle === "" ||
-            Department === "" ||
-            Genders === ""
-        ) {
+        if (FirstName === "" || LastName === "" || JobTitle === "" || Department === "" || Genders === "" || Position === "") {
             notify();
         } else {
             const formData = new FormData();
@@ -119,6 +113,7 @@ const PersonDetail = () => {
             formData.append("Phone", Phone);
             formData.append("Operating_Manual", OperatingManual);
             formData.append("Profile", OldProfile);
+            formData.append("Position", Position);
             await axios.put(`${REACT_APP_PATH}/admin/api/UpdatePerson/${param}`, formData).then((res) => {
                 if (res) {
                     Swal.fire("เเก้ไขข้อมูลสำเร็จ").then(() => {
@@ -173,6 +168,14 @@ const PersonDetail = () => {
                                                         <option value="">เพศ</option>
                                                         <option value="ชาย">ชาย</option>
                                                         <option value="หญิง">หญิง</option>
+                                                    </Form.Select>
+                                                </Form.Group>
+                                                <Form.Group as={Col} controlId="formGridState">
+                                                    <Form.Select value={Position} onChange={(event) => setPosition(event.target.value)}>
+                                                        <option value="">ลำดับขั้น</option>
+                                                        <option value="leader">leader</option>
+                                                        <option value="group_leader">group_leader</option>
+                                                        <option value="general">general</option>
                                                     </Form.Select>
                                                 </Form.Group>
                                             </Row>

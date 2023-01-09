@@ -20,7 +20,7 @@ const CreatePerson = () => {
     const [JobTitle, setJobTitle] = useState("");
     const [Department, setDepartment] = useState("");
     const [Genders, setGenders] = useState("");
-
+    const [Position, setPosition] = useState("");
     const [Profile, setProfile] = useState("");
     const [OperatingManual, setOperatingManual] = useState("");
 
@@ -77,13 +77,7 @@ const CreatePerson = () => {
     }
 
     const onSubmit = async () => {
-        if (
-            FirstName === "" ||
-            LastName === "" ||
-            JobTitle === "" ||
-            Department === "" ||
-            Genders === ""
-        ) {
+        if (FirstName === "" || LastName === "" || JobTitle === "" || Department === "" || Genders === "" || Position === "") {
             notify();
         } else {
             const formData = new FormData();
@@ -96,6 +90,7 @@ const CreatePerson = () => {
             formData.append("Phone", Phone);
             formData.append("Operating_Manual", OperatingManual);
             formData.append("Profile", Profile);
+            formData.append("Position", Position);
             const id = toast.loading("Please wait...");
             await axios.post(`${REACT_APP_PATH}/admin/api/CreatePerson`, formData).then((a) => {
                 toast.update(id, { render: "All is good", type: "success", isLoading: false });
@@ -142,6 +137,14 @@ const CreatePerson = () => {
                                     <option value="">เพศ</option>
                                     <option value="ชาย">ชาย</option>
                                     <option value="หญิง">หญิง</option>
+                                </Form.Select>
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="formGridState">
+                                <Form.Select onChange={(event) => setPosition(event.target.value)}>
+                                    <option value="">ลำดับขั้น</option>
+                                    <option value="leader">leader</option>
+                                    <option value="group_leader">group_leader</option>
+                                    <option value="general">general</option>
                                 </Form.Select>
                             </Form.Group>
                         </Row>
