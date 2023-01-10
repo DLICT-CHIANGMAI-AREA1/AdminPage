@@ -100,7 +100,14 @@ const PersonDetail = () => {
             theme: "light",
         });
     const onSubmit = async () => {
-        if (FirstName === "" || LastName === "" || JobTitle === "" || Department === "" || Genders === "" || Position === "") {
+        if (
+            FirstName === "" ||
+            LastName === "" ||
+            JobTitle === "" ||
+            Department === "" ||
+            Genders === "" ||
+            Position === ""
+        ) {
             notify();
         } else {
             const formData = new FormData();
@@ -114,7 +121,7 @@ const PersonDetail = () => {
             formData.append("Operating_Manual", OperatingManual);
             formData.append("Profile", OldProfile);
             formData.append("Position", Position);
-            await axios.put(`${REACT_APP_PATH}/admin/api/UpdatePerson/${param}`, formData).then((res) => {
+            await axios.post(`http://localhost:7000/admin/api/UpdatePerson/${param}`, formData).then((res) => {
                 if (res) {
                     Swal.fire("เเก้ไขข้อมูลสำเร็จ").then(() => {
                         navigate("/Person");
@@ -171,7 +178,10 @@ const PersonDetail = () => {
                                                     </Form.Select>
                                                 </Form.Group>
                                                 <Form.Group as={Col} controlId="formGridState">
-                                                    <Form.Select value={Position} onChange={(event) => setPosition(event.target.value)}>
+                                                    <Form.Select
+                                                        value={Position}
+                                                        onChange={(event) => setPosition(event.target.value)}
+                                                    >
                                                         <option value="">ลำดับขั้น</option>
                                                         <option value="leader">leader</option>
                                                         <option value="group_leader">group_leader</option>
