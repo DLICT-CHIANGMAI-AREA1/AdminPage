@@ -32,13 +32,14 @@ function LoginForm() {
             username: Username,
             password: Password,
         };
-
+        const id = toast.loading("Please wait...")
         await axios
             .post(`${REACT_APP_PATH}/admin/api/login`, data)
             .then((res) => {
                 if (res.data.text === "Invalid password") {
                   notify()
                 } else {
+                    toast.update(id, {render: "Login successful", type: "success", isLoading: false});
                     dispatch(fetchUser(res.data));
                     localStorage.setItem("mini-session", JSON.stringify(res.data));
                     navigate("/News");
