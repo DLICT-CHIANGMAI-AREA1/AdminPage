@@ -64,7 +64,7 @@ const NewPage = () => {
                                                 {Data ? (
                                                     Data.map((data) => {
                                                         return <ListsNews key={data._id} data={data} />; // map ออกมาเป็นปีก่อน
-                                                    })
+                                                    }).reverse()
                                                 ) : (
                                                     <Spinner
                                                         animation="border"

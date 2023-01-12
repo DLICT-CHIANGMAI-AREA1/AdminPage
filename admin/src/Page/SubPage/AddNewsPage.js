@@ -109,8 +109,10 @@ const AddNewsPage = () => {
                 DateTime: Dates,
                 type: "ICT",
             };
+            const id = toast.loading("Please wait...")
             await axios.post(`${REACT_APP_PATH}/admin/api/AddNews`, data).then((res) => {
                 if (res) {
+                    toast.update(id, {render: "All is good", type: "success", isLoading: false});
                     notifySucceed();
                     setTimeout(() => {
                         navigate("/News");
