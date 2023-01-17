@@ -59,7 +59,7 @@ const ButtonAdd = (x) => {
     return (
         <div>
             <button type="button" class="btn btn-success rounded-pill m-3" onClick={handleShowAddRecord}>
-                + Add Date
+                + Add Data
             </button>
             <Modal show={showAddRecord} onHide={handleCloseAddRecord}>
                 <Modal.Header closeButton>
@@ -68,7 +68,7 @@ const ButtonAdd = (x) => {
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>ช่วงเวลา</Form.Label>
+                            <Form.Label>ชื่อข้อมูล</Form.Label>
                             <Form.Control
                                 type="text"
                                 autoFocus

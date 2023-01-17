@@ -67,7 +67,7 @@ const ButtonCreateRecords = (data) => {
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>ชื่อข้อมูล</Form.Label>
+                            <Form.Label>ชื่อของกลุ่มข้อมูล</Form.Label>
                             <Form.Control
                                 type="text"
                                 autoFocus

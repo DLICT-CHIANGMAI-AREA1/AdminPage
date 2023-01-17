@@ -41,7 +41,18 @@ const ButtonCreateRecords = () => {
         } else {
             const data = {
                 name_year: year,
-                data: [],
+                data: [
+                    { name_data: "กลุ่มอำนวยการ", date: [] },
+                    { name_data: "กลุ่มบริหารงานการเงินและสินทรัพย์", date: [] },
+                    { name_data: "กลุ่มนโยบายและแผน", date: [] },
+                    { name_data: "กลุ่มส่งเสริมการจัดการศึกษา", date: [] },
+                    { name_data: "กลุ่มนิเทศ ติดตามและประเมินผลฯ", date: [] },
+                    { name_data: "กลุ่มส่งเสริมการจัดการศึกษาทางไกลฯ", date: [] },
+                    { name_data: "กลุ่มบริหารงานบุคคล", date: [] },
+                    { name_data: "กลุ่มกฎหมายและคดี", date: [] },
+                    { name_data: "หน่วยตรวจสอบภายใน", date: [] },
+                    { name_data: "กลุ่มพัฒนาครูและบุคลากรทางการศึกษา", date: [] },
+                ],
             };
             await axios.post(`${REACT_APP_PATH}/admin/api/CreateDataYear`, data).then((a) => {
                 notifySucceed();
