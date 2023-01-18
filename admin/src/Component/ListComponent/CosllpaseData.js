@@ -10,16 +10,17 @@ function FlushExample({ data, id_year }) {
     return (
         <Accordion.Item eventKey="0">
             <Accordion.Header>{data.name_data}</Accordion.Header>
+
             <Accordion.Body>
                 <div class="row gy-5">
                     <div class="col-8">
                         <h2 className="m-4"></h2>
                     </div>
                     <div class="col-2">
-                        <ButtonDeleteRecord data={data._id} id_year={id_year} /> 
+                        <ButtonDeleteRecord data={data._id} id_year={id_year} />
                     </div>
                     <div class="col-2">
-                        <ButtonAdd id_data={data._id} id_year={id_year} /> 
+                        <ButtonAdd id_data={data._id} id_year={id_year} />
                     </div>
                 </div>
 
@@ -35,7 +36,9 @@ function FlushExample({ data, id_year }) {
                         <tbody>
                             {data.date.map((x, index) => (
                                 <tr>
-                                    <td class="col-md-10"><p>{x.name_date}</p></td>
+                                    <td class="col-md-10">
+                                        <p>{x.name_date}</p>
+                                    </td>
                                     <td>
                                         <ButtonEditLink data={x} id={data._id} id_year={id_year} />
                                     </td>

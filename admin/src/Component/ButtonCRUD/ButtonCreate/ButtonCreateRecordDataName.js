@@ -12,6 +12,33 @@ const ButtonCreateRecords = (data) => {
     const [param] = useState(data.id_year);
     const handleCloseAddRecord = () => setShowAddRecord(false);
     const handleShowAddRecord = () => setShowAddRecord(true);
+    const [File, setFile] = useState();
+
+    const _treat = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertBase64(file);
+        const { files } = e.target;
+        let images = [];
+        const selecteds = [...[...files]];
+        selecteds.forEach((i) => images.push(URL.createObjectURL(i)));
+        setFile(base64);
+    };
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
+
+
 
     const notify = () =>
         toast.warn("กรุณากรอกข้อมูลให้ครบถ้วน ", {
@@ -42,6 +69,7 @@ const ButtonCreateRecords = (data) => {
         } else {
             const data = {
                 name_data: DataName,
+                icon:File,
                 date: [],
             };
             await axios.post(`${REACT_APP_PATH}/admin/api/CreateDataName/${param}`, data).then((a) => {
@@ -74,6 +102,10 @@ const ButtonCreateRecords = (data) => {
                                 onChange={(event) => setDataName(event.target.value)}
                                 required
                             />
+                        </Form.Group>
+                        <Form.Group controlId="formFile" className="mb-3">
+                            <Form.Label>Upload icon Data</Form.Label>
+                            <Form.Control type="file" onChange={_treat} />
                         </Form.Group>
                     </Form>
                 </Modal.Body>

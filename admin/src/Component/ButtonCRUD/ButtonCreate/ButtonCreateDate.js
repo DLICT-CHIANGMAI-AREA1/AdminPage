@@ -7,8 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 const { REACT_APP_PATH } = process.env;
 const ButtonAdd = (x) => {
-    const [param] = useState(x.id_year)
-    const [param2] = useState(x.id_data)
+    const [param] = useState(x.id_year);
+    const [param2] = useState(x.id_data);
     const [showAddRecord, setShowAddRecord] = useState(false);
     const [name, setName] = useState("");
     const handleCloseAddRecord = () => setShowAddRecord(false);
@@ -42,8 +42,7 @@ const ButtonAdd = (x) => {
             notify();
         } else {
             const data = {
-                name_date:name,
-                
+                name_date: name,
             };
             await axios.post(`${REACT_APP_PATH}/admin/api/CreateDate/${param}/${param2}`, data).then((a) => {
                 notifySucceed();
