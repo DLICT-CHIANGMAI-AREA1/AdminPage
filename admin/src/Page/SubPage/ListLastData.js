@@ -14,19 +14,19 @@ import Pagination from "../../Component/Pagination";
 import jwtDecode from "jwt-decode";
 const { REACT_APP_PATH } = process.env;
 const Data = () => {
-  // check token 
-  const jwt = localStorage.getItem("mini-session");
-  const navigate = useNavigate();
-  if (!jwt) {
-      navigate("/Login");
-  }
-  const { exp } = jwtDecode(jwt)
-  const expirationTime = (exp * 1000) - 60000
-  if (Date.now() >= expirationTime) {
-      localStorage.clear();
-      navigate("/Login");
+    // check token
+    const jwt = localStorage.getItem("mini-session");
+    const navigate = useNavigate();
+    if (!jwt) {
+        navigate("/Login");
     }
-////////////////////////////////////////////////////
+    const { exp } = jwtDecode(jwt);
+    const expirationTime = exp * 1000 - 60000;
+    if (Date.now() >= expirationTime) {
+        localStorage.clear();
+        navigate("/Login");
+    }
+    ////////////////////////////////////////////////////
     const { param1, param2, param3 } = useParams();
     const [Data, setData] = useState([]);
 
@@ -66,6 +66,9 @@ const Data = () => {
                                         <thead>
                                             <tr>
                                                 <th class="col-md-7">Name</th>
+                                                <th>DataVisualization</th>
+                                                <th>Excel</th>
+                                                <th>PDF</th>
                                                 <th>Edit</th>
                                                 <th>Delete</th>
                                             </tr>

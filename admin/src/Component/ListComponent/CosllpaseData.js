@@ -5,12 +5,12 @@ import ButtonDeleteRecord from "../ButtonCRUD/ButtonDelete/ButtonDeleteRecordDat
 import ButtonDelete from "../ButtonCRUD/ButtonDelete/ButtonDeleteDate";
 import ButtonEditLink from "../ButtonCRUD/ButtonEdit/ButtonEditLink2";
 import ListGroup from "react-bootstrap/ListGroup";
+import { v4 as uuidv4 } from "uuid";
 
 function FlushExample({ data, id_year }) {
     return (
-        <Accordion.Item eventKey="0">
+        <Accordion.Item eventKey={uuidv4()}>
             <Accordion.Header>{data.name_data}</Accordion.Header>
-
             <Accordion.Body>
                 <div class="row gy-5">
                     <div class="col-8">

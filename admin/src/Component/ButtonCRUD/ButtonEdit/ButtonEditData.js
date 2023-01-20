@@ -11,6 +11,7 @@ const ButtonEdit = (x) => {
     const [name, setName] = useState(x.data.name);
     const [URL, setURL] = useState(x.data.url);
     const [csv, setCsv] = useState(x.data.csv_url);
+    const [Pdf, setPdf] = useState("");
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -47,29 +48,25 @@ const ButtonEdit = (x) => {
             progress: undefined,
             theme: "light",
         });
-    const validation = (url) => {
-        const regEx = new RegExp("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?");
-        return regEx.test(url);
-    };
-    const validation2 = (url) => {
-        const regEx = new RegExp("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?");
-        return regEx.test(url);
+    const uploadFile = async (e) => {
+        const file = e.target.files[0];
+        setPdf(file);
     };
 
     const onSubmit = async () => {
-        if (name === "" || URL === "") {
+        if (name === "") {
             notify();
-        } else if (validation(URL) === false || validation2(csv) === false) {
-            notifyURL();
         } else {
             const formData = new FormData();
             formData.append("name", name);
             formData.append("url", URL);
             formData.append("csv_url", csv);
+            formData.append("pdf", Pdf);
+            const id = toast.loading("Please wait...");
             await axios
-                .put(`${REACT_APP_PATH}/admin/api/UpdateData/${x.id_year}/${x.data._id}/${x.id_date}`, formData)
+                .put(`http://localhost:7000/admin/api/UpdateData/${x.id_year}/${x.data._id}/${x.id_date}`, formData)
                 .then((a) => {
-                    console.log(a);
+                    toast.update(id, { render: "All is good", type: "success", isLoading: false });
                     notifySucceed();
                     setTimeout(Reload, 2000);
                 });
@@ -125,6 +122,18 @@ const ButtonEdit = (x) => {
                                 value={csv}
                                 onChange={(event) => setCsv(event.target.value)}
                                 required
+                            />
+                        </Form.Group>
+                    </Form>
+                    <Form>
+                        <Form.Group controlId="formFile" className="mb-3">
+                            <Form.Label>Upload PDF file</Form.Label>
+                            <Form.Control
+                                type="file"
+                                accept=".pdf"
+                                onChange={(e) => {
+                                    uploadFile(e);
+                                }}
                             />
                         </Form.Group>
                     </Form>

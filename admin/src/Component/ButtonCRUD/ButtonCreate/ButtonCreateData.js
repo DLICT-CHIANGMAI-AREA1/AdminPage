@@ -14,76 +14,35 @@ const ButtonAdd = (x) => {
     const [name, setName] = useState("");
     const [url, setUrl] = useState("");
     const [csv, setCsv] = useState("");
+    const [Pdf, setPdf] = useState("");
     const handleCloseAddRecord = () => setShowAddRecord(false);
     const handleShowAddRecord = () => setShowAddRecord(true);
     /*****************************************/
-    const notify = () =>
-        toast.warn("กรุณากรอกข้อมูลให้ครบถ้วน ", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-    const notifyURL = () =>
-        toast.warn("URL ไม่ถูกต้อง ", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-    const notifySucceed = () =>
-        toast.success("เพิ่มข้อมูลสำเร็จ", {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-    const validation = (url) => {
-        const regEx = new RegExp("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?");
-        return regEx.test(url);
-    };
-    const validation2 = (url) => {
-        const regEx = new RegExp("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?");
-        return regEx.test(url);
-    };
-
-    /*****************************************/
 
     const onSubmit = async () => {
-        if (name === "" || url === "") {
-            notify();
-        } else if (validation(url) === false || validation2(csv) === false) {
+        if (name === "") {
             notifyURL();
         } else {
             const formData = new FormData();
             formData.append("name", name);
             formData.append("url", url);
             formData.append("csv_url", csv);
-
+            formData.append("pdf", Pdf);
+            const id = toast.loading("Please wait...");
             await axios
-                .post(`${REACT_APP_PATH}/admin/api/CreateData/${param}/${param2}/${param3}`, formData)
+                .post(`http://localhost:7000/admin/api/CreateData/${param}/${param2}/${param3}`, formData)
                 .then((a) => {
+                    toast.update(id, { render: "All is good", type: "success", isLoading: false });
                     notifySucceed();
                     setTimeout(Reload, 2000);
                 });
         }
     };
 
-    function Reload() {
-        window.location.reload();
-    }
+    const uploadFile = async (e) => {
+        const file = e.target.files[0];
+        setPdf(file);
+    };
 
     return (
         <div className="CreateDataButton">
@@ -108,7 +67,7 @@ const ButtonAdd = (x) => {
                     </Form>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>URL</Form.Label>
+                            <Form.Label>URL ของ DataVisualization</Form.Label>
                             <Form.Control
                                 type="text"
                                 autoFocus
@@ -119,7 +78,7 @@ const ButtonAdd = (x) => {
                     </Form>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>CSV.URL</Form.Label>
+                            <Form.Label>URL ของ File CSV หรือ excel </Form.Label>
                             <Form.Control
                                 type="text"
                                 autoFocus
@@ -128,7 +87,18 @@ const ButtonAdd = (x) => {
                             />
                         </Form.Group>
                     </Form>
-                   
+                    <Form>
+                        <Form.Group controlId="formFile" className="mb-3">
+                            <Form.Label>Upload PDF file</Form.Label>
+                            <Form.Control
+                                type="file"
+                                accept=".pdf"
+                                onChange={(e) => {
+                                    uploadFile(e);
+                                }}
+                            />
+                        </Form.Group>
+                    </Form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseAddRecord}>
@@ -142,6 +112,40 @@ const ButtonAdd = (x) => {
             </Modal>
         </div>
     );
+};
+
+function Reload() {
+    window.location.reload();
+}
+const notifyURL = () =>
+    toast.warn("URL ไม่ถูกต้อง ", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    });
+const notifySucceed = () =>
+    toast.success("เพิ่มข้อมูลสำเร็จ", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    });
+const validation = (url) => {
+    const regEx = new RegExp("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?");
+    return regEx.test(url);
+};
+const validation2 = (url) => {
+    const regEx = new RegExp("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?");
+    return regEx.test(url);
 };
 
 export default ButtonAdd;
