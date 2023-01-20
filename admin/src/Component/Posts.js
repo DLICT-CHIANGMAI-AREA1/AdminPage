@@ -1,9 +1,9 @@
 import React from "react";
 import ButtonDelete from "../Component/ButtonCRUD/ButtonDelete/ButtonDelete";
 import ButtonEdit from "../Component/ButtonCRUD/ButtonEdit/ButtonEditData";
-
+const { REACT_APP_IMGEPATH } = process.env;
 const Posts = (data) => {
-    console.log(data.data)
+    console.log(data.data);
     return (
         <tbody>
             {data.data.map((x, index) => (
@@ -20,15 +20,19 @@ const Posts = (data) => {
                     </td>{" "}
                     <td class="col-md-10">
                         <p>
-                            <a href={x.csv_url} target="_blank" rel="noreferrer">
-                               CSV
-                            </a>
+                            <a href={x.csv_url} target="_blank" rel="noreferrer"></a>
                         </p>
                     </td>{" "}
                     <td class="col-md-10">
                         <p>
                             <a href={x.pdf.url} target="_blank" rel="noreferrer">
-                               PDF
+                                <img
+                                    src={`${REACT_APP_IMGEPATH}/images/pdf.png`}
+                                    alt="Girl in a jacket"
+                                    width="50"
+                                    height="50"
+                                    class="pointer"
+                                ></img>
                             </a>
                         </p>
                     </td>
