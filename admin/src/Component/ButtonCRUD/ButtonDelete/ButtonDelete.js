@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Swa from "sweetalert2";
-const { REACT_APP_PATH ,REACT_APP_IMGEPATH} = process.env;
+const { REACT_APP_PATH, REACT_APP_IMGEPATH } = process.env;
 const ButtonDelete = (x) => {
     const { param1, param2, param3 } = useParams();
     const [id, setId] = useState(x.data._id);
@@ -47,8 +47,16 @@ const ButtonDelete = (x) => {
         window.location.reload();
     }
     return (
-        <td>
-             <img src={`${REACT_APP_IMGEPATH}/images/delete-button.png`} alt="Girl in a jacket" width="40" height="45" class="pointer" onClick={Delete}></img>
+        <td class="col-md-10">
+            <img
+                style={{ marginTop: "11px" }}
+                src={`${REACT_APP_IMGEPATH}/images/delete-button.png`}
+                alt="Girl in a jacket"
+                width="40"
+                height="45"
+                class="pointer"
+                onClick={Delete}
+            ></img>
         </td>
     );
 };

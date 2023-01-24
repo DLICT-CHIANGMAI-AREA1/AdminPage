@@ -168,11 +168,17 @@ p {
 .zoom {
     transition: transform 0.2s;
 }
-h3{
-    padding-top:15px
+h3 {
+    padding-top: 15px;
 }
-.login{
+.login {
     margin-top: 10rem;
     margin-left: 30rem;
- 
+}
+.name {
+    margin-top: 30px;
+}
+a.disabled {
+    pointer-events: none;
+    cursor: default;
 }

@@ -77,8 +77,9 @@ const ButtonEdit = (x) => {
         window.location.reload();
     }
     return (
-        <td>
+        <td class="col-md-10">
             <img
+                style={{ marginTop: "11px" }}
                 src={`${REACT_APP_IMGEPATH}/images/contract.png`}
                 alt="Girl in a jacket"
                 width="50"

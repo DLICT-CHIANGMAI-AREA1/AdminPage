@@ -66,7 +66,7 @@ const Data = () => {
                                         <thead>
                                             <tr>
                                                 <th class="col-md-7">Name</th>
-                                                <th>DataVisualization</th>
+                                                <th>Data</th>
                                                 <th>Excel</th>
                                                 <th>PDF</th>
                                                 <th>Edit</th>

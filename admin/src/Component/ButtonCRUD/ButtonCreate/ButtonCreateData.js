@@ -30,7 +30,7 @@ const ButtonAdd = (x) => {
             formData.append("pdf", Pdf);
             const id = toast.loading("Please wait...");
             await axios
-                .post(`http://localhost:7000/admin/api/CreateData/${param}/${param2}/${param3}`, formData)
+                .post(`${REACT_APP_PATH}/admin/api/CreateData/${param}/${param2}/${param3}`, formData)
                 .then((a) => {
                     toast.update(id, { render: "All is good", type: "success", isLoading: false });
                     notifySucceed();
