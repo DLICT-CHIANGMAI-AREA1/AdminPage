@@ -21,12 +21,12 @@ const ButtonAdd = (x) => {
 
     const onSubmit = async () => {
         if (name === "") {
-            notifyURL();
+            notify();
         } else {
             const formData = new FormData();
             formData.append("name", name);
             formData.append("url", url);
-            formData.append("csv_url", csv);
+            formData.append("csv", csv);
             formData.append("pdf", Pdf);
             const id = toast.loading("Please wait...");
             await axios
@@ -44,9 +44,14 @@ const ButtonAdd = (x) => {
         setPdf(file);
     };
 
+    const uploadCSVFile = async (e) => {
+        const file = e.target.files[0];
+        setCsv(file);
+    };
+
     return (
         <div className="CreateDataButton">
-            <button type="button" class="btn btn-success rounded-pill m-3" onClick={handleShowAddRecord}>
+            <button type="button" className="btn btn-success rounded-pill m-3" onClick={handleShowAddRecord}>
                 + Add New Data
             </button>
             <Modal show={showAddRecord} onHide={handleCloseAddRecord}>
@@ -68,24 +73,22 @@ const ButtonAdd = (x) => {
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>URL ของ DataVisualization</Form.Label>
-                            <Form.Control
-                                type="text"
-                                autoFocus
-                                onChange={(event) => setUrl(event.target.value)}
-                                required
-                            />
+                            <Form.Control type="text" autoFocus onChange={(event) => setUrl(event.target.value)} />
                         </Form.Group>
                     </Form>
                     <Form>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>URL ของ File CSV หรือ excel </Form.Label>
-                            <Form.Control
-                                type="text"
-                                autoFocus
-                                onChange={(event) => setCsv(event.target.value)}
-                                required
-                            />
-                        </Form.Group>
+                        <Form>
+                            <Form.Group controlId="formFile" className="mb-3">
+                                <Form.Label>Upload CSV file</Form.Label>
+                                <Form.Control
+                                    type="file"
+                                    accept=".csv"
+                                    onChange={(e) => {
+                                        uploadCSVFile(e);
+                                    }}
+                                />
+                            </Form.Group>
+                        </Form>
                     </Form>
                     <Form>
                         <Form.Group controlId="formFile" className="mb-3">
@@ -117,8 +120,8 @@ const ButtonAdd = (x) => {
 function Reload() {
     window.location.reload();
 }
-const notifyURL = () =>
-    toast.warn("URL ไม่ถูกต้อง ", {
+const notify = () =>
+    toast.warn("กรุณากรอกข้อมูลให้ถูกต้อง ", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -139,13 +142,5 @@ const notifySucceed = () =>
         progress: undefined,
         theme: "light",
     });
-const validation = (url) => {
-    const regEx = new RegExp("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?");
-    return regEx.test(url);
-};
-const validation2 = (url) => {
-    const regEx = new RegExp("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?");
-    return regEx.test(url);
-};
 
 export default ButtonAdd;

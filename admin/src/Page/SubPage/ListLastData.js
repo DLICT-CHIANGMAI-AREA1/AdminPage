@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import ListGroup from "react-bootstrap/ListGroup";
+import { v4 as uuidv4 } from "uuid";
 import ButtonDelete from "../../Component/ButtonCRUD/ButtonDelete/ButtonDelete";
 import ButtonEdit from "../../Component/ButtonCRUD/ButtonEdit/ButtonEditData";
 import ButtonCreateData from "../../Component/ButtonCRUD/ButtonCreate/ButtonCreateData";
@@ -56,16 +57,16 @@ const Data = () => {
                     <div className="row">
                         <div className="col-12">
                             <div className="landing-data-page">
-                                <div class="p-2">
+                                <div className="p-2">
                                     <div>
                                         <ButtonCreateData id_year={param1} id_data={param2} id_date={param3} />
                                     </div>
                                 </div>
                                 <ListGroup>
-                                    <table class="table table-bordered table-striped">
+                                    <table className="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th class="col-md-7">Name</th>
+                                                <th className="col-md-7">Name</th>
                                                 <th>Data</th>
                                                 <th>Excel</th>
                                                 <th>PDF</th>
@@ -73,8 +74,8 @@ const Data = () => {
                                                 <th>Delete</th>
                                             </tr>
                                         </thead>
-
                                         <Post
+                                            key={uuidv4()}
                                             data={currentPosts}
                                             param1={param1}
                                             param2={param2}

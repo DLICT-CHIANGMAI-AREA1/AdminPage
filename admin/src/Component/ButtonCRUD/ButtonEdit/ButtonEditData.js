@@ -10,8 +10,8 @@ const ButtonEdit = (x) => {
     const [show, setShow] = useState(false);
     const [name, setName] = useState(x.data.name);
     const [URL, setURL] = useState(x.data.url);
-    const [csv, setCsv] = useState(x.data.csv_url);
-    const [Pdf, setPdf] = useState("");
+    const [csv, setCsv] = useState(x.data.csv);
+    const [Pdf, setPdf] = useState(x.data.pdf);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -37,20 +37,14 @@ const ButtonEdit = (x) => {
             progress: undefined,
             theme: "light",
         });
-    const notifyURL = () =>
-        toast.warn("URL ไม่ถูกต้อง ", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
+
     const uploadFile = async (e) => {
         const file = e.target.files[0];
         setPdf(file);
+    };
+    const uploadCSVFile = async (e) => {
+        const file = e.target.files[0];
+        setCsv(file);
     };
 
     const onSubmit = async () => {
@@ -60,11 +54,11 @@ const ButtonEdit = (x) => {
             const formData = new FormData();
             formData.append("name", name);
             formData.append("url", URL);
-            formData.append("csv_url", csv);
+            formData.append("csv", csv);
             formData.append("pdf", Pdf);
             const id = toast.loading("Please wait...");
             await axios
-                .put(`http://localhost:7000/admin/api/UpdateData/${x.id_year}/${x.data._id}/${x.id_date}`, formData)
+                .put(`${REACT_APP_PATH}/admin/api/UpdateData/${x.id_year}/${x.data._id}/${x.id_date}`, formData)
                 .then((a) => {
                     toast.update(id, { render: "All is good", type: "success", isLoading: false });
                     notifySucceed();
@@ -77,14 +71,14 @@ const ButtonEdit = (x) => {
         window.location.reload();
     }
     return (
-        <td class="col-md-10">
+        <td className="col-md-10">
             <img
                 style={{ marginTop: "11px" }}
                 src={`${REACT_APP_IMGEPATH}/images/contract.png`}
                 alt="Girl in a jacket"
                 width="50"
                 height="50"
-                class="pointer"
+                className="pointer"
                 onClick={handleShow}
             ></img>
             <Modal show={show} onHide={handleClose}>
@@ -115,14 +109,14 @@ const ButtonEdit = (x) => {
                         </Form.Group>
                     </Form>
                     <Form>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>CSV.URL</Form.Label>
+                        <Form.Group controlId="formFile" className="mb-3">
+                            <Form.Label>Upload CSV file</Form.Label>
                             <Form.Control
-                                type="text"
-                                autoFocus
-                                value={csv}
-                                onChange={(event) => setCsv(event.target.value)}
-                                required
+                                type="file"
+                                accept=".csv"
+                                onChange={(e) => {
+                                    uploadCSVFile(e);
+                                }}
                             />
                         </Form.Group>
                     </Form>

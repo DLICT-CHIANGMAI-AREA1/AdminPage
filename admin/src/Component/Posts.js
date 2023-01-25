@@ -7,10 +7,10 @@ const Posts = (data) => {
         <tbody>
             {data.data.map((x, index) => (
                 <tr>
-                    <td class="col-md-10">
+                    <td className="col-md-10">
                         <p className="name">{x.name}</p>
                     </td>
-                    <td class="col-md-1">
+                    <td className="col-md-1">
                         <p style={{ textAlign: "center" }}>
                             {x.url ? (
                                 <a href={x.url} target="_blank" rel="noreferrer">
@@ -19,7 +19,7 @@ const Posts = (data) => {
                                         alt="Girl in a jacket"
                                         width="50"
                                         height="50"
-                                        class="pointer"
+                                        className="pointer"
                                     ></img>
                                 </a>
                             ) : (
@@ -29,40 +29,40 @@ const Posts = (data) => {
                                         alt="Girl in a jacket"
                                         width="50"
                                         height="50"
-                                        class="pointer"
+                                        className="pointer"
                                         style={{ opacity: 0.5 }}
                                     ></img>
                                 </a>
                             )}
                         </p>
-                    </td>{" "}
-                    <td class="col-md-10">
+                    </td>
+                    <td className="col-md-10">
                         <p>
-                            {x.csv_url ? (
-                                <a href={x.csv_url} target="_blank" rel="noreferrer">
+                            {x.csv ? (
+                                <a href={x.csv} target="_blank" rel="noreferrer">
                                     <img
                                         src={`${REACT_APP_IMGEPATH}/images/csv.png`}
                                         alt="Girl in a jacket"
                                         width="50"
                                         height="50"
-                                        class="pointer"
+                                        className="pointer"
                                     ></img>
                                 </a>
                             ) : (
-                                <a href={x.csv_url} target="_blank" rel="noreferrer" className="disabled">
+                                <a href={x.csv} target="_blank" rel="noreferrer" className="disabled">
                                     <img
                                         src={`${REACT_APP_IMGEPATH}/images/csv.png`}
                                         alt="Girl in a jacket"
                                         width="50"
                                         height="50"
-                                        class="pointer"
+                                        className="pointer"
                                         style={{ opacity: 0.5 }}
                                     ></img>
                                 </a>
                             )}
                         </p>
                     </td>{" "}
-                    <td class="col-md-10">
+                    <td className="col-md-10">
                         <p>
                             {x.pdf ? (
                                 <a href={x.pdf} target="_blank" rel="noreferrer">
@@ -71,7 +71,7 @@ const Posts = (data) => {
                                         alt="Girl in a jacket"
                                         width="50"
                                         height="50"
-                                        class="pointer"
+                                        className="pointer"
                                     ></img>
                                 </a>
                             ) : (
@@ -81,7 +81,7 @@ const Posts = (data) => {
                                         alt="Girl in a jacket"
                                         width="50"
                                         height="50"
-                                        class="pointer"
+                                        className="pointer"
                                         style={{ opacity: 0.5 }}
                                     ></img>
                                 </a>
