@@ -20,10 +20,11 @@ const ButtonDelete = (x) => {
             cancelButtonText: "No",
         }).then((result) => {
             if (result.isConfirmed) {
+                const a = toast.loading("Please wait...");
                 let data = axios
                     .delete(`${REACT_APP_PATH}/admin/api/DeleteData/${param1}/${param2}/${param3}/${id}`)
                     .then((result) => {
-                        console.log(result.data);
+                        toast.update(a, { render: "All is good", type: "success", isLoading: false });
                         notifySucceed();
                         setTimeout(Reload, 2000);
                     });
