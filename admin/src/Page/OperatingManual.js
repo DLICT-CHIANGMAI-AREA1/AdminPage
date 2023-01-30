@@ -11,19 +11,19 @@ import jwtDecode from "jwt-decode";
 const { REACT_APP_PATH } = process.env;
 
 const PDFViewer = () => {
-    // check token 
+    // check token
     const jwt = localStorage.getItem("mini-session");
     const navigate = useNavigate();
     if (!jwt) {
         navigate("/Login");
     }
-    const { exp } = jwtDecode(jwt)
-    const expirationTime = (exp * 1000) - 60000
+    const { exp } = jwtDecode(jwt);
+    const expirationTime = exp * 1000 - 60000;
     if (Date.now() >= expirationTime) {
         localStorage.clear();
         navigate("/Login");
-      }
-////////////////////////////////////////////////////
+    }
+    ////////////////////////////////////////////////////
     const [Data, setData] = useState("");
     const [Id, setId] = useState("");
     useEffect(() => {
@@ -82,16 +82,15 @@ const PDFViewer = () => {
         } else {
             const formData = new FormData();
             formData.append("filename", "operation");
-            formData.append("file", File);
+            formData.append("OPM", File);
             /*await axios.post(`http://localhost:7000/admin/api/CreatePDF`, formData).then((res) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });*/
 
-            
-            const id = toast.loading("Please wait...")
+            const id = toast.loading("Please wait...");
             await axios.put(`${REACT_APP_PATH}/admin/api/UpdatePDF_OPM/${Id}`, formData).then((res) => {
-                toast.update(id, {render: "All is good", type: "success", isLoading: false});
+                toast.update(id, { render: "All is good", type: "success", isLoading: false });
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });
