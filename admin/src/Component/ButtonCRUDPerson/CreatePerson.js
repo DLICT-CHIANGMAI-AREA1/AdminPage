@@ -175,7 +175,7 @@ const CreatePerson = () => {
                                     type="email"
                                     autoFocus
                                     onChange={(event) => setEmail(event.target.value)}
-                                    required
+                                
                                 />
                             </Col>
                         </Row>
@@ -187,7 +187,7 @@ const CreatePerson = () => {
                                     autoFocus
                                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                     onChange={(event) => setPhone(event.target.value)}
-                                    required
+                               
                                 />
                             </Col>
                         </Row>

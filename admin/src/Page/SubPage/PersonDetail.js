@@ -40,6 +40,7 @@ const PersonDetail = () => {
     const [OldProfile, setOldProfile] = useState();
     const [OperatingManual, setOperatingManual] = useState();
     const [Position, setPosition] = useState("");
+
     useEffect(() => {
         function get() {
             axios.get(`${REACT_APP_PATH}/admin/api/DataPersonById/${param}`).then((res) => {
@@ -51,8 +52,8 @@ const PersonDetail = () => {
                 setJobTitle(res.data.Job_title);
                 setDepartment(res.data.Department);
                 setGenders(res.data.Gender);
-                setOperatingManual(res.data.Operating_Manual);
                 setProfile(res.data.Profile);
+                setOldProfile(res.data.Profile);
                 setPosition(res.data.Positions);
             });
         }
@@ -89,7 +90,7 @@ const PersonDetail = () => {
     };
 
     const notify = () =>
-        toast.warn("กรุณา upload file pdf. ", {
+        toast.warn("กรุณากรอกข้อมูลให้ครบถ้วน. ", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -99,7 +100,9 @@ const PersonDetail = () => {
             progress: undefined,
             theme: "light",
         });
+
     const onSubmit = async () => {
+        console.log("run");
         if (
             FirstName === "" ||
             LastName === "" ||
@@ -119,9 +122,11 @@ const PersonDetail = () => {
             formData.append("Department", Department);
             formData.append("Phone", Phone);
             formData.append("Operating_Manual", OperatingManual);
-            formData.append("Profile", OldProfile);
+            formData.append("Profile", Profile);
             formData.append("Position", Position);
-            await axios.post(`http://localhost:7000/admin/api/UpdatePerson/${param}`, formData).then((res) => {
+        
+            await axios.post(`${REACT_APP_PATH}/admin/api/UpdatePerson/${param}`, formData).then((res) => {
+            toast.loading("Please wait...");
                 if (res) {
                     Swal.fire("เเก้ไขข้อมูลสำเร็จ").then(() => {
                         navigate("/Person");
@@ -140,7 +145,12 @@ const PersonDetail = () => {
                             <div className="landing-data-page">
                                 <div class="row p-2">
                                     <div class="col-5">
-                                        <img src={`${Profile}`} alt="Girl in a jacket" width="350" height="500"></img>
+                                        <img
+                                            src={`${OldProfile}`}
+                                            alt="Girl in a jacket"
+                                            width="350"
+                                            height="500"
+                                        ></img>
                                     </div>
                                     <div class="col">
                                         <Form>
@@ -219,7 +229,6 @@ const PersonDetail = () => {
                                                         autoFocus
                                                         value={Email}
                                                         onChange={(event) => setEmail(event.target.value)}
-                                                        required
                                                     />
                                                 </Col>
                                             </Row>
@@ -230,9 +239,7 @@ const PersonDetail = () => {
                                                         type="tel"
                                                         autoFocus
                                                         value={Phone}
-                                                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                                         onChange={(event) => setPhone(event.target.value)}
-                                                        required
                                                     />
                                                 </Col>
                                             </Row>
