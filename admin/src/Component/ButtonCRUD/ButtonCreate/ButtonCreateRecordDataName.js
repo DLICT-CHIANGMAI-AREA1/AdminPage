@@ -85,7 +85,7 @@ const ButtonCreateRecords = (data) => {
 
     return (
         <div className="CreateDataButton">
-            <button type="button" class="btn btn-success" onClick={handleShowAddRecord}>
+            <button type="button" className="btn btn-success" onClick={handleShowAddRecord}>
                 + Create Record Data Name
             </button>
             <Modal show={showAddRecord} onHide={handleCloseAddRecord}>

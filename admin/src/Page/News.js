@@ -10,25 +10,18 @@ import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 const { REACT_APP_PATH } = process.env;
 const NewPage = () => {
-    
-    // check token 
+    // check token
     const jwt = localStorage.getItem("mini-session");
     const navigate = useNavigate();
     if (!jwt) {
         navigate("/Login");
     }
-    const { exp } = jwtDecode(jwt)
-    const expirationTime = (exp * 1000) - 60000
+    const { exp } = jwtDecode(jwt);
+    const expirationTime = exp * 1000 - 60000;
     if (Date.now() >= expirationTime) {
         localStorage.clear();
         navigate("/Login");
-      }
-      console.log("Token "+expirationTime)
-      console.log("DateT "+Date.now())
-////////////////////////////////////////////////////
-    
-   
-
+    }
 
     const [Data, setData] = useState();
     useEffect(() => {
@@ -42,20 +35,20 @@ const NewPage = () => {
 
     return (
         <Container>
-            <div className="container">
+            <div className="container ">
                 <div className="row">
                     <div className="row">
                         <div className="col-12">
                             <div className="landing-data-page">
-                                <div class="p-2">
+                                <div className="p-2">
                                     <AddNewsButton />
                                 </div>
-                                <div class="row ">
+                                <div className="row ">
                                     <ListGroup variant="flush">
-                                        <table class="table table-bordered table-striped">
+                                        <table className="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th class="col-md-10">Name</th>
+                                                    <th className="col-md-10">Name</th>
                                                     <th>Edit</th>
                                                     <th>Delete</th>
                                                 </tr>

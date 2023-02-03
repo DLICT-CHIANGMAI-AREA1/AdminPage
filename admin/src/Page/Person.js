@@ -39,15 +39,15 @@ const Person = () => {
                     <div className="row">
                         <div className="col-12">
                             <div className="landing-data-page">
-                                <div class="p-2">
+                                <div className="p-2">
                                     <CreatePerson />
                                 </div>
                                 <ListGroup>
-                                    <table class="table table-bordered table-striped">
+                                    <table className="table table-bordered table-striped">
                                         <thead>
                                             <tr>
                                                 <th>Profile</th>
-                                                <th class="col-md-10">Name</th>
+                                                <th className="col-md-10">Name</th>
                                                 <th>Edit</th>
                                                 <th>Delete</th>
                                             </tr>

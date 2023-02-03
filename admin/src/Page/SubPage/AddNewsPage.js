@@ -129,15 +129,15 @@ const AddNewsPage = () => {
                     <div className="row">
                         <div className="col-12">
                             <div className="landing-data-page">
-                                <div class="d-flex flex-row-reverse">
-                                    <div class="p-2">
+                                <div className="d-flex flex-row-reverse">
+                                    <div className="p-2">
                                         <Button variant="primary" onClick={onSubmit}>
                                             {" "}
                                             + Upload News
                                         </Button>
                                     </div>
                                 </div>
-                                <div class="p-2">
+                                <div className="p-2">
                                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                         <Form.Label>HeadLine</Form.Label>
                                         <Form.Control
@@ -161,7 +161,7 @@ const AddNewsPage = () => {
                                     ))}
                                 </div>
 
-                                <div class="p-2">
+                                <div className="p-2">
                                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                         <Form.Label>Content</Form.Label>
                                         <Form.Control
@@ -172,7 +172,7 @@ const AddNewsPage = () => {
                                         />
                                     </Form.Group>
                                 </div>
-                                <div class="container">
+                                <div className="container">
                                     <div class="row" className="container-img">
                                         {Minput.map((i) => (
                                             <div className="item">
@@ -188,7 +188,7 @@ const AddNewsPage = () => {
                                         ))}
                                     </div>
                                 </div>
-                                <div class="p-2">
+                                <div className="p-2">
                                     <Form.Label>วันที่</Form.Label>
                                     <DatePicker
                                         selected={selectedDate}
@@ -196,19 +196,19 @@ const AddNewsPage = () => {
                                         onChange={(date) => setSelectedDate(date)}
                                     />
                                 </div>
-                                <div class="p-2">
+                                <div className="p-2">
                                     <Form.Group controlId="formFile" className="mb-3">
                                         <Form.Label>ภาพปก</Form.Label>
                                         <Form.Control type="file" onChange={_treat} />
                                     </Form.Group>
                                 </div>
-                                <div class="p-2">
+                                <div className="p-2">
                                     <Form.Group controlId="formFileMultiple" className="mb-3">
                                         <Form.Label>ภาพอื่นๆ เพิ่มเติม</Form.Label>
                                         <Form.Control type="file" multiple onChange={_treatMultiple} />
                                     </Form.Group>
                                 </div>
-                                <div class="row "></div>
+                                <div className="row "></div>
                             </div>
                         </div>
                     </div>

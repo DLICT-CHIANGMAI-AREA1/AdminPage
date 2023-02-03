@@ -10,7 +10,7 @@ const ButtonEditLink = (x) => {
                     alt="Girl in a jacket"
                     width="50"
                     height="50"
-                    class="pointer"
+                    className="pointer"
                 ></img>
             </Link>
         </td>

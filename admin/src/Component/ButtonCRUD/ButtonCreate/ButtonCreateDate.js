@@ -57,7 +57,7 @@ const ButtonAdd = (x) => {
 
     return (
         <div>
-            <button type="button" class="btn btn-success rounded-pill m-3" onClick={handleShowAddRecord}>
+            <button type="button" className="btn btn-success rounded-pill m-3" onClick={handleShowAddRecord}>
                 + Add Data
             </button>
             <Modal show={showAddRecord} onHide={handleCloseAddRecord}>

@@ -48,14 +48,14 @@ const ButtonDelete = (x) => {
         window.location.reload();
     }
     return (
-        <td class="col-md-10">
+        <td className="col-md-10">
             <img
                 style={{ marginTop: "11px" }}
                 src={`${REACT_APP_IMGEPATH}/images/delete-button.png`}
                 alt="Girl in a jacket"
                 width="40"
                 height="45"
-                class="pointer"
+                className="pointer"
                 onClick={Delete}
             ></img>
         </td>

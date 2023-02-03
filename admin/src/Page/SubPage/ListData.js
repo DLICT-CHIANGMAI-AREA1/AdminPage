@@ -46,11 +46,11 @@ const Data = () => {
                     <div className="row">
                         <div className="col-12">
                             <div className="landing-data-page">
-                                <div class="row p-2">
-                                    <div class="col">
+                                <div className="row p-2">
+                                    <div className="col">
                                         <h1>{NameYear}</h1>
                                     </div>
-                                    <div class="col">
+                                    <div className="col">
                                         <ButtonCreateRecordNameData id_year={param1} />
                                     </div>
                                 </div>

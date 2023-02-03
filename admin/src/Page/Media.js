@@ -39,10 +39,10 @@ const Media = () => {
                     <div className="row">
                         <div className="col-12">
                             <div className="landing-data-page">
-                                <div class="p-2">
+                                <div className="p-2">
                                     <ButtonCreateMedia />
                                 </div>
-                                <div class="row ">
+                                <div className="row ">
                                     {Data ? (
                                         Data.map((data) => {
                                             return <Video key={data._id} data={data} />;

@@ -143,8 +143,8 @@ const PersonDetail = () => {
                     <div className="row">
                         <div className="col-12">
                             <div className="landing-data-page">
-                                <div class="row p-2">
-                                    <div class="col-5">
+                                <div className="row p-2">
+                                    <div className="col-5">
                                         <img
                                             src={`${OldProfile}`}
                                             alt="Girl in a jacket"
@@ -152,7 +152,7 @@ const PersonDetail = () => {
                                             height="500"
                                         ></img>
                                     </div>
-                                    <div class="col">
+                                    <div className="col">
                                         <Form>
                                             <Row className="mb-4">
                                                 <Col>

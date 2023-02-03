@@ -42,18 +42,16 @@ const ButtonDeleteNews = (x) => {
     }
 
     return (
-        <td>
-            <Link className="btn" role="button">
-                <img
-                    src={`${REACT_APP_IMGEPATH}/images/delete-button.png`}
-                    alt="Girl in a jacket"
-                    width="40"
-                    height="45"
-                    class="pointer"
-                    onClick={DeleteRecord}
-                ></img>
-            </Link>
-        </td>
+        <Link className="btn" role="button">
+            <img
+                src={`${REACT_APP_IMGEPATH}/images/delete-button.png`}
+                alt="Girl in a jacket"
+                width="40"
+                height="45"
+                className="pointer"
+                onClick={DeleteRecord}
+            ></img>
+        </Link>
     );
 };
 

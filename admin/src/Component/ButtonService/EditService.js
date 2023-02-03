@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 const { REACT_APP_PATH, REACT_APP_IMGEPATH } = process.env;
 const EditService = (x) => {
-    console.log(x)
+   
     const [id] = useState(x.data.data._id);
     const [show, setShow] = useState(false);
     const [name, setName] = useState(x.data.data.name);
@@ -84,7 +84,7 @@ const EditService = (x) => {
                 alt="Girl in a jacket"
                 width="50"
                 height="50"
-                class="pointer"
+                className="pointer"
                 onClick={handleShow}
             ></img>
             <Modal show={show} onHide={handleClose}>

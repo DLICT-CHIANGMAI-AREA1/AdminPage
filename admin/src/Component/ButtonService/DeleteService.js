@@ -41,18 +41,18 @@ const ButtonDeleteService = (x) => {
         window.location.reload();
     }
     return (
-        <div>
+        <td>
             <Link className="btn" role="button">
                 <img
                     src={`${REACT_APP_IMGEPATH}/images/delete-button.png`}
                     alt="Girl in a jacket"
                     width="40"
                     height="45"
-                    class="pointer"
+                    className="pointer"
                     onClick={DeleteRecord}
                 ></img>
             </Link>
-        </div>
+        </td>
     );
 };
 

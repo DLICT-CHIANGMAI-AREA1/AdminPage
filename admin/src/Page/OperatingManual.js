@@ -106,7 +106,7 @@ const PDFViewer = () => {
                             {Data ? (
                                 <iframe
                                     src={`${Data}`}
-                                    frameborder="0"
+                                    frameBorder="0"
                                     height="90%"
                                     width="90%"
                                     title="myFrame"

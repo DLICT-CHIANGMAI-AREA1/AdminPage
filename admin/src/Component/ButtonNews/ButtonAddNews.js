@@ -5,7 +5,7 @@ const ButtonAddNews = () => {
     return (
         <div className="CreateDataButton">
             <Link className="btn" role="button" to={`/News/AddNews`}>
-            <button type="button" class="btn btn-success" >
+            <button type="button" className="btn btn-success" >
                 + Add News
             </button>
             </Link>

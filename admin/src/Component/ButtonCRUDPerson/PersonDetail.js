@@ -5,7 +5,7 @@ const PeronDetail = (x) => {
     return (
         <div>
             <Link className="btn" role="button" to={`/Person/${x.data.data._id}`}>
-                <img src={`${REACT_APP_IMGEPATH}/images/contract.png`} alt="Girl in a jacket" width="50" height="50" class="pointer"></img>
+                <img src={`${REACT_APP_IMGEPATH}/images/contract.png`} alt="Girl in a jacket" width="50" height="50" className="pointer"></img>
             </Link>
         </div>
     );

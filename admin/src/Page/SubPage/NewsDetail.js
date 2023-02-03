@@ -11,27 +11,28 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import jwtDecode from "jwt-decode";
-const { REACT_APP_PATH, REACT_APP_IMGEPATH } = process.env;
-const AddNewsPage = () => {
+import { v4 as uuidv4 } from "uuid";
+const { REACT_APP_PATH} = process.env;
+
+const AddNewsPage = ({className}) => {
     const navigate = useNavigate();
-    // check token 
+    // check token
     const jwt = localStorage.getItem("mini-session");
 
     if (!jwt) {
         navigate("/Login");
     }
-    const { exp } = jwtDecode(jwt)
-    const expirationTime = (exp * 1000) - 60000
+    const { exp } = jwtDecode(jwt);
+    const expirationTime = exp * 1000 - 60000;
     if (Date.now() >= expirationTime) {
         localStorage.clear();
         navigate("/Login");
-      }
-////////////////////////////////////////////////////
+    }
+    ////////////////////////////////////////////////////
     const { param } = useParams();
     useEffect(() => {
         function get() {
             axios.get(`${REACT_APP_PATH}/admin/api/FindNewsById/${param}`).then((res) => {
-                console.log(res.data);
                 setHeadline(res.data.Headline);
                 setInput(res.data.image_title_url);
                 setContent(res.data.content);
@@ -52,7 +53,6 @@ const AddNewsPage = () => {
     const [File, setFile] = useState([]);
     const [Minput, setMInput] = useState([]);
     const [MFile, setMFile] = useState([]);
-
 
     const _treat = async (e) => {
         const file = e.target.files[0];
@@ -127,10 +127,10 @@ const AddNewsPage = () => {
                 DateTime: Dates,
                 type: "ICT",
             };
-            const id = toast.loading("Please wait...")
+            const id = toast.loading("Please wait...");
             await axios.put(`${REACT_APP_PATH}/admin/api/UpdateNews/${Id}`, data).then((res) => {
                 if (res) {
-                    toast.update(id, {render: "All is good", type: "success", isLoading: false});
+                    toast.update(id, { render: "All is good", type: "success", isLoading: false });
                     notifySucceed();
                     setTimeout(() => {
                         navigate("/News");
@@ -147,15 +147,15 @@ const AddNewsPage = () => {
                     <div className="row">
                         <div className="col-12">
                             <div className="landing-data-page">
-                                <div class="d-flex flex-row-reverse">
-                                    <div class="p-2">
+                                <div className="d-flex flex-row-reverse">
+                                    <div className="p-2">
                                         <Button variant="primary" onClick={onSubmit}>
                                             {" "}
                                             + Update News
                                         </Button>
                                     </div>
                                 </div>
-                                <div class="p-2">
+                                <div className="p-2">
                                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                         <Form.Label>HeadLine</Form.Label>
                                         <Form.Control
@@ -169,18 +169,19 @@ const AddNewsPage = () => {
 
                                 <div class="p-2" className="img-center">
                                     {input.map((i) => (
+
                                         <img
-                                            key={i}
+                                            key={uuidv4()}
                                             src={i}
                                             alt="Girl in a jacket"
                                             width="auto"
-                                            class="zoom"
+                                            className="zoom"
                                             height="500"
                                         ></img>
                                     ))}
                                 </div>
 
-                                <div class="p-2">
+                                <div className="p-2">
                                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                         <Form.Label>Content</Form.Label>
                                         <Form.Control
@@ -192,7 +193,7 @@ const AddNewsPage = () => {
                                         />
                                     </Form.Group>
                                 </div>
-                                <div class="container">
+                                <div className="container">
                                     <div class="row" className="container-img">
                                         {Minput.map((i) => (
                                             <div className="item">
@@ -202,13 +203,13 @@ const AddNewsPage = () => {
                                                     alt="Girl in a jacket"
                                                     width="auto"
                                                     height="200px"
-                                                    class="zoom"
+                                                    className="zoom"
                                                 ></img>
                                             </div>
                                         ))}
                                     </div>
                                 </div>
-                                <div class="p-2">
+                                <div className="p-2">
                                     <Form.Label>วันที่</Form.Label>
                                     <DatePicker
                                         selected={selectedDate}
@@ -216,19 +217,19 @@ const AddNewsPage = () => {
                                         onChange={(date) => setSelectedDate(date)}
                                     />
                                 </div>
-                                <div class="p-2">
+                                <div className="p-2">
                                     <Form.Group controlId="formFile" className="mb-3">
                                         <Form.Label>ภาพปก</Form.Label>
                                         <Form.Control type="file" onChange={_treat} />
                                     </Form.Group>
                                 </div>
-                                <div class="p-2">
+                                <div className="p-2">
                                     <Form.Group controlId="formFileMultiple" className="mb-3">
                                         <Form.Label>ภาพอื่นๆ เพิ่มเติม</Form.Label>
                                         <Form.Control type="file" multiple onChange={_treatMultiple} />
                                     </Form.Group>
                                 </div>
-                                <div class="row "></div>
+                                <div className="row "></div>
                             </div>
                         </div>
                     </div>

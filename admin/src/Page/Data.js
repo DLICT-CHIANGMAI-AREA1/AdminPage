@@ -41,14 +41,14 @@ const Data = () => {
                     <div className="row">
                         <div className="col-12">
                             <div className="landing-data-page">
-                                <div class="p-2">
+                                <div className="p-2">
                                     <ButtonCreateRecordsYear />
                                 </div>
                                 <ListGroup>
-                                    <table class="table table-bordered table-striped">
+                                    <table className="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th class="col-md-10">ปีข้อมูล</th>
+                                                <th className="col-md-10">ปีข้อมูล</th>
                                                 <th>Edit</th>
                                                 <th>Delete</th>
                                             </tr>

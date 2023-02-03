@@ -53,7 +53,7 @@ const ButtonDelete = (x) => {
                 alt="Girl in a jacket"
                 width="40"
                 height="45"
-                class="pointer"
+                className="pointer"
                 onClick={Delete}
             ></img>
             </Link>

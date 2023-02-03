@@ -49,7 +49,7 @@ const ButtonDeleteYear = (x) => {
                     alt="Girl in a jacket"
                     width="40"
                     height="45"
-                    class="pointer"
+                    className="pointer"
                     onClick={DeleteRecord}
                 ></img>
             </Link>

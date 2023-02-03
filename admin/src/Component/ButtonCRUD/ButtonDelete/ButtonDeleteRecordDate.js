@@ -43,7 +43,7 @@ const ButtonDeleteRecord = (x) => {
     }
     return (
         <div>
-            <button type="button" class="btn btn-danger rounded-pill m-3" onClick={DeleteRecord}>
+            <button type="button" className="btn btn-danger rounded-pill m-3" onClick={DeleteRecord}>
                 Delete Record
             </button>
         </div>

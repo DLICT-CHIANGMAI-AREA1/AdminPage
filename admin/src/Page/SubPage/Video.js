@@ -8,7 +8,7 @@ import axios from "axios";
 const { REACT_APP_PATH } = process.env;
 
 const Video = (data) => {
-    const id = data.data._id
+    const id = data.data._id;
     const notifySucceed = () =>
         toast.success("ลบรายการสำเร็จ", {
             position: "top-right",
@@ -42,15 +42,23 @@ const Video = (data) => {
             }
         });
     };
+  
 
     return (
-        <div class="col-sm-4 p-1">
-            <div class="card ">
-                <div class="card-header d-flex justify-content-end ">
+        <div className="col-sm-4 p-1">
+            <div className="card ">
+                <div className="card-header d-flex justify-content-end ">
                     <img className="close_img_size" alt="video" src={iconDelete} onClick={Delete}></img>
                 </div>
-                <div class="card-body">
-                    <ReactPlayer controls className="react-player" url={data.data.url} width="auto" height="200px" />
+                <div className="card-body">
+                    <ReactPlayer
+                        controls
+                        className="react-player"
+                        muted={true}
+                        url={data.data.url}
+                        width="auto"
+                        height="200px"
+                    />
                 </div>
             </div>
         </div>

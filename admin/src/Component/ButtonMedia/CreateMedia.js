@@ -73,7 +73,7 @@ const ButtonCreateMedia = () => {
 
     return (
         <div className="CreateDataButton">
-            <button type="button" class="btn btn-success" onClick={handleShowAddRecord}>
+            <button type="button" className="btn btn-success" onClick={handleShowAddRecord}>
                 + Add Video
             </button>
             <Modal show={showAddRecord} onHide={handleCloseAddRecord}>

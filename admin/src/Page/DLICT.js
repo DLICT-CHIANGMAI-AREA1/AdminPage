@@ -43,17 +43,17 @@ const DLICTPage = () => {
                     <div className="row">
                         <div className="col-12">
                             <div className="landing-data-page">
-                                <div class="p-2">
+                                <div className="p-2">
                                     <ButtonCreateServiceIcon data={type}/>
                                 </div>
-                                <div class="row ">
+                                <div className="row ">
                                     <ListGroup variant="flush">
                                         <TitleText data={type} />
-                                        <table class="table table-bordered table-striped">
+                                        <table className="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>Image</th>
-                                                    <th class="col-md-10">Name</th>
+                                                    <th className="col-md-10">Name</th>
                                                     <th>Edit</th>
                                                     <th>Delete</th>
                                                 </tr>
@@ -63,6 +63,7 @@ const DLICTPage = () => {
                                                     Data.map((data) => {
                                                         return <ListService key={data._id} data={data} />; // map ออกมาเป็นปีก่อน
                                                     })
+                                                    
                                                 ) : (
                                                     <Spinner
                                                         animation="border"

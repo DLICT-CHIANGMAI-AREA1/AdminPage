@@ -40,10 +40,10 @@ const Mission = () => {
                     <div className="row">
                         <div className="col-12">
                             <div className="landing-data-page">
-                                <div class="p-2">
+                                <div className="p-2">
                                     <ButtonCreateMission />
                                 </div>
-                                <div class="row ">
+                                <div className="row ">
                                     <ListGroup variant="flush">
                                         {Data ? (
                                             Data.map((data) => {
