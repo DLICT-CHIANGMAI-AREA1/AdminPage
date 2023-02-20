@@ -49,7 +49,7 @@ const Footer = () => {
     const [Id3, setId3] = useState();
     useEffect(() => {
         function get() {
-            axios.get(`http://localhost:7000/admin/api/website/findFooter`).then((res) => {
+            axios.get(`${REACT_APP_PATH}/admin/api/website/findFooter`).then((res) => {
                 setData(res.data[0].data);
                 setId(res.data[0]._id);
                 setId2(res.data[1]._id);
@@ -58,8 +58,8 @@ const Footer = () => {
                 setYoutube(res.data[1].data[0].Youtube);
                 setTwitter(res.data[1].data[0].Twitter);
                 setInstagram(res.data[1].data[0].Instagram);
-                setTitle(res.data[2].data[0].Title)
-                setDescription(res.data[2].data[0].Description)
+                setTitle(res.data[2].data[0].Title);
+                setDescription(res.data[2].data[0].Description);
             });
         }
         get();
@@ -85,7 +85,7 @@ const Footer = () => {
         let data = { Facebook, Youtube, Twitter, Instagram };
 
         axios
-            .put(`http://localhost:7000/admin/api/website/EditLink/${Id2}`, data)
+            .put(`${REACT_APP_PATH}/admin/api/website/EditLink/${Id2}`, data)
             .then((response) => {
                 toast.update(id, { render: "All is good", type: "success", isLoading: false });
                 notifySucceed();
@@ -100,7 +100,7 @@ const Footer = () => {
         const lines = Text.split("\n");
         const id = toast.loading("Please wait...");
         axios
-            .put(`http://localhost:7000/admin/api/website/editFooter/${Id}`, lines)
+            .put(`${REACT_APP_PATH}/admin/api/website/editFooter/${Id}`, lines)
             .then((response) => {
                 toast.update(id, { render: "All is good", type: "success", isLoading: false });
                 notifySucceed();
@@ -116,7 +116,7 @@ const Footer = () => {
         let data = { Title, Description };
 
         axios
-            .put(`http://localhost:7000/admin/api/website/EditTitleBanner/${Id3}`, data)
+            .put(`${REACT_APP_PATH}/admin/api/website/EditTitleBanner/${Id3}`, data)
             .then((response) => {
                 toast.update(id, { render: "All is good", type: "success", isLoading: false });
                 notifySucceed();
