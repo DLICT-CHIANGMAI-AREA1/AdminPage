@@ -10,6 +10,7 @@ import PDFViewer from "./OperatingManual";
 import Person from "./Person";
 import Media from "./Media";
 import Mission from "./Mission";
+import Footer from "./Footer";
 import Service from "./Service";
 import DLICT from "./DLICT";
 import AddNewsPage from "./SubPage/AddNewsPage";
@@ -38,6 +39,7 @@ const AnimatedRoute = () => {
                 <Route path="/BigData" element={<><Navbar/><Data /></>} />
                 <Route path="/BigData/ListData/:param1" element={<><Navbar/><ListData /></>} />
                 <Route path="/BigData/ListData/Data/:param1/:param2/:param3" element={<><Navbar/><ListLastData /></>} />
+                <Route path="/Footer" element={<><Navbar/><Footer /></>} />
             </Routes>
         </AnimatePresence>
     );

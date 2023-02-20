@@ -53,5 +53,11 @@ export const SidebarData = [
         icon: <FaIcons.FaDigitalTachograph/>,
         cName: "nav-text",
     },
+    {
+        title: "Other",
+        path: "/Footer",
+        icon: <FaIcons.FaDigitalTachograph/>,
+        cName: "nav-text",
+    },
   
 ];
