@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 import { Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH,REACT_APP_PATH2 } = process.env;
 
 const PDFViewer = () => {
     // check token
@@ -26,11 +26,13 @@ const PDFViewer = () => {
     ////////////////////////////////////////////////////
     const [Data, setData] = useState("");
     const [Id, setId] = useState("");
+    console.log(Id)
     useEffect(() => {
         function get() {
-            axios.get(`${REACT_APP_PATH}/admin/api/FindPDF`).then((res) => {
+            axios.get(`${REACT_APP_PATH2}/admin/api/get_uploadOPM`).then((res) => {
+                console.log(res)
                 setData(res.data[0].url);
-                setId(res.data[0]._id);
+                setId(res.data[0].id);
             });
         }
         get();
@@ -81,15 +83,15 @@ const PDFViewer = () => {
             notify();
         } else {
             const formData = new FormData();
-            formData.append("filename", "operation");
-            formData.append("OPM", File);
-            /*await axios.post(`http://localhost:7000/admin/api/CreatePDF`, formData).then((res) => {
+            formData.append("name", "operation");
+            formData.append("file", File);
+            /*await axios.post(`${REACT_APP_PATH2}/admin/api/uploadOPM`, formData).then((res) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });*/
 
             const id = toast.loading("Please wait...");
-            await axios.put(`${REACT_APP_PATH}/admin/api/UpdatePDF_OPM/${Id}`, formData).then((res) => {
+            await axios.post(`${REACT_APP_PATH2}/admin/api/updateOPM/${Id}`, formData).then((res) => {
                 toast.update(id, { render: "All is good", type: "success", isLoading: false });
                 notifySucceed();
                 setTimeout(Reload, 2000);

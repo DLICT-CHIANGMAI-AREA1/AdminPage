@@ -8,7 +8,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import SubMission from "../Page/SubPage/subMission"
 import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH ,REACT_APP_PATH2} = process.env;
 
 const Mission = () => {
     // check token 
@@ -27,7 +27,7 @@ const Mission = () => {
     const [Data, setData] = useState();
     useEffect(() => {
         function get() {
-            axios.get(`${REACT_APP_PATH}/admin/api/FindMission`).then((res) => {
+            axios.get(`${REACT_APP_PATH2}/admin/api/FindMission`).then((res) => {
                 setData(res.data);
             });
         }
@@ -47,7 +47,7 @@ const Mission = () => {
                                     <ListGroup variant="flush">
                                         {Data ? (
                                             Data.map((data) => {
-                                                return  <SubMission key={data._id} data={data}/>
+                                                return  <SubMission key={data.id} data={data}/>
                                             })
                                         ) : (
                                             <Spinner
