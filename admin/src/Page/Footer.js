@@ -12,19 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 const { REACT_APP_PATH } = process.env;
 
 const Footer = () => {
-    // check token
-    const jwt = localStorage.getItem("mini-session");
-    const navigate = useNavigate();
-    if (!jwt) {
-        navigate("/Login");
-    }
-    const { exp } = jwtDecode(jwt);
-    const expirationTime = exp * 1000 - 60000;
-    if (Date.now() >= expirationTime) {
-        localStorage.clear();
-        navigate("/Login");
-    }
-    ///////////////////////////////////////////
+
     const notifySucceed = () =>
         toast.success("Update success", {
             position: "top-right",

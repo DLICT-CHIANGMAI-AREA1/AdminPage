@@ -7,7 +7,7 @@ import logoAdmin from "../../src/assets/img/logo.png";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH2 } = process.env;
 
 function LoginForm({ className }) {
     const [Username, setUsername] = useState();
@@ -36,15 +36,14 @@ function LoginForm({ className }) {
         };
         const id = toast.loading("Please wait...");
         await axios
-            .post(`${REACT_APP_PATH}/admin/api/login`, data)
+            .post(`${REACT_APP_PATH2}/admin/api/login`, data)
             .then((res) => {
-                if (res.data.text === "Invalid password") {
+                if (res.data.message !== "Login successful") {
                     toast.update(id, { render: "Login fail", type: "error", isLoading: false });
                     notify();
                 } else {
                     toast.update(id, { render: "Login successful", type: "success", isLoading: false });
                     dispatch(fetchUser(res.data));
-                    localStorage.setItem("mini-session", JSON.stringify(res.data));
                     navigate("/News");
                 }
             })

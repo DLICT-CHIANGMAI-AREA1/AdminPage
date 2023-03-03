@@ -11,21 +11,11 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import jwtDecode from "jwt-decode";
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH2 } = process.env;
 const PersonDetail = () => {
     // check token
     const navigate = useNavigate();
-    const jwt = localStorage.getItem("mini-session");
-
-    if (!jwt) {
-        navigate("/Login");
-    }
-    const { exp } = jwtDecode(jwt);
-    const expirationTime = exp * 1000 - 60000;
-    if (Date.now() >= expirationTime) {
-        localStorage.clear();
-        navigate("/Login");
-    }
+   
     ////////////////////////////////////////////////////
     const { param } = useParams();
     const [Data, setData] = useState();
@@ -43,18 +33,19 @@ const PersonDetail = () => {
 
     useEffect(() => {
         function get() {
-            axios.get(`${REACT_APP_PATH}/admin/api/DataPersonById/${param}`).then((res) => {
-                setData(res.data);
-                setLastName(res.data.Last_name);
-                setFirstName(res.data.First_name);
-                setEmail(res.data.Email);
-                setPhone(res.data.Phone);
-                setJobTitle(res.data.Job_title);
-                setDepartment(res.data.Department);
-                setGenders(res.data.Gender);
-                setProfile(res.data.Profile);
-                setOldProfile(res.data.Profile);
-                setPosition(res.data.Positions);
+            axios.get(`${REACT_APP_PATH2}/admin/api/DataPersonById/${param}`).then((res) => {
+                console.log(res.data[0])
+                setData(res.data[0]);
+                setLastName(res.data[0].Last_name);
+                setFirstName(res.data[0].First_name);
+                setEmail(res.data[0].Email);
+                setPhone(res.data[0].Phone);
+                setJobTitle(res.data[0].Job_title);
+                setDepartment(res.data[0].Department);
+                setGenders(res.data[0].Gender);
+                setProfile(res.data[0].Profile);
+                setOldProfile(res.data[0].Profile);
+                setPosition(res.data[0].Positions);
             });
         }
         get();
@@ -125,7 +116,7 @@ const PersonDetail = () => {
             formData.append("Profile", Profile);
             formData.append("Position", Position);
         
-            await axios.post(`${REACT_APP_PATH}/admin/api/UpdatePerson/${param}`, formData).then((res) => {
+            await axios.post(`${REACT_APP_PATH2}/admin/api/UpdatePerson/${param}`, formData).then((res) => {
             toast.loading("Please wait...");
                 if (res) {
                     Swal.fire("เเก้ไขข้อมูลสำเร็จ").then(() => {

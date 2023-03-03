@@ -11,19 +11,7 @@ import jwtDecode from "jwt-decode";
 const { REACT_APP_PATH,REACT_APP_PATH2 } = process.env;
 
 const PDFViewer = () => {
-    // check token
-    const jwt = localStorage.getItem("mini-session");
-    const navigate = useNavigate();
-    if (!jwt) {
-        navigate("/Login");
-    }
-    const { exp } = jwtDecode(jwt);
-    const expirationTime = exp * 1000 - 60000;
-    if (Date.now() >= expirationTime) {
-        localStorage.clear();
-        navigate("/Login");
-    }
-    ////////////////////////////////////////////////////
+   
     const [Data, setData] = useState("");
     const [Id, setId] = useState("");
     console.log(Id)

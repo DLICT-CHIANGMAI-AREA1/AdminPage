@@ -5,10 +5,11 @@ import Swa from "sweetalert2";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import axios from "axios";
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH2 } = process.env;
 
 const Video = (data) => {
-    const id = data.data._id;
+    console.log(data)
+    const id = data.data.id;
     const notifySucceed = () =>
         toast.success("ลบรายการสำเร็จ", {
             position: "top-right",
@@ -35,7 +36,7 @@ const Video = (data) => {
             cancelButtonText: "No",
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`${REACT_APP_PATH}/admin/api/DeleteVideo/${id}`).then((result) => {
+                axios.delete(`${REACT_APP_PATH2}/admin/api/DeleteVideo/${id}`).then((result) => {
                     notifySucceed();
                     setTimeout(Reload, 2000);
                 });

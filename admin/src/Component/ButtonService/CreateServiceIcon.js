@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH2 } = process.env;
 
 const ButtonCreateServiceIcon = (types) => {
     const [showAddRecord, setShowAddRecord] = useState(false);
@@ -74,7 +74,7 @@ const ButtonCreateServiceIcon = (types) => {
                 type: types.data,
             };
 
-            await axios.post(`${REACT_APP_PATH}/admin/api/CreateService`, data).then((a) => {
+            await axios.post(`${REACT_APP_PATH2}/admin/api/CreateService`, data).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });

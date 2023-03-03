@@ -5,10 +5,10 @@ import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-const { REACT_APP_PATH, REACT_APP_IMGEPATH } = process.env;
+const { REACT_APP_PATH2, REACT_APP_IMGEPATH } = process.env;
 const EditService = (x) => {
-   
-    const [id] = useState(x.data.data._id);
+
+    const [id] = useState(x.data.data.id);
     const [show, setShow] = useState(false);
     const [name, setName] = useState(x.data.data.name);
     const [URL, setURL] = useState(x.data.data.url);
@@ -58,16 +58,16 @@ const EditService = (x) => {
         });
     };
     const onSubmit = async () => {
-        if (name === "" || URL === "") {
+        if (name === "" ) {
             notify();
         } else {
             const data = {
                 name: name,
                 url: URL,
                 image: image,
-                type: x.data.types,
+                type: x.data.data.type,
             };
-            await axios.put(`${REACT_APP_PATH}/admin/api/EditService/${id}`, data).then((a) => {
+            await axios.post(`${REACT_APP_PATH2}/admin/api/EditService/${id}`, data).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });

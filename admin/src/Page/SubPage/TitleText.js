@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import ListGroup from "react-bootstrap/ListGroup";
 import edit_icon from "../../assets/img/edit.png";
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH2 } = process.env;
 const TitleText = (types) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -48,12 +48,11 @@ const TitleText = (types) => {
             notify();
         } else {
             let data = {
-                Title: Title,
-                subTitle: subTitle,
-                type:types.data
+                title: Title,
+                subtitle: subTitle,
             };
               
-            await axios.put(`${REACT_APP_PATH}/admin/api/ServiceTitle/${id}`,data).then((a) => {
+            await axios.post(`${REACT_APP_PATH2}/admin/api/ServiceTitle/${types.data}`,data).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });
@@ -62,7 +61,7 @@ const TitleText = (types) => {
     
     useEffect(() => {
         function get() {
-            axios.get(`${REACT_APP_PATH}/admin/api/ServiceTitleFindByType/${types.data}`).then((res) => {
+            axios.get(`${REACT_APP_PATH2}/admin/api/ServiceTitleFindByType/${types.data}`).then((res) => {
                 setTitle(res.data[0].title)
                 setSubTitle(res.data[0].subtitle)
                 setId(res.data[0]._id)

@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH2 } = process.env;
 
 const CreatePerson = () => {
     const [showAddRecord, setShowAddRecord] = useState(false);
@@ -92,7 +92,7 @@ const CreatePerson = () => {
             formData.append("Profile", Profile);
             formData.append("Position", Position);
             const id = toast.loading("Please wait...");
-            await axios.post(`${REACT_APP_PATH}/admin/api/CreatePerson`, formData).then((a) => {
+            await axios.post(`${REACT_APP_PATH2}/admin/api/CreatePerson`, formData).then((a) => {
                 toast.update(id, { render: "All is good", type: "success", isLoading: false });
                 notifySucceed();
                 setTimeout(Reload, 2000);

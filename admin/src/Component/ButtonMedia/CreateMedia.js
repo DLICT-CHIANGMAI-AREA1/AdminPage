@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH2 } = process.env;
 
 const ButtonCreateMedia = () => {
     const [showAddRecord, setShowAddRecord] = useState(false);
@@ -64,7 +64,7 @@ const ButtonCreateMedia = () => {
             notifyURL();
         } else {
             let data = { url: Video };
-            await axios.post(`${REACT_APP_PATH}/admin/api/AddVideo`, data).then((a) => {
+            await axios.post(`${REACT_APP_PATH2}/admin/api/AddVideo`, data).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });

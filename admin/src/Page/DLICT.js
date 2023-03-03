@@ -9,27 +9,15 @@ import ListService from "../Component/ListComponent/ListService";
 import TitleText from "../Page/SubPage/TitleText";
 import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH2 } = process.env;
 
 const DLICTPage = () => {
-     // check token 
-     const jwt = localStorage.getItem("mini-session");
-     const navigate = useNavigate();
-     if (!jwt) {
-         navigate("/Login");
-     }
-     const { exp } = jwtDecode(jwt)
-     const expirationTime = (exp * 1000) - 60000
-     if (Date.now() >= expirationTime) {
-         localStorage.clear();
-         navigate("/Login");
-       }
- ////////////////////////////////////////////////////
+  
     const type = 'dlict'
     const [Data, setData] = useState();
     useEffect(() => {
         function get() {
-            axios.get(`${REACT_APP_PATH}/admin/api/FindServiceByType/${type}`).then((res) => {
+            axios.get(`${REACT_APP_PATH2}/admin/api/FindServiceByType/${type}`).then((res) => {
                 setData(res.data);
             });
         }
