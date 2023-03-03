@@ -85,12 +85,12 @@ const CreatePerson = () => {
             formData.append("Last_name", LastName);
             formData.append("Gender", Genders);
             formData.append("Email", Email);
-            formData.append("JobTitle", JobTitle);
+            formData.append("Job_title", JobTitle);
             formData.append("Department", Department);
             formData.append("Phone", Phone);
             formData.append("Operating_Manual", OperatingManual);
             formData.append("Profile", Profile);
-            formData.append("Position", Position);
+            formData.append("Positions", Position);
             const id = toast.loading("Please wait...");
             await axios.post(`${REACT_APP_PATH2}/admin/api/CreatePerson`, formData).then((a) => {
                 toast.update(id, { render: "All is good", type: "success", isLoading: false });

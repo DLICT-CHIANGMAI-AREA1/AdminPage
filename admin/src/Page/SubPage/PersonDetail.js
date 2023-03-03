@@ -109,12 +109,12 @@ const PersonDetail = () => {
             formData.append("Last_name", LastName);
             formData.append("Gender", Genders);
             formData.append("Email", Email);
-            formData.append("JobTitle", JobTitle);
+            formData.append("Job_title", JobTitle);
             formData.append("Department", Department);
             formData.append("Phone", Phone);
             formData.append("Operating_Manual", OperatingManual);
             formData.append("Profile", Profile);
-            formData.append("Position", Position);
+            formData.append("Positions", Position);
         
             await axios.post(`${REACT_APP_PATH2}/admin/api/UpdatePerson/${param}`, formData).then((res) => {
             toast.loading("Please wait...");
