@@ -4,42 +4,31 @@ import { Container } from "react-bootstrap";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import th_TH from "antd/lib/locale/th_TH";
 import moment from "moment";
-import jwtDecode from "jwt-decode";
+import "moment/locale/th";
 import { v4 as uuidv4 } from "uuid";
-const { REACT_APP_PATH} = process.env;
+import { DatePicker, Space } from "antd";
+import { Button } from "antd";
+const { REACT_APP_PATH2 } = process.env;
 
-const AddNewsPage = ({className}) => {
+const AddNewsPage = ({ className }) => {
     const navigate = useNavigate();
-    // check token
-    const jwt = localStorage.getItem("mini-session");
 
-    if (!jwt) {
-        navigate("/Login");
-    }
-    const { exp } = jwtDecode(jwt);
-    const expirationTime = exp * 1000 - 60000;
-    if (Date.now() >= expirationTime) {
-        localStorage.clear();
-        navigate("/Login");
-    }
-    ////////////////////////////////////////////////////
     const { param } = useParams();
     useEffect(() => {
         function get() {
-            axios.get(`${REACT_APP_PATH}/admin/api/FindNewsById/${param}`).then((res) => {
-                setHeadline(res.data.Headline);
-                setInput(res.data.image_title_url);
-                setContent(res.data.content);
-                setFile(res.data.image_title_url);
-                setMInput(res.data.images[0]);
-                setMFile(res.data.images[0]);
-                setId(res.data._id);
+            axios.get(`${REACT_APP_PATH2}/admin/api/FindNewsById/${param}`).then((res) => {
+                setHeadline(res.data.content[0].headline);
+                setInput(res.data.content[0].image_title_url);
+                setContent(res.data.content[0].content);
+                setFile(res.data.content[0].image_title_url);
+                setMInput(res.data.images);
+                setMFile(res.data.images);
+                setId(res.data.content[0].id);
             });
         }
         get();
@@ -48,12 +37,11 @@ const AddNewsPage = ({className}) => {
     const [selectedDate, setSelectedDate] = useState("");
     const [Headline, setHeadline] = useState("");
     const [Content, setContent] = useState("");
-    let Dates = moment(selectedDate).add(543, "year").format("MMMM Do YYYY");
+
     const [input, setInput] = useState([]);
     const [File, setFile] = useState([]);
     const [Minput, setMInput] = useState([]);
     const [MFile, setMFile] = useState([]);
-
     const _treat = async (e) => {
         const file = e.target.files[0];
         const base64 = await convertBase64(file);
@@ -122,13 +110,14 @@ const AddNewsPage = ({className}) => {
             let data = {
                 Headline: Headline,
                 content: Content,
-                image_title_url: File,
-                images: [MFile],
-                DateTime: Dates,
+                ImageTitle: File,
+                ImageContent: MFile,
+                DateTime: selectedDate,
                 type: "ICT",
             };
+            console.log(data)
             const id = toast.loading("Please wait...");
-            await axios.put(`${REACT_APP_PATH}/admin/api/UpdateNews/${Id}`, data).then((res) => {
+            await axios.post(`${REACT_APP_PATH2}/admin/api/UpdateNews/${Id}`, data).then((res) => {
                 if (res) {
                     toast.update(id, { render: "All is good", type: "success", isLoading: false });
                     notifySucceed();
@@ -140,6 +129,9 @@ const AddNewsPage = ({className}) => {
         }
     };
 
+    const onChange = (date, dateString) => {
+        setSelectedDate(dateString);
+    };
     return (
         <Container>
             <div className="container">
@@ -168,8 +160,7 @@ const AddNewsPage = ({className}) => {
                                 </div>
 
                                 <div class="p-2" className="img-center">
-                                    {input.map((i) => (
-
+                                    {[input].map((i) => (
                                         <img
                                             key={uuidv4()}
                                             src={i}
@@ -210,12 +201,9 @@ const AddNewsPage = ({className}) => {
                                     </div>
                                 </div>
                                 <div className="p-2">
-                                    <Form.Label>วันที่</Form.Label>
-                                    <DatePicker
-                                        selected={selectedDate}
-                                        dateFormat="dd/MM/yyyy"
-                                        onChange={(date) => setSelectedDate(date)}
-                                    />
+                                    <Space direction="vertical">
+                                        <DatePicker locale={th_TH} format="DD MMMM YYYY" onChange={onChange} />
+                                    </Space>
                                 </div>
                                 <div className="p-2">
                                     <Form.Group controlId="formFile" className="mb-3">

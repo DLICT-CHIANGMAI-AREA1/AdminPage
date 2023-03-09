@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const { REACT_APP_IMGEPATH } = process.env;
 const EditNews = (x) => {
     return (
-        <Link className="btn" role="button" to={`/News/${x.data.data._id}`}>
+        <Link className="btn" role="button" to={`/News/${x.data.data.id}`}>
             <img
                 src={`${REACT_APP_IMGEPATH}/images/contract.png`}
                 alt="Girl in a jacket"

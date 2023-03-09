@@ -7,19 +7,19 @@ import { ToastContainer } from "react-toastify";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListsNews from "../Component/ListComponent/ListNew";
 import { useNavigate } from "react-router-dom";
-import jwtDecode from "jwt-decode";
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH2 } = process.env;
 const NewPage = () => {
     
     const [Data, setData] = useState();
     useEffect(() => {
         function get() {
-            axios.get(`${REACT_APP_PATH}/admin/api/FindNews`).then((res) => {
+            axios.get(`${REACT_APP_PATH2}/admin/api/FindNews`).then((res) => {
                 setData(res.data);
             });
         }
         get();
     }, []);
+
 
     return (
         <Container>
@@ -44,7 +44,7 @@ const NewPage = () => {
                                             <tbody>
                                                 {Data ? (
                                                     Data.map((data) => {
-                                                        return <ListsNews key={data._id} data={data} />; // map ออกมาเป็นปีก่อน
+                                                        return <ListsNews key={data.id} data={data} />; // map ออกมาเป็นปีก่อน
                                                     }).reverse()
                                                 ) : (
                                                     <Spinner

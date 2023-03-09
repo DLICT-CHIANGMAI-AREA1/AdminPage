@@ -4,10 +4,10 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Swa from "sweetalert2";
 import { Link } from "react-router-dom";
-const { REACT_APP_IMGEPATH, REACT_APP_PATH } = process.env;
+const { REACT_APP_IMGEPATH, REACT_APP_PATH2 } = process.env;
 
 const ButtonDeleteNews = (x) => {
-    const [id] = useState(x.data.data._id);
+    const [id] = useState(x.data.data.id);
     const DeleteRecord = async () => {
         Swa.fire({
             title: "ต้องการลบข้อมูลนี้หรือไม่",
@@ -19,7 +19,7 @@ const ButtonDeleteNews = (x) => {
             cancelButtonText: "No",
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`${REACT_APP_PATH}/admin/api/DeleteNews/${id}`).then((result) => {
+                axios.delete(`${REACT_APP_PATH2}/admin/api/DeleteNews/${id}`).then((result) => {
                     notifySucceed();
                     setTimeout(Reload, 2000);
                 });

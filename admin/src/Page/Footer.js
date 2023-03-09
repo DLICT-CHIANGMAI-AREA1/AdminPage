@@ -6,10 +6,9 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import jwtDecode from "jwt-decode";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH,REACT_APP_PATH2 } = process.env;
 
 const Footer = () => {
 
@@ -37,17 +36,19 @@ const Footer = () => {
     const [Id3, setId3] = useState();
     useEffect(() => {
         function get() {
-            axios.get(`${REACT_APP_PATH}/admin/api/website/findFooter`).then((res) => {
-                setData(res.data[0].data);
-                setId(res.data[0]._id);
-                setId2(res.data[1]._id);
-                setId3(res.data[2]._id);
-                setFacebook(res.data[1].data[0].Facebook);
-                setYoutube(res.data[1].data[0].Youtube);
-                setTwitter(res.data[1].data[0].Twitter);
-                setInstagram(res.data[1].data[0].Instagram);
-                setTitle(res.data[2].data[0].Title);
-                setDescription(res.data[2].data[0].Description);
+            axios.get(`${REACT_APP_PATH2}/admin/api/getOther`).then((res) => {
+
+                console.log(res.data)
+                setData(res.data[0].array)
+                setId(res.data[0].id);
+                setId2(res.data[1].id);
+                setId3(res.data[2].id);
+                setFacebook(res.data[2].array.Facebook);
+                setYoutube(res.data[2].array.Youtube);
+                setTwitter(res.data[2].array.Twitter);
+                setInstagram(res.data[2].array.Instagram);
+                setTitle(res.data[1].array.Title);
+                setDescription(res.data[1].array.Description);
             });
         }
         get();
@@ -73,7 +74,7 @@ const Footer = () => {
         let data = { Facebook, Youtube, Twitter, Instagram };
 
         axios
-            .put(`${REACT_APP_PATH}/admin/api/website/EditLink/${Id2}`, data)
+            .post(`${REACT_APP_PATH2}/admin/api/editSocial/${Id3}`, data)
             .then((response) => {
                 toast.update(id, { render: "All is good", type: "success", isLoading: false });
                 notifySucceed();
@@ -88,7 +89,7 @@ const Footer = () => {
         const lines = Text.split("\n");
         const id = toast.loading("Please wait...");
         axios
-            .put(`${REACT_APP_PATH}/admin/api/website/editFooter/${Id}`, lines)
+            .post(`${REACT_APP_PATH2}/admin/api/editFooter/${Id}`, lines)
             .then((response) => {
                 toast.update(id, { render: "All is good", type: "success", isLoading: false });
                 notifySucceed();
@@ -102,9 +103,9 @@ const Footer = () => {
     const handleSubmitBanner = (event) => {
         const id = toast.loading("Please wait...");
         let data = { Title, Description };
-
+        console.log(data);
         axios
-            .put(`${REACT_APP_PATH}/admin/api/website/EditTitleBanner/${Id3}`, data)
+            .post(`${REACT_APP_PATH2}/admin/api/editBanner/${Id2}`, data)
             .then((response) => {
                 toast.update(id, { render: "All is good", type: "success", isLoading: false });
                 notifySucceed();
