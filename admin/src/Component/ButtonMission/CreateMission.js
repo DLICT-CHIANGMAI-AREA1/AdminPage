@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+import { Button } from "antd";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-const { REACT_APP_PATH ,REACT_APP_PATH2} = process.env;
+const { REACT_APP_PATH, REACT_APP_PATH2 } = process.env;
 
 const ButtonCreateMedia = () => {
     const [showAddRecord, setShowAddRecord] = useState(false);
     const handleCloseAddRecord = () => setShowAddRecord(false);
     const handleShowAddRecord = () => setShowAddRecord(true);
-    const [Message, setMessage] = useState('');
+    const [Message, setMessage] = useState("");
 
     const notify = () =>
         toast.warn("กรุณากรอกข้อมูลให้ครบถ้วน ", {
@@ -44,8 +44,8 @@ const ButtonCreateMedia = () => {
         if (Message === "") {
             notify();
         } else {
-            let data = {text: Message };
-            await axios.post(`${REACT_APP_PATH2}/admin/api/AddMission`,data).then((a) => {
+            let data = { text: Message };
+            await axios.post(`${REACT_APP_PATH2}/admin/api/AddMission`, data).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });
@@ -54,9 +54,10 @@ const ButtonCreateMedia = () => {
 
     return (
         <div className="CreateDataButton">
-            <button type="button" className="btn btn-success" onClick={handleShowAddRecord}>
+            <Button type="primary" onClick={handleShowAddRecord}>
                 + เพิ่มขอบข่าย/ภารกิจ
-            </button>
+            </Button>
+
             <Modal show={showAddRecord} onHide={handleCloseAddRecord}>
                 <Modal.Header closeButton>
                     <Modal.Title>เพิ่มขอบข่าย/ภารกิจ</Modal.Title>
@@ -75,10 +76,10 @@ const ButtonCreateMedia = () => {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseAddRecord}>
+                    <Button type="default" onClick={handleCloseAddRecord}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={onSubmit}>
+                    <Button type="primary" onClick={onSubmit}>
                         Create Save
                     </Button>
                 </Modal.Footer>

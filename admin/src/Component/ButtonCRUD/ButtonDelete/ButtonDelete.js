@@ -4,10 +4,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Swa from "sweetalert2";
-const { REACT_APP_PATH, REACT_APP_IMGEPATH } = process.env;
+const { REACT_APP_PATH2, REACT_APP_IMGEPATH } = process.env;
 const ButtonDelete = (x) => {
     const { param1, param2, param3 } = useParams();
-    const [id, setId] = useState(x.data._id);
+    const [id, setId] = useState(x.id_data);
 
     const Delete = async () => {
         Swa.fire({
@@ -22,7 +22,7 @@ const ButtonDelete = (x) => {
             if (result.isConfirmed) {
                 const a = toast.loading("Please wait...");
                 let data = axios
-                    .delete(`${REACT_APP_PATH}/admin/api/DeleteData/${param1}/${param2}/${param3}/${id}`)
+                    .delete(`${REACT_APP_PATH2}/admin/api/DeleteDataOfGroup/${param1}/${param2}/${param3}/${id}`)
                     .then((result) => {
                         toast.update(a, { render: "All is good", type: "success", isLoading: false });
                         notifySucceed();

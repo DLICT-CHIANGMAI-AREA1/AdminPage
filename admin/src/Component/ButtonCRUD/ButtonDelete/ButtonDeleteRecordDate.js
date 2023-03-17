@@ -1,53 +1,56 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
-import Swa from "sweetalert2";
+import { Button, Modal, message } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
-const { REACT_APP_PATH } = process.env;
-const ButtonDeleteRecord = (x) => {
-    const [id, setId] = useState(x.data);
-    const DeleteRecord = async () => {
-        Swa.fire({
-            title: "ต้องการลบข้อมูลชุดนี้หรือไม่",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes",
-            cancelButtonText: "No",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let data = axios
-                    .delete(`${REACT_APP_PATH}/admin/api/DeleteDataRecordDate/${x.id_year}/${id}`)
-                    .then((result) => {
-                        notifySucceed();
-                        setTimeout(Reload, 2000);
-                    });
-            }
-        });
-    };
 
-    const notifySucceed = () =>
-        toast.success("ลบรายการสำเร็จ", {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
+const { REACT_APP_PATH2 } = process.env;
 
-    function Reload() {
-        window.location.reload();
-    }
-    return (
-        <div>
-            <button type="button" className="btn btn-danger rounded-pill m-3" onClick={DeleteRecord}>
-                Delete Record
-            </button>
-        </div>
-    );
+const ButtonDeleteRecord = (props) => {
+  const { id_year, id_data } = props;
+
+  const handleDelete = () => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this record?",
+      icon: <ExclamationCircleOutlined />,
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
+      onOk() {
+        axios
+          .delete(`${REACT_APP_PATH2}/admin/api/DeleteGroupOfYear/${id_year}/${id_data}`)
+          .then(() => {
+            notifySucceed();
+            setTimeout(Reload, 2000);
+          })
+          .catch(() => {
+            message.error("Failed to delete the record.");
+          });
+      },
+    });
+  };
+
+  const notifySucceed = () =>
+    toast.success("Record deleted successfully.", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+  const Reload = () => {
+    window.location.reload();
+  };
+
+  return (
+    <Button type="primary"  className="m-2" danger onClick={handleDelete}>
+      Delete Record
+    </Button>
+  );
 };
 
 export default ButtonDeleteRecord;

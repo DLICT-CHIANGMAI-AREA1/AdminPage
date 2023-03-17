@@ -7,23 +7,10 @@ import FlushExample from "../../Component/ListComponent/CosllpaseData";
 import Accordion from "react-bootstrap/Accordion";
 import ButtonCreateRecordNameData from "../../Component/ButtonCRUD/ButtonCreate/ButtonCreateRecordDataName";
 import { Spinner } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import jwtDecode from "jwt-decode";
-const { REACT_APP_PATH } = process.env;
+import { v4 as uuidv4 } from "uuid";
+
+const { REACT_APP_PATH2 } = process.env;
 const Data = () => {
-    // check token 
-    const jwt = localStorage.getItem("mini-session");
-    const navigate = useNavigate();
-    if (!jwt) {
-        navigate("/Login");
-    }
-    const { exp } = jwtDecode(jwt)
-    const expirationTime = (exp * 1000) - 60000
-    if (Date.now() >= expirationTime) {
-        localStorage.clear();
-        navigate("/Login");
-      }
-////////////////////////////////////////////////////
     //TODO หลังจากได้รับข้อมูลจากการกด ButtonEditlink ใน file ButtonEditLink.js ดึง param _Id ที่ส่งไปลงมา เเล้วนำมา Axios ว่าในปีนี้มีข้อมูลอะไรบ้าง เช่น DMC , Money
 
     const { param1 } = useParams();
@@ -32,13 +19,19 @@ const Data = () => {
 
     useEffect(() => {
         function get() {
-            axios.get(`${REACT_APP_PATH}/admin/api/FindDataEachYearById/${param1}`).then((res) => {
-                setData(res.data.data);
-                setNameYear(res.data.name_year);
+            axios.get(`${REACT_APP_PATH2}/admin/api/FindDataEachYearById/${param1}`).then((res) => {
+                const { id, Year } = res.data[0]; // Accessing the first item in the response array
+                const parsedData = {
+                    id:id, // add the id property to the parsed data object
+                    year: JSON.parse(Year)// parse the Year property for each item
+                };
+               setData(parsedData.year.group);
+               setNameYear(parsedData.year.name_year);
             });
         }
         get();
     }, [param1]);
+  
     return (
         <Container>
             <div className="container">
@@ -57,8 +50,9 @@ const Data = () => {
 
                                 <Accordion flush>
                                     {Data ? (
-                                        Data.map((data) => {
-                                            return <FlushExample key={data._id} data={data} id_year={param1} />;
+                                        
+                                        Data.map((data,index) => {
+                                            return <FlushExample key={index} data={data} index={index} id_year={param1} />;
                                         })
                                     ) : (
                                         <Spinner

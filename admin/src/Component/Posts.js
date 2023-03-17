@@ -88,8 +88,8 @@ const Posts = (data) => {
                             )}
                         </p>
                     </td>
-                    <ButtonEdit data={x} id_year={data.param1} id_data={data.param2} id_date={data.param3} />
-                    <ButtonDelete data={x} />
+                    <ButtonEdit data={x} id_data={index} />
+                    <ButtonDelete data={x} id_data={index} />
                 </tr>
             ))}
         </tbody>

@@ -6,13 +6,13 @@ function ListYear({ data }) {
     return (
         <tr>
             <td>
-                <p>{data.name_year}</p>
+                <p>{data.year.name_year}</p>
             </td>
             <td> 
                 <ButtonEditLink data={data} />  
             </td>
             <td>
-                <ButtonDeleteYear data={data} id={data._id} />
+                <ButtonDeleteYear data={data} id={data.id} />
             </td>
         </tr>
     );

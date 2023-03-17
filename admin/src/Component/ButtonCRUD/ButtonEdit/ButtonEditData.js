@@ -5,8 +5,10 @@ import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-const { REACT_APP_PATH, REACT_APP_IMGEPATH } = process.env;
+import { useParams } from "react-router-dom";
+const { REACT_APP_PATH2, REACT_APP_IMGEPATH } = process.env;
 const ButtonEdit = (x) => {
+    const { param1, param2, param3 } = useParams();
     const [show, setShow] = useState(false);
     const [name, setName] = useState(x.data.name);
     const [URL, setURL] = useState(x.data.url);
@@ -29,7 +31,7 @@ const ButtonEdit = (x) => {
     const notifySucceed = () =>
         toast.success("อัพเดทข้อมูลสำเร็จ", {
             position: "top-right",
-            autoClose: 2000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -58,11 +60,11 @@ const ButtonEdit = (x) => {
             formData.append("pdf", Pdf);
             const id = toast.loading("Please wait...");
             await axios
-                .put(`${REACT_APP_PATH}/admin/api/UpdateData/${x.id_year}/${x.data._id}/${x.id_date}`, formData)
+                .post(`${REACT_APP_PATH2}/admin/api/UpdateDataOfGroup/${param1}/${param2}/${param3}/${x.id_data}`, formData)
                 .then((a) => {
                     toast.update(id, { render: "All is good", type: "success", isLoading: false });
                     notifySucceed();
-                    setTimeout(Reload, 2000);
+                    setTimeout(Reload, 1000);
                 });
         }
     };

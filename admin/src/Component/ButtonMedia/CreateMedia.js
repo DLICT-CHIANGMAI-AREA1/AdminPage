@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+import { Button } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -73,9 +73,10 @@ const ButtonCreateMedia = () => {
 
     return (
         <div className="CreateDataButton">
-            <button type="button" className="btn btn-success" onClick={handleShowAddRecord}>
+            <Button type="primary" onClick={handleShowAddRecord}>
                 + Add Video
-            </button>
+            </Button>
+
             <Modal show={showAddRecord} onHide={handleCloseAddRecord}>
                 <Modal.Header closeButton>
                     <Modal.Title>ADD VIDEO</Modal.Title>
@@ -95,10 +96,10 @@ const ButtonCreateMedia = () => {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseAddRecord}>
+                    <Button type="default" onClick={handleCloseAddRecord}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={onSubmit}>
+                    <Button type="primary" onClick={onSubmit}>
                         Create Save
                     </Button>
                 </Modal.Footer>

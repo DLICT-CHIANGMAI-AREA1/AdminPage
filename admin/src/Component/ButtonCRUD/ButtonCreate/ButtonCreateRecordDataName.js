@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+import { Button } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH2 } = process.env;
 const ButtonCreateRecords = (data) => {
     const [showAddRecord, setShowAddRecord] = useState(false);
     const [DataName, setDataName] = useState("");
@@ -38,8 +38,6 @@ const ButtonCreateRecords = (data) => {
         });
     };
 
-
-
     const notify = () =>
         toast.warn("กรุณากรอกข้อมูลให้ครบถ้วน ", {
             position: "top-right",
@@ -69,10 +67,10 @@ const ButtonCreateRecords = (data) => {
         } else {
             const data = {
                 name_data: DataName,
-                icon:File,
-                date: [],
+                icon: File,
+                data: [],
             };
-            await axios.post(`${REACT_APP_PATH}/admin/api/CreateDataName/${param}`, data).then((a) => {
+            await axios.post(`${REACT_APP_PATH2}/admin/api/CreateGroupOfYear/${param}`, data).then((a) => {
                 notifySucceed();
                 setTimeout(Reload, 2000);
             });
@@ -85,9 +83,10 @@ const ButtonCreateRecords = (data) => {
 
     return (
         <div className="CreateDataButton">
-            <button type="button" className="btn btn-success" onClick={handleShowAddRecord}>
+            <Button type="primary" onClick={handleShowAddRecord}>
                 + Create Record Data Name
-            </button>
+            </Button>
+
             <Modal show={showAddRecord} onHide={handleCloseAddRecord}>
                 <Modal.Header closeButton>
                     <Modal.Title>เพิ่มข้อมูลชุดใหม่</Modal.Title>
@@ -110,10 +109,10 @@ const ButtonCreateRecords = (data) => {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseAddRecord}>
+                    <Button type="default" onClick={handleCloseAddRecord}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={onSubmit}>
+                    <Button type="primary" onClick={onSubmit}>
                         Create Save
                     </Button>
                 </Modal.Footer>

@@ -11,45 +11,38 @@ import ButtonEdit from "../../Component/ButtonCRUD/ButtonEdit/ButtonEditData";
 import ButtonCreateData from "../../Component/ButtonCRUD/ButtonCreate/ButtonCreateData";
 import ButtonSeeFullImage from "../../Component/ButtonCRUD/ButtonImage";
 import Post from "../../Component/Posts";
-import Pagination from "../../Component/Pagination";
-import jwtDecode from "jwt-decode";
-const { REACT_APP_PATH } = process.env;
+import { Pagination } from "antd";
+
+
+const { REACT_APP_PATH2 } = process.env;
+
 const Data = () => {
-    // check token
-    const jwt = localStorage.getItem("mini-session");
-    const navigate = useNavigate();
-    if (!jwt) {
-        navigate("/Login");
-    }
-    const { exp } = jwtDecode(jwt);
-    const expirationTime = exp * 1000 - 60000;
-    if (Date.now() >= expirationTime) {
-        localStorage.clear();
-        navigate("/Login");
-    }
-    ////////////////////////////////////////////////////
     const { param1, param2, param3 } = useParams();
-    const [Data, setData] = useState([]);
+    const [data, setData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(100);
 
     useEffect(() => {
         function get() {
-            axios.get(`${REACT_APP_PATH}/admin/api/FindDataEachYearByDate/${param2}/${param3}`).then((res) => {
-                setData(res.data[0].data);
-            });
+            axios
+                .get(`${REACT_APP_PATH2}/admin/api/GetDataOfGroup/${param1}/${param2}/${param3}`)
+                .then((res) => {
+                    setData(res.data.data);
+                });
         }
         get();
     }, [param1, param2, param3]);
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage, setPostsPerPage] = useState(10);
+    // Calculate pagination information
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
-    // Current Page
-    const indexOfLastPosts = currentPage * postsPerPage;
-    const indexOfFirstPosts = indexOfLastPosts - postsPerPage;
-    const currentPosts = Data.slice(indexOfFirstPosts, indexOfLastPosts);
+    // Change page
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
 
-    // Change Page
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
     return (
         <Container>
             <div className="container">
@@ -59,7 +52,7 @@ const Data = () => {
                             <div className="landing-data-page">
                                 <div className="p-2">
                                     <div>
-                                        <ButtonCreateData id_year={param1} id_data={param2} id_date={param3} />
+                                        <ButtonCreateData id_year={param1} id_group={param2} id_data={param3} />
                                     </div>
                                 </div>
                                 <ListGroup>
@@ -74,20 +67,17 @@ const Data = () => {
                                                 <th>Delete</th>
                                             </tr>
                                         </thead>
-                                        <Post
-                                            key={uuidv4()}
-                                            data={currentPosts}
-                                            param1={param1}
-                                            param2={param2}
-                                            param3={param3}
-                                        ></Post>
+                                        <Post key={uuidv4()} data={currentItems}  param1={param1} param2={param2} param3={param3} />
                                     </table>
-                                    <Pagination
-                                        postsPerPage={postsPerPage}
-                                        totalPosts={Data.length}
-                                        setCurrentPage={setCurrentPage}
-                                        currentPage={currentPage}
-                                    />
+                                    <div className="d-flex justify-content-center">
+                                        <Pagination
+                                            current={currentPage}
+                                            onChange={handlePageChange}
+                                            total={data.length}
+                                            showSizeChanger={false}
+                                            pageSize={itemsPerPage}
+                                        />
+                                    </div>
                                 </ListGroup>
                             </div>
                         </div>

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import { Button } from "antd";
 import { Link  } from "react-router-dom";
 const ButtonAddNews = () => {
    
     return (
         <div className="CreateDataButton">
             <Link className="btn" role="button" to={`/News/AddNews`}>
-            <button type="button" className="btn btn-success" >
+            <Button type="primary" >
                 + Add News
-            </button>
+            </Button>
             </Link>
         </div>
     );

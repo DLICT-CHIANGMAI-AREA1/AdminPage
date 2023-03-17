@@ -7,17 +7,22 @@ import "react-toastify/dist/ReactToastify.css";
 import ButtonCreateRecordsYear from "../Component/ButtonCRUD/ButtonCreate/ButtonCreateRecord";
 import { Spinner } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import jwtDecode from "jwt-decode";
-const { REACT_APP_PATH } = process.env;
+const { REACT_APP_PATH2 } = process.env;
 const Data = () => {
-  
     const [Data, setData] = useState("");
     useEffect(() => {
         function get() {
-            axios.get(`${REACT_APP_PATH}/admin/api/FindDataEachYear`).then((res) => {
-                // ดึงข้อมูล Data ทั้งหมด
-                setData(res.data);
+            axios.get(`${REACT_APP_PATH2}/admin/api/FindDataEachYear`).then((res) => {
+                const dataArray = []; // create an empty array to store the parsed data
+                for (const item of res.data) {
+                    const parsedData = {
+                        id: item.id, // add the id property to the parsed data object
+                        year: JSON.parse(item.Year), // parse the Year property for each item
+                    };
+                    dataArray.push(parsedData); // store the parsed data in the array
+                }
+                setData(dataArray)
+                // do something with the stored data
             });
         }
         get();
@@ -44,8 +49,8 @@ const Data = () => {
                                         <tbody>
                                             {Data ? (
                                                 Data.map((data) => {
-                                                    return <ListYear key={data._id} data={data} />; // map ออกมาเป็นปีก่อน
-                                                })
+                                                    return <ListYear key={data.id} data={data} />; // map ออกมาเป็นปีก่อน
+                                                }).reverse()
                                             ) : (
                                                 <Spinner
                                                     animation="border"

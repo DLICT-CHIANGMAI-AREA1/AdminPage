@@ -7,9 +7,9 @@ import ButtonEditLink from "../ButtonCRUD/ButtonEdit/ButtonEditLink2";
 import ListGroup from "react-bootstrap/ListGroup";
 import { v4 as uuidv4 } from "uuid";
 
-function FlushExample({ data, id_year }) {
+function FlushExample({ data, id_year, index }) {
     return (
-        <Accordion.Item eventKey={uuidv4()}>
+        <Accordion.Item eventKey={index + 1}>
             <Accordion.Header>{data.name_data}</Accordion.Header>
             <Accordion.Body>
                 <div className="row gy-5">
@@ -17,10 +17,10 @@ function FlushExample({ data, id_year }) {
                         <h2 className="m-4"></h2>
                     </div>
                     <div className="col-2">
-                        <ButtonDeleteRecord data={data._id} id_year={id_year} />
+                        <ButtonDeleteRecord id_data={index} id_year={id_year} />
                     </div>
                     <div className="col-2">
-                        <ButtonAdd id_data={data._id} id_year={id_year} />
+                        <ButtonAdd id_data={index} id_year={id_year} />
                     </div>
                 </div>
 
@@ -34,16 +34,16 @@ function FlushExample({ data, id_year }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.date.map((x, index) => (
+                            {data.data.map((x, index2) => (
                                 <tr>
                                     <td className="col-md-10">
                                         <p>{x.name_date}</p>
                                     </td>
                                     <td>
-                                        <ButtonEditLink data={x} id={data._id} id_year={id_year} />
+                                        <ButtonEditLink data={x} id_array={index2} id_group={index} id_year={id_year} />
                                     </td>
                                     <td>
-                                        <ButtonDelete id_date={x._id} id={data._id} id_year={id_year} />
+                                        <ButtonDelete id_date={index} id={index2} id_year={id_year} />
                                     </td>
                                 </tr>
                             ))}
