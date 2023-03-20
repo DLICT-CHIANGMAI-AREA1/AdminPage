@@ -12,8 +12,20 @@ import jwtDecode from "jwt-decode";
 const { REACT_APP_PATH2 } = process.env;
 
 const DLICTPage = () => {
-  
-    const type = 'dlict'
+    /////////////////////////////////////////////////////
+    const jwt = localStorage.getItem("mini-session");
+    const navigate = useNavigate();
+    if (!jwt) {
+        navigate("/Login");
+    }
+    const { exp } = jwtDecode(jwt);
+    const expirationTime = exp * 1000 - 60000;
+    if (Date.now() >= expirationTime) {
+        localStorage.clear();
+        navigate("/Login");
+    }
+    ////////////////////////////////////////////////////////////////
+    const type = "dlict";
     const [Data, setData] = useState();
     useEffect(() => {
         function get() {
@@ -32,7 +44,7 @@ const DLICTPage = () => {
                         <div className="col-12">
                             <div className="landing-data-page">
                                 <div className="p-2">
-                                    <ButtonCreateServiceIcon data={type}/>
+                                    <ButtonCreateServiceIcon data={type} />
                                 </div>
                                 <div className="row ">
                                     <ListGroup variant="flush">
@@ -51,7 +63,6 @@ const DLICTPage = () => {
                                                     Data.map((data) => {
                                                         return <ListService key={data._id} data={data} />; // map ออกมาเป็นปีก่อน
                                                     })
-                                                    
                                                 ) : (
                                                     <Spinner
                                                         animation="border"

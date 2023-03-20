@@ -6,10 +6,13 @@ import { ToastContainer, toast } from "react-toastify";
 import logoAdmin from "../../src/assets/img/logo.png";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 
 const { REACT_APP_PATH2 } = process.env;
 
 function LoginForm({ className }) {
+
+    
     const [Username, setUsername] = useState();
     const [Password, setPassword] = useState();
 
@@ -38,13 +41,15 @@ function LoginForm({ className }) {
         await axios
             .post(`${REACT_APP_PATH2}/admin/api/login`, data)
             .then((res) => {
-                if (res.data.message !== "Login successful") {
+                if (!res.data) {
                     toast.update(id, { render: "Login fail", type: "error", isLoading: false });
                     notify();
                 } else {
+                    console.log(res.data)
                     toast.update(id, { render: "Login successful", type: "success", isLoading: false });
+                    localStorage.setItem("mini-session", JSON.stringify(res.data));
                     dispatch(fetchUser(res.data));
-                    navigate("/News");
+                   navigate("/News");
                 }
             })
             .catch(() => {
