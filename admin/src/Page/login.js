@@ -41,7 +41,7 @@ function LoginForm({ className }) {
         await axios
             .post(`${REACT_APP_PATH2}/admin/api/login`, data)
             .then((res) => {
-                if (!res.data) {
+                if (res.data.error) {
                     toast.update(id, { render: "Login fail", type: "error", isLoading: false });
                     notify();
                 } else {
