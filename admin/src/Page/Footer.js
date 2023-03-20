@@ -9,23 +9,26 @@ import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
-const {REACT_APP_PATH2 } = process.env;
+const { REACT_APP_PATH2 } = process.env;
 
 const Footer = () => {
+    ////////////////////////////////////
+    const jwt = localStorage.getItem("mini-session");
+    const navigate = useNavigate();
+    if (!jwt) {
+        navigate("/Login");
+    }
 
-/////////////////////////////////////////////////////
-const jwt = localStorage.getItem("mini-session");
-const navigate = useNavigate();
-if (!jwt) {
-    navigate("/Login");
-}
-const { exp } = jwtDecode(jwt);
-const expirationTime = exp * 1000 - 60000;
-if (Date.now() >= expirationTime) {
-    localStorage.clear();
-    navigate("/Login");
-}
-////////////////////////////////////////////////////////////////
+    if (jwt) {
+        const { exp } = jwtDecode(jwt);
+        const expirationTime = exp * 1000 - 60000;
+        if (Date.now() >= expirationTime) {
+            localStorage.clear();
+            navigate("/Login");
+        }
+    }
+    ////////////////////////////////////////////////////////////
+
     const notifySucceed = () =>
         toast.success("Update success", {
             position: "top-right",
@@ -51,9 +54,8 @@ if (Date.now() >= expirationTime) {
     useEffect(() => {
         function get() {
             axios.get(`${REACT_APP_PATH2}/admin/api/getOther`).then((res) => {
-
-                console.log(res.data)
-                setData(res.data[0].array)
+                console.log(res.data);
+                setData(res.data[0].array);
                 setId(res.data[0].id);
                 setId2(res.data[1].id);
                 setId3(res.data[2].id);
