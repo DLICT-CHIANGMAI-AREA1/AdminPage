@@ -17,6 +17,7 @@ import AddNewsPage from "./SubPage/AddNewsPage";
 import NewsDetail from "./SubPage/NewsDetail";
 import Navbar from "../Component/Navbar";
 import LoginForm from "./login";
+import BigData from "./SubPage/Bigdata";
 const AnimatedRoute = () => {
     const location = useLocation();
     return (
@@ -36,10 +37,12 @@ const AnimatedRoute = () => {
                 <Route path="/Person/:param" element={<><Navbar/><PersonDetail /></>} />
                 <Route path="/News/:param" element={<><Navbar/><NewsDetail /></>} />
                 <Route path="/News/AddNews" element={<><Navbar/><AddNewsPage /></>} />
-                <Route path="/BigData" element={<><Navbar/><Data /></>} />
+                <Route path="/Department" element={<><Navbar/><Data /></>} />
                 <Route path="/BigData/ListData/:param1" element={<><Navbar/><ListData /></>} />
                 <Route path="/BigData/ListData/Data/:param1/:param2/:param3" element={<><Navbar/><ListLastData /></>} />
                 <Route path="/Footer" element={<><Navbar/><Footer /></>} />
+                <Route path="/big-data/year/:year" element={<><Navbar/><BigData /></>} />
+                <Route path="/big-data/year" element={<><Navbar/><BigData /></>} />
             </Routes>
         </AnimatePresence>
     );
