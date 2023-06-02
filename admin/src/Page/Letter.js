@@ -49,7 +49,7 @@ const Letter = () => {
                                     {Data ? (
                                         Data.map((data) => {
                                             return <EachLetter key={data._id} data={data} />;
-                                        })
+                                        }).reverse()
                                     ) : (
                                         <Spinner
                                             animation="border"
