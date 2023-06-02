@@ -33,6 +33,7 @@ const AddNewsPage = ({ className }) => {
         }
         get();
     }, [param]);
+    
     const [Id, setId] = useState("");
     const [selectedDate, setSelectedDate] = useState("");
     const [Headline, setHeadline] = useState("");

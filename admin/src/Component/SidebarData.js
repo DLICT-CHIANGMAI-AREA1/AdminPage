@@ -12,6 +12,12 @@ export const SidebarData = [
         cName: "nav-text",
     },
     {
+        title: "จดหมายข่าว ",
+        path: "/letter",
+        icon: <IoIcons.IoIosPaper />,
+        cName: "nav-text",
+    },
+    {
         title: "คู่มือปฏิบัติงาน ",
         path: "/OperatingManual",
         icon: <IoIcons.IoIosPaper />,

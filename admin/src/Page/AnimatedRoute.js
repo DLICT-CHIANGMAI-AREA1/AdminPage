@@ -12,6 +12,7 @@ import Media from "./Media";
 import Mission from "./Mission";
 import Footer from "./Footer";
 import Service from "./Service";
+import Letter from "./Letter";
 import DLICT from "./DLICT";
 import AddNewsPage from "./SubPage/AddNewsPage";
 import NewsDetail from "./SubPage/NewsDetail";
@@ -34,6 +35,7 @@ const AnimatedRoute = () => {
                 <Route path="/Mission" element={<><Navbar/><Mission /></>} />
                 <Route path="/Service" element={<><Navbar/><Service /></>} />
                 <Route path="/DLICT" element={<><Navbar/><DLICT /></>} />
+                <Route path="/Letter" element={<><Navbar/><Letter /></>} />
                 <Route path="/Person/:param" element={<><Navbar/><PersonDetail /></>} />
                 <Route path="/News/:param" element={<><Navbar/><NewsDetail /></>} />
                 <Route path="/News/AddNews" element={<><Navbar/><AddNewsPage /></>} />

@@ -1,19 +1,42 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
+import { Button } from "antd";
 import { ToastContainer, toast } from "react-toastify";
-const { REACT_APP_PATH2 } = process.env;
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+const { REACT_APP_PATH2 } = process.env;
 
-const ButtonEditMedia = () => {
+const ButtonCreateLetter = () => {
+    const [File, setFile] = useState("");
+
+    const _treat = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertBase64(file);
+        const { files } = e.target;
+        let images = [];
+        const selecteds = [...[...files]];
+        selecteds.forEach((i) => images.push(URL.createObjectURL(i)));
+        setFile(base64);
+    };
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
+
     const [showAddRecord, setShowAddRecord] = useState(false);
     const handleCloseAddRecord = () => setShowAddRecord(false);
     const handleShowAddRecord = () => setShowAddRecord(true);
-    const [Video, setVideo] = useState();
 
     const notify = () =>
         toast.warn("กรุณากรอกข้อมูลให้ครบถ้วน ", {
@@ -42,74 +65,50 @@ const ButtonEditMedia = () => {
         window.location.reload();
     }
 
-    const validation = (url) => {
-        const regEx = new RegExp("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?");
-        return regEx.test(url);
-    };
-
-    const notifyURL = () =>
-        toast.warn("URL ไม่ถูกต้อง ", {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-
     const onSubmit = async () => {
-        if (Video === "") {
-            notify();
-        } else if (validation(Video) === false) {
-            notifyURL();
-        } else {
-            let data ={url:Video}
+        if(File){
+            let data ={image:File}
             await axios
-                .post(`${REACT_APP_PATH2}/admin/api/AddVideo`, data)
+                .post(`${REACT_APP_PATH2}/admin/api/AddLetter`, data)
                 .then((a) => {
                     notifySucceed();
                     setTimeout(Reload, 2000);
                 });
+        }else{
+            notify()
         }
+    
     };
 
     return (
         <div className="CreateDataButton">
-            <button type="button" className="btn btn-success" onClick={handleShowAddRecord}>
-                + Add Vdieo
-            </button>
+            <Button type="primary" onClick={handleShowAddRecord}>
+                + เพิ่มจดหมายข่าว
+            </Button>
+
             <Modal show={showAddRecord} onHide={handleCloseAddRecord}>
                 <Modal.Header closeButton>
-                    <Modal.Title>ADD VIDEO</Modal.Title>
+                    <Modal.Title>เพิ่มจดหมายข่าว</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>url video</Form.Label>
-                            <Form.Control
-                                type="url"
-                                autoFocus
-                                placeholder="https://example.com"
-                                onChange={(event) => setVideo(event.target.value)}
-                                required
-                            />
+                        <Form.Group controlId="formFile" className="mb-3">
+                            <Form.Label>จดหมายข่าว</Form.Label>
+                            <Form.Control type="file" onChange={_treat} />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseAddRecord}>
+                    <Button type="default" onClick={handleCloseAddRecord}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={onSubmit}>
-                        Create Save
+                    <Button type="primary" onClick={onSubmit}>
+                        Upload
                     </Button>
                 </Modal.Footer>
-                <ToastContainer />
             </Modal>
         </div>
     );
 };
 
-export default ButtonEditMedia;
+export default ButtonCreateLetter;

@@ -5,11 +5,11 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { ToastContainer, toast } from "react-toastify";
-const { REACT_APP_PATH2 } = process.env;
+
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-const ButtonEditMedia = () => {
+const ButtonEditLetter = () => {
     const [showAddRecord, setShowAddRecord] = useState(false);
     const handleCloseAddRecord = () => setShowAddRecord(false);
     const handleShowAddRecord = () => setShowAddRecord(true);
@@ -67,7 +67,7 @@ const ButtonEditMedia = () => {
         } else {
             let data ={url:Video}
             await axios
-                .post(`${REACT_APP_PATH2}/admin/api/AddVideo`, data)
+                .post(`http://localhost:5000/admin/api/AddVideo`, data)
                 .then((a) => {
                     notifySucceed();
                     setTimeout(Reload, 2000);
@@ -112,4 +112,4 @@ const ButtonEditMedia = () => {
     );
 };
 
-export default ButtonEditMedia;
+export default ButtonEditLetter;
