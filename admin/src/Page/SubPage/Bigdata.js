@@ -7,6 +7,7 @@ import { SelectYear } from "../../Component/ButtonCRUDBigdata/SelectYear";
 import ButtonCreateYear from "../../Component/ButtonCRUDBigdata/ButtonCreateYear";
 import ButtonCreateData from "../../Component/ButtonCRUDBigdata/ButtonCreateData";
 import ButtonDeleteYear from "../../Component/ButtonCRUDBigdata/ButtonDeleteYear";
+import CreateDataTopicButton from "../../Component/ButtonCRUDBigdata/ButtonCreateTopicData";
 import { Spinner } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -59,9 +60,7 @@ const BigData = () => {
             return;
         }
         try {
-            const response = await axios.get(
-                `${REACT_APP_PATH2}/admin/api/findEachYear/${selectedYear}`
-            );
+            const response = await axios.get(`${REACT_APP_PATH2}/admin/api/findEachYear/${selectedYear}`);
 
             const { id, year } = response.data[0]; // Accessing the first item in the response array
             const parsedData = {
@@ -105,10 +104,7 @@ const BigData = () => {
     const handleSubmit = (e) => {
         const playload = { url: New_Data };
         axios
-            .post(
-                `${REACT_APP_PATH2}/admin/api/addData/${year.year}/${selectedGroup}/${selectedData}`,
-                playload
-            )
+            .post(`${REACT_APP_PATH2}/admin/api/addData/${year.year}/${selectedGroup}/${selectedData}`, playload)
             .then((response) => {
                 toast.success("Year created successfully!");
                 window.location.reload();
@@ -163,9 +159,41 @@ const BigData = () => {
                                             <Accordion defaultActiveKey="0">
                                                 {Data && Data.year && Data.year.group ? (
                                                     Data.year.group.map((group, index1) => {
+                    
                                                         return (
                                                             <Accordion.Item eventKey={index1} key={index1}>
-                                                                <Accordion.Header>{group.Name}</Accordion.Header>
+                                                                <Accordion.Header>
+                                                                    {group.Name}{" "}
+                                                                    <Popconfirm
+                                                                        title="Are you sure you want to delete this item?"
+                                                                        onConfirm={() => {
+                                                                            axios
+                                                                                .delete(
+                                                                                    `${REACT_APP_PATH2}/admin/api/deleteTopicData/${year.year}/${index1}`
+                                                                                )
+                                                                                .then((response) => {
+                                                                                    message.success(
+                                                                                        "Item deleted successfully!"
+                                                                                    );
+                                                                                    window.location.reload();
+                                                                                })
+                                                                                .catch((error) => {
+                                                                                    message.error(
+                                                                                        "Failed to delete item"
+                                                                                    );
+                                                                                });
+                                                                        }}
+                                                                        okText="Yes"
+                                                                        cancelText="No"
+                                                                    >
+                                                                        <DeleteOutlined
+                                                                            style={{
+                                                                                color: "red",
+                                                                                cursor: "pointer",
+                                                                            }}
+                                                                        />
+                                                                    </Popconfirm>
+                                                                </Accordion.Header>
                                                                 <Accordion.Body>
                                                                     {group.Data ? (
                                                                         <ListGroup>
@@ -271,6 +299,11 @@ const BigData = () => {
                                                 ) : (
                                                     <div></div>
                                                 )}
+                                                {Object.keys(year).length === 0 ? (
+                                                    <div></div>
+                                                ) : (
+                                                    <CreateDataTopicButton />
+                                                )}
                                             </Accordion>
                                         </div>
                                         {selectedItem === "" ? (
@@ -313,8 +346,7 @@ const BigData = () => {
                                                                     height: "600px",
                                                                     border: "none",
                                                                 }}
-                    
-                                                                allowFullScreen  
+                                                                allowFullScreen
                                                             ></iframe>
                                                         ) : (
                                                             <p>Please enter a URL.</p>

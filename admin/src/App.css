@@ -117,6 +117,9 @@ body {
 .CreateDataButton {
     text-align: end;
 }
+.CreateDataTopicButton{
+    text-align: center;
+}
 th {
     text-align: center;
 }
